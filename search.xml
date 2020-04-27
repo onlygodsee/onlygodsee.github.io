@@ -6,11 +6,11 @@
     <content><![CDATA[<p>首先交代一下为什么使用Hexo而不是Jekyll。因为电脑环境有问题导致第一次安装Ruby失败了，然后懒得弄了。</p>
 <p>开发环境：Mac</p>
 <p>感谢 <strong><a href="https://blog.csdn.net/muzilanlan/article/details/81542917" target="_blank" rel="noopener">muzilan</a></strong> 兄台的分享</p>
-<h3 id="一-设置Git-Pages"><a href="#一-设置Git-Pages" class="headerlink" title="一 设置Git Pages"></a>一 设置Git Pages</h3><p>​    创建一个新仓库，命名规则为 <strong>{<em>username</em>}.github.io</strong></p>
+<h3 id="设置Git-Pages"><a href="#设置Git-Pages" class="headerlink" title="设置Git Pages"></a>设置Git Pages</h3><p>​    创建一个新仓库，命名规则为 <strong>{<em>username</em>}.github.io</strong></p>
 <p>​    注意这里的 <strong>“<em>username</em>”</strong> 是 Github 的用户名</p>
 <p>​    创建成功后创建 <strong><em>index.html</em></strong> 文件，内容随意</p>
 <p>​    之后使用浏览器打开pages页面查看是否创建成功</p>
-<h3 id="二-Hexo"><a href="#二-Hexo" class="headerlink" title="二 Hexo"></a>二 Hexo</h3><p>​    <a href="https://hexo.io/themes/" target="_blank" rel="noopener">Hexo模版地址</a></p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>​    <a href="https://hexo.io/themes/" target="_blank" rel="noopener">Hexo模版地址</a></p>
 <p>​    <a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo中文文档</a></p>
 <p>​    <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">Next主题文档</a></p>
 <p>​    Hexo 依赖 Node.js 环境，我这里已经安装过了便不再叙述。</p>
@@ -36,7 +36,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
 
 <p>至此 模版部署完成</p>
-<h3 id="三-Hexo-添加分类、标签"><a href="#三-Hexo-添加分类、标签" class="headerlink" title="三 Hexo 添加分类、标签"></a>三 Hexo 添加分类、标签</h3><p>新建分类页面</p>
+<h3 id="Hexo-添加分类、标签"><a href="#Hexo-添加分类、标签" class="headerlink" title="Hexo 添加分类、标签"></a>Hexo 添加分类、标签</h3><p>新建分类页面</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
 
 <p>此时会在 <strong><em>source/categories</em></strong> 下生成一个 <strong><em>index.md</em></strong> 文件,对他进行编辑</p>
