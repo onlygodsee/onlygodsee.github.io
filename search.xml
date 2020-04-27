@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hello-world</title>
-    <url>/2020/04/23/hello-world/</url>
-    <content><![CDATA[<p>Hello world, this is my first blog.</p>
-<p>Everything is ok.</p>
-]]></content>
-  </entry>
-  <entry>
     <title>Git Pages + Hexo 搭建个人博客记录</title>
     <url>/2020/04/26/article1/</url>
     <content><![CDATA[<p>首先交代一下为什么使用Hexo而不是Jekyll。因为电脑环境有问题导致第一次安装Ruby失败了，然后懒得弄了。</p>
@@ -100,5 +93,12 @@
         <tag>Hexo</tag>
         <tag>Git</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>hello-world</title>
+    <url>/2020/04/23/hello-world/</url>
+    <content><![CDATA[<p>Hello world, this is my first blog.</p>
+<p>Everything is ok.</p>
+]]></content>
   </entry>
 </search>
