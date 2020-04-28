@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>hello-world</title>
+    <url>/2020/04/23/hello-world/</url>
+    <content><![CDATA[<p>Hello world, this is my first blog.</p>
+<p>Everything is ok.</p>
+]]></content>
+  </entry>
+  <entry>
     <title>Git Pages + Hexo 搭建个人博客记录</title>
     <url>/2020/04/26/article-1/</url>
     <content><![CDATA[<p>首先交代一下为什么使用Hexo而不是Jekyll。因为电脑环境有问题导致第一次安装Ruby失败了，然后懒得弄了。</p>
@@ -78,6 +85,18 @@
 
 
 
+<h3 id="利用Shell脚本按序号递增创建文章"><a href="#利用Shell脚本按序号递增创建文章" class="headerlink" title="利用Shell脚本按序号递增创建文章"></a>利用Shell脚本按序号递增创建文章</h3><p>创建shell脚本  </p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim crt_hexo_article.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 文件名命名示例 article-1.md<span class="string">"</span></span></span><br><span class="line">NEW_FILE=`ls -rt Hexo文章目录 | sed '/sh/d' | tail -n1`</span><br><span class="line">echo $NEW_FILE</span><br><span class="line">var=`echo $&#123;NEW_FILE&#125;|awk -F '-' '&#123;print $2&#125;'|awk -F '.' '&#123;print $1&#125;'`</span><br><span class="line">echo "max index now -&gt; $var"</span><br><span class="line"></span><br><span class="line">let var+=1</span><br><span class="line">echo "create article index -&gt; $var"</span><br><span class="line">hexo new post article-$&#123;var&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用 typora 打开刚刚创建的md文件</span></span><br><span class="line">open -a typora Hexo文章路径</span><br></pre></td></tr></table></figure>
+
+<p>在 <strong><em>.bash_profile</em></strong> 中添加别名</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> shell 脚本别名</span></span><br><span class="line">alias crtart="/bin/bash /Users/woo/crt_hexo_article.sh" </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> typora 打开文件别名</span></span><br><span class="line">alias typora="open -a typora"</span><br></pre></td></tr></table></figure>
+
+<p>保存退出后执行</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source .bash_profile</span><br></pre></td></tr></table></figure>
+
+<p>进入站点目录输入别名 <strong><em>crtart</em></strong> </p>
 <h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><h4 id="部署后没有更新"><a href="#部署后没有更新" class="headerlink" title="部署后没有更新"></a>部署后没有更新</h4><p>解决方案：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo d -g</span><br></pre></td></tr></table></figure>
 
@@ -92,12 +111,5 @@
         <tag>Hexo</tag>
         <tag>Git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>hello-world</title>
-    <url>/2020/04/23/hello-world/</url>
-    <content><![CDATA[<p>Hello world, this is my first blog.</p>
-<p>Everything is ok.</p>
-]]></content>
   </entry>
 </search>
