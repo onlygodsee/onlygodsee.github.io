@@ -486,7 +486,7 @@ export CPPFLAGS=&quot;-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/incl
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-28 18:51:02" itemprop="dateModified" datetime="2020-04-28T18:51:02+08:00">2020-04-28</time>
+                <time title="修改时间：2020-04-30 14:11:02" itemprop="dateModified" datetime="2020-04-30T14:11:02+08:00">2020-04-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -600,6 +600,14 @@ export CPPFLAGS=&quot;-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/incl
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source .bash_profile</span><br></pre></td></tr></table></figure>
 
 <p>进入站点目录输入别名 <strong><em>crtart</em></strong> </p>
+<h3 id="文章图片预览"><a href="#文章图片预览" class="headerlink" title="文章图片预览"></a>文章图片预览</h3><p>博文中的图片可以使用图床进行展示，我这里是在Github中新建了一个图床仓库</p>
+<p>想要让博文中的图片有放大预览功能需要借助插件 <strong>fancybox</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd theme/next/source/lib</span><br><span class="line"></span><br><span class="line">git clone https://github.com/theme-next/theme-next-fancybox3 fancybox</span><br></pre></td></tr></table></figure>
+
+<p>修改 <strong><em>主题配置文件</em></strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fancybox: true</span><br></pre></td></tr></table></figure>
+
+<p>重新部署后就可以看到效果了</p>
 <h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><h4 id="部署后没有更新"><a href="#部署后没有更新" class="headerlink" title="部署后没有更新"></a>部署后没有更新</h4><p>解决方案：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo d -g</span><br></pre></td></tr></table></figure>
 
