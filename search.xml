@@ -5,7 +5,7 @@
     <url>/2020/04/30/article-4/</url>
     <content><![CDATA[<p>网站地址：aHR0cDovL3d3dy52dnZkai5jb20v</p>
 <h3 id="网站分析"><a href="#网站分析" class="headerlink" title="网站分析"></a>网站分析</h3><h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>随便点击一首音乐的链接，并进行抓包，发现了这样的几个请求：</p>
-<p><img src="http://onlygodsee.top/imags/article-4/image-20200430111802994.png" alt="image-20200430111802994"></p>
+<p><img src="http://onlygodsee.top/images/article-4/image-20200430111802994.png" alt="image-20200430111802994"></p>
 <p>再看下m3u8请求的响应体：</p>
 <p><img src="http://onlygodsee.top/images/article-4/image-20200429185725469.png" alt="image-20200429185725469"></p>
 <p>发现上面标出的ts流请求出现在了m3u8请求的响应体中，关于对m3u8的介绍看这里 <a href="https://www.jianshu.com/p/e97f6555a070" target="_blank" rel="noopener">m3u8 文件格式详解</a></p>
