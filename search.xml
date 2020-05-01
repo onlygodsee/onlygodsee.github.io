@@ -1,8 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Python环境管理--pyenv</title>
+    <url>/2020/04/28/article-2/</url>
+    <content><![CDATA[<h2 id="安装pyenv"><a href="#安装pyenv" class="headerlink" title="安装pyenv"></a>安装pyenv</h2><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><h4 id="pyenv-installer-安装"><a href="#pyenv-installer-安装" class="headerlink" title="pyenv-installer 安装"></a>pyenv-installer 安装</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl https://pyenv.run | bash</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash</span><br></pre></td></tr></table></figure>
+
+<p>以上命令会弹出提示 把以下内容加入 ~/.bashrc 中</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PATH="~/.pyenv/bin:$PATH"</span><br><span class="line">eval "$(pyenv init -)"</span><br><span class="line">eval "$(pyenv virtualenv-init -)"</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><h4 id="homebrew-安装"><a href="#homebrew-安装" class="headerlink" title="homebrew 安装"></a>homebrew 安装</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install pyenv</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><h3 id="Linux-1"><a href="#Linux-1" class="headerlink" title="Linux"></a>Linux</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyenv update</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mac-1"><a href="#Mac-1" class="headerlink" title="Mac"></a>Mac</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew upgrade pyenv</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装-Python-3-7-3"><a href="#安装-Python-3-7-3" class="headerlink" title="安装 Python 3.7.3"></a>安装 Python 3.7.3</h2><h3 id="Linux-2"><a href="#Linux-2" class="headerlink" title="Linux"></a>Linux</h3><p>安装依赖<br>sudo apt-get update<br>sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev</p>
+<p>下载源码包到 pyenv 的 缓存目录里，加快安装速度</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz -P $(pyenv root)/cache</span><br></pre></td></tr></table></figure>
+
+<p>安装</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyenv install 3.7.3</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mac-2"><a href="#Mac-2" class="headerlink" title="Mac"></a>Mac</h3><p>下载源码包到 pyenv 的 缓存目录里，加快安装速度</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz -P $(pyenv root)/cache</span><br></pre></td></tr></table></figure>
+
+<p>安装依赖及设置环境变量</p>
+<p>如果缺少 zlib 报错，则需要安装 zlib<br>zipimport.ZipImportError: can’t decompress data; zlib not available</p>
+<p>安装 zlib<br>brew install zlib</p>
+<p>设置zlib环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export LDFLAGS="-L/usr/local/opt/zlib/lib"</span><br><span class="line">export CPPFLAGS="-I/usr/local/opt/zlib/include"</span><br></pre></td></tr></table></figure>
+
+<p>如果缺少 SQLite3 警告，则需要设置sqlite 环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">The Python sqlite3 extension was not compiled. Missing the SQLite3 lib?</span><br><span class="line">Installed Python-3.7.3 to /Users/slipper/.pyenv/versions/3.7.3</span><br></pre></td></tr></table></figure>
+
+<p>设置 sqlite 环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"</span><br><span class="line">export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"</span><br></pre></td></tr></table></figure>
+
+<p>安装 python<br>pyenv install 3.7.3</p>
+<h2 id="卸载-python"><a href="#卸载-python" class="headerlink" title="卸载 python"></a>卸载 python</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyenv uninstall 3.7.3</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>技术</category>
+        <category>环境管理</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>pyenv</tag>
+        <tag>环境管理</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git Pages + Hexo 搭建个人博客记录</title>
-    <url>/2020/05/01/article-1/</url>
+    <url>/2020/04/26/article-1/</url>
     <content><![CDATA[<p>首先交代一下为什么使用Hexo而不是Jekyll。因为电脑环境有问题导致第一次安装Ruby失败了，然后懒得弄了。</p>
 <p>开发环境：Mac</p>
 <p>感谢 <strong><a href="https://blog.csdn.net/muzilanlan/article/details/81542917" target="_blank" rel="noopener">muzilan</a></strong> 兄台的分享</p>
@@ -119,59 +170,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Python环境管理--pyenv</title>
-    <url>/2020/05/01/article-2/</url>
-    <content><![CDATA[<h2 id="安装pyenv"><a href="#安装pyenv" class="headerlink" title="安装pyenv"></a>安装pyenv</h2><h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><h4 id="pyenv-installer-安装"><a href="#pyenv-installer-安装" class="headerlink" title="pyenv-installer 安装"></a>pyenv-installer 安装</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl https://pyenv.run | bash</span><br></pre></td></tr></table></figure>
-
-<p>或者</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash</span><br></pre></td></tr></table></figure>
-
-<p>以上命令会弹出提示 把以下内容加入 ~/.bashrc 中</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PATH="~/.pyenv/bin:$PATH"</span><br><span class="line">eval "$(pyenv init -)"</span><br><span class="line">eval "$(pyenv virtualenv-init -)"</span><br></pre></td></tr></table></figure>
-
-<h3 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h3><h4 id="homebrew-安装"><a href="#homebrew-安装" class="headerlink" title="homebrew 安装"></a>homebrew 安装</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install pyenv</span><br></pre></td></tr></table></figure>
-
-<h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><h3 id="Linux-1"><a href="#Linux-1" class="headerlink" title="Linux"></a>Linux</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyenv update</span><br></pre></td></tr></table></figure>
-
-<h3 id="Mac-1"><a href="#Mac-1" class="headerlink" title="Mac"></a>Mac</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew upgrade pyenv</span><br></pre></td></tr></table></figure>
-
-<h2 id="安装-Python-3-7-3"><a href="#安装-Python-3-7-3" class="headerlink" title="安装 Python 3.7.3"></a>安装 Python 3.7.3</h2><h3 id="Linux-2"><a href="#Linux-2" class="headerlink" title="Linux"></a>Linux</h3><p>安装依赖<br>sudo apt-get update<br>sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev</p>
-<p>下载源码包到 pyenv 的 缓存目录里，加快安装速度</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz -P $(pyenv root)/cache</span><br></pre></td></tr></table></figure>
-
-<p>安装</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyenv install 3.7.3</span><br></pre></td></tr></table></figure>
-
-<h3 id="Mac-2"><a href="#Mac-2" class="headerlink" title="Mac"></a>Mac</h3><p>下载源码包到 pyenv 的 缓存目录里，加快安装速度</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/3.7.3/Python-3.7.3.tar.xz -P $(pyenv root)/cache</span><br></pre></td></tr></table></figure>
-
-<p>安装依赖及设置环境变量</p>
-<p>如果缺少 zlib 报错，则需要安装 zlib<br>zipimport.ZipImportError: can’t decompress data; zlib not available</p>
-<p>安装 zlib<br>brew install zlib</p>
-<p>设置zlib环境变量</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export LDFLAGS="-L/usr/local/opt/zlib/lib"</span><br><span class="line">export CPPFLAGS="-I/usr/local/opt/zlib/include"</span><br></pre></td></tr></table></figure>
-
-<p>如果缺少 SQLite3 警告，则需要设置sqlite 环境变量</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">The Python sqlite3 extension was not compiled. Missing the SQLite3 lib?</span><br><span class="line">Installed Python-3.7.3 to /Users/slipper/.pyenv/versions/3.7.3</span><br></pre></td></tr></table></figure>
-
-<p>设置 sqlite 环境变量</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export LDFLAGS="-L/usr/local/opt/zlib/lib -L/usr/local/opt/sqlite/lib"</span><br><span class="line">export CPPFLAGS="-I/usr/local/opt/zlib/include -I/usr/local/opt/sqlite/include"</span><br></pre></td></tr></table></figure>
-
-<p>安装 python<br>pyenv install 3.7.3</p>
-<h2 id="卸载-python"><a href="#卸载-python" class="headerlink" title="卸载 python"></a>卸载 python</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pyenv uninstall 3.7.3</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>技术</category>
-        <category>环境管理</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>pyenv</tag>
-        <tag>环境管理</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python环境管理--pipenv</title>
-    <url>/2020/05/01/article-3/</url>
+    <url>/2020/04/28/article-3/</url>
     <content><![CDATA[<h2 id="安装pipenv"><a href="#安装pipenv" class="headerlink" title="安装pipenv"></a>安装pipenv</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 install pipenv</span><br></pre></td></tr></table></figure>
 
 <p>初始化</p>
