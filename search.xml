@@ -170,37 +170,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python环境管理--pipenv</title>
-    <url>/2020/05/01/article-3/</url>
-    <content><![CDATA[<h2 id="安装pipenv"><a href="#安装pipenv" class="headerlink" title="安装pipenv"></a>安装pipenv</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 install pipenv</span><br></pre></td></tr></table></figure>
-
-<p>初始化</p>
-<p>安装到项目目录里</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PIPENV_VENV_IN_PROJECT=1</span><br></pre></td></tr></table></figure>
-
-<p>使用 Python 3.7.3</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pipenv --python $(pyenv root)/versions/3.7.3/bin/python</span><br></pre></td></tr></table></figure>
-
-<p>设置源</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PIPENV_PYPI_MIRROR=http://mirrors.aliyun.com/pypi/simple</span><br><span class="line">或</span><br><span class="line">pipenv install --pypi-mirror http://mirrors.aliyun.com/pypi/simple</span><br></pre></td></tr></table></figure>
-
-<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip uninstall pipenv</span><br></pre></td></tr></table></figure>
-
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><h3 id="pipenv-可以触发-pyenv-安装-Python-版本"><a href="#pipenv-可以触发-pyenv-安装-Python-版本" class="headerlink" title="pipenv 可以触发 pyenv 安装 Python 版本"></a>pipenv 可以触发 pyenv 安装 Python 版本</h3><p>.python-version</p>
-<h3 id="pipenv-可以打开依赖的包"><a href="#pipenv-可以打开依赖的包" class="headerlink" title="pipenv 可以打开依赖的包"></a>pipenv 可以打开依赖的包</h3><p>export EDITOR=subl # 设置 pipenv open 的 默认编辑器<br>pipenv open fabric</p>
-<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>删除在 /usr/local/bin/pipenv 目录的pipenv<br>建议用 pip3 安装 pipenv</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>环境管理</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>环境管理</tag>
-        <tag>pipenv</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JS逆向学习-某DJ音乐网</title>
     <url>/2020/05/01/article-4/</url>
     <content><![CDATA[<p>网站地址：aHR0cDovL3d3dy52dnZkai5jb20v</p>
@@ -231,6 +200,37 @@
       </categories>
       <tags>
         <tag>JS逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python环境管理--pipenv</title>
+    <url>/2020/05/01/article-3/</url>
+    <content><![CDATA[<h2 id="安装pipenv"><a href="#安装pipenv" class="headerlink" title="安装pipenv"></a>安装pipenv</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 install pipenv</span><br></pre></td></tr></table></figure>
+
+<p>初始化</p>
+<p>安装到项目目录里</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PIPENV_VENV_IN_PROJECT=1</span><br></pre></td></tr></table></figure>
+
+<p>使用 Python 3.7.3</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pipenv --python $(pyenv root)/versions/3.7.3/bin/python</span><br></pre></td></tr></table></figure>
+
+<p>设置源</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">PIPENV_PYPI_MIRROR=http://mirrors.aliyun.com/pypi/simple</span><br><span class="line">或</span><br><span class="line">pipenv install --pypi-mirror http://mirrors.aliyun.com/pypi/simple</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip uninstall pipenv</span><br></pre></td></tr></table></figure>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><h3 id="pipenv-可以触发-pyenv-安装-Python-版本"><a href="#pipenv-可以触发-pyenv-安装-Python-版本" class="headerlink" title="pipenv 可以触发 pyenv 安装 Python 版本"></a>pipenv 可以触发 pyenv 安装 Python 版本</h3><p>.python-version</p>
+<h3 id="pipenv-可以打开依赖的包"><a href="#pipenv-可以打开依赖的包" class="headerlink" title="pipenv 可以打开依赖的包"></a>pipenv 可以打开依赖的包</h3><p>export EDITOR=subl # 设置 pipenv open 的 默认编辑器<br>pipenv open fabric</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>删除在 /usr/local/bin/pipenv 目录的pipenv<br>建议用 pip3 安装 pipenv</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>环境管理</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>环境管理</tag>
+        <tag>pipenv</tag>
       </tags>
   </entry>
   <entry>
