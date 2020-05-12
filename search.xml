@@ -6,9 +6,6 @@
     <content><![CDATA[<p>首先交代一下为什么使用Hexo而不是Jekyll。因为电脑环境有问题导致第一次安装Ruby失败了，然后懒得弄了。</p>
 <p>开发环境：Mac</p>
 <p>感谢 <strong><a href="https://blog.csdn.net/muzilanlan/article/details/81542917" target="_blank" rel="noopener">muzilan</a></strong> 兄台的分享</p>
-<p>首先交代一下为什么使用Hexo而不是Jekyll。因为电脑环境有问题导致第一次安装Ruby失败了，然后懒得弄了。</p>
-<p>开发环境：Mac</p>
-<p>感谢 <strong><a href="https://blog.csdn.net/muzilanlan/article/details/81542917" target="_blank" rel="noopener">muzilan</a></strong> 兄台的分享</p>
 <h3 id="设置Git-Pages"><a href="#设置Git-Pages" class="headerlink" title="设置Git Pages"></a>设置Git Pages</h3><p> 创建一个新仓库，命名规则为 <strong>{*username*}.github.io</strong></p>
 <p> 注意这里的 <strong>“*username*”</strong> 是 Github 的用户名</p>
 <p> 创建成功后创建 <strong><em>index.html\</em></strong> 文件，内容随意</p>
