@@ -3,7 +3,7 @@ title: JS逆向学习-*博登陆加密参数
 date: 2020-06-02 14:50:40
 tags:
 - JS逆向
-categoties:
+categories:
 - 技术
 - JS逆向
 ---
