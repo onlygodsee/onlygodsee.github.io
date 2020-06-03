@@ -764,6 +764,10 @@
 <p><img src="/2020/06/02/article-8/WX20200602-160244.png" alt></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>其实参数加密没什么难度，完善后续登陆操作需要对验证码识别做优化</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JS逆向</category>
+      </categories>
       <tags>
         <tag>JS逆向</tag>
       </tags>
