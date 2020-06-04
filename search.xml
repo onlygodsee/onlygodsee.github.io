@@ -799,7 +799,7 @@
       </tags>
   </entry>
   <entry>
-    <title>article-10</title>
+    <title>JS逆向学习-某8登陆参数</title>
     <url>/2020/06/04/article-10/</url>
     <content><![CDATA[<p>aHR0cHM6Ly9wYXNzcG9ydC41OC5jb20vbG9naW4vP3BhdGg9aHR0cHMlM0EvL2Z6LjU4LmNvbS8mUEdUSUQ9MGQxMDAwMDAtMDAxMy0wMjk0LTFjZWItYjU3NTBiZDIwNmU5JkNsaWNrSUQ9Mg</p>
 <h3 id="分析请求"><a href="#分析请求" class="headerlink" title="分析请求"></a>分析请求</h3><p><img src="/2020/06/04/article-10/WX20200604-142559.png" alt></p>
@@ -826,5 +826,12 @@
 <p>这里就是指纹加密的地方</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>需要注意的是浏览器指纹信息的构建，但总体来说不难</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JS逆向</category>
+      </categories>
+      <tags>
+        <tag>JS逆向</tag>
+      </tags>
   </entry>
 </search>
