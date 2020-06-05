@@ -834,4 +834,37 @@
         <tag>JS逆向</tag>
       </tags>
   </entry>
+  <entry>
+    <title>JS逆向学习-某某之星登陆</title>
+    <url>/2020/06/05/article-11/</url>
+    <content><![CDATA[<p>aHR0cHM6Ly9ob3RlbC5iZXN0d2Vob3RlbC5jb20vTmV3TG9naW4vP2dvPWh0dHBzJTNBJTJGJTJGaG90ZWwuYmVzdHdlaG90ZWwuY29tJTJG</p>
+<h3 id="分析请求"><a href="#分析请求" class="headerlink" title="分析请求"></a>分析请求</h3><p><img src="/2020/06/05/article-11/WX20200605-163518.png" alt></p>
+<p>需要解决的是这两个参数</p>
+<p>先来看 <strong><em>password</em></strong>， 通过全局搜索定位到如下位置</p>
+<p><img src="/2020/06/05/article-11/WX20200605-164302.png" alt></p>
+<p>追进去查看这个加密方法</p>
+<p><img src="/2020/06/05/article-11/WX20200605-164501.png" alt></p>
+<p>这里就是最终的aes加密方法</p>
+<p>接下来重点看 <strong><em>black_box</em></strong>，全局搜索一下</p>
+<p><img src="/2020/06/05/article-11/WX20200605-164713.png" alt></p>
+<p>发现是通过 <strong><em>_fmOpt.getinfo()</em></strong> 获取的，再来看下 <strong><em>_fmOpt</em></strong> 定义位置</p>
+<p><img src="/2020/06/05/article-11/WX20200605-165922.png" alt></p>
+<p>我们找到了定义的位置，但是发现这并不是我们需要的结果，接下来我们直接在控制台输出这个函数</p>
+<p><img src="/2020/06/05/article-11/WX20200605-170642.png" alt></p>
+<p>最后发现这段函数是在一个文件中定义的，然后通过 <strong><em>reres</em></strong> 工具替换这个文件并打上断点便于调试</p>
+<p><img src="/2020/06/05/article-11/WX20200605-171024.png" alt></p>
+<p><img src="/2020/06/05/article-11/WX20200605-171115.png" alt></p>
+<p>最后发现是对一个对象进行了base64操作，看下这个对象</p>
+<p><img src="/2020/06/05/article-11/WX20200605-171319.png" alt></p>
+<p>其中 <strong><em>it</em></strong> 是两个时间戳的差值，<strong><em>v</em></strong> 是版本信息，属于定值，<strong><em>t</em></strong>是浏览器信息</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>注意 <strong><em>eval</em></strong> 和混淆代码的处理及调试</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JS逆向</category>
+      </categories>
+      <tags>
+        <tag>JS逆向</tag>
+      </tags>
+  </entry>
 </search>
