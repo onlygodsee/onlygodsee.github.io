@@ -198,6 +198,100 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/04/28/article-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blog_head.png">
+      <meta itemprop="name" content="青桑">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="太液池">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/04/28/article-3/" class="post-title-link" itemprop="url">Python环境管理--pipenv</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-28 14:18:59" itemprop="dateCreated datePublished" datetime="2020-04-28T14:18:59+08:00">2020-04-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-01 15:35:21" itemprop="dateModified" datetime="2020-05-01T15:35:21+08:00">2020-05-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">环境管理</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="安装pipenv"><a href="#安装pipenv" class="headerlink" title="安装pipenv"></a>安装pipenv</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install pipenv</span><br></pre></td></tr></table></figure>
+
+<p>初始化</p>
+<p>安装到项目目录里</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PIPENV_VENV_IN_PROJECT=1</span><br></pre></td></tr></table></figure>
+
+<p>使用 Python 3.7.3</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pipenv --python $(pyenv root)/versions/3.7.3/bin/python</span><br></pre></td></tr></table></figure>
+
+<p>设置源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PIPENV_PYPI_MIRROR=http://mirrors.aliyun.com/pypi/simple</span><br><span class="line">或</span><br><span class="line">pipenv install --pypi-mirror http://mirrors.aliyun.com/pypi/simple</span><br></pre></td></tr></table></figure>
+
+<h2 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip uninstall pipenv</span><br></pre></td></tr></table></figure>
+
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><h3 id="pipenv-可以触发-pyenv-安装-Python-版本"><a href="#pipenv-可以触发-pyenv-安装-Python-版本" class="headerlink" title="pipenv 可以触发 pyenv 安装 Python 版本"></a>pipenv 可以触发 pyenv 安装 Python 版本</h3><p>.python-version</p>
+<h3 id="pipenv-可以打开依赖的包"><a href="#pipenv-可以打开依赖的包" class="headerlink" title="pipenv 可以打开依赖的包"></a>pipenv 可以打开依赖的包</h3><p>export EDITOR=subl # 设置 pipenv open 的 默认编辑器<br>pipenv open fabric</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>删除在 /usr/local/bin/pipenv 目录的pipenv<br>建议用 pip3 安装 pipenv</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/04/28/article-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -623,7 +717,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
