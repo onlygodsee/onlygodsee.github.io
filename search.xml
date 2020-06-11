@@ -938,4 +938,28 @@
         <tag>JS逆向</tag>
       </tags>
   </entry>
+  <entry>
+    <title>JS逆向学习-某游戏网站登陆</title>
+    <url>/2020/06/11/article-14/</url>
+    <content><![CDATA[<p>aHR0cDovLzk5NzE4aC5jb20vY24vcmVnaXN0ZXI=</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2020/06/11/article-14/WX20200611-181630.png" alt></p>
+<p>登陆时对密码进行了加密处理，打一个xhr断点，定位到了这里</p>
+<p><img src="/2020/06/11/article-14/WX20200611-181835.png" alt></p>
+<p>跟进 <strong><em>cryptStr</em></strong> 这个函数查看</p>
+<p><img src="/2020/06/11/article-14/WX20200611-182047.png" alt></p>
+<p>这里的处理是在DOM中增加了一个button，触发click后再将其删掉，通过事件监听发现了加密代码</p>
+<p><img src="/2020/06/11/article-14/WX20200611-182300.png" alt></p>
+<p><img src="/2020/06/11/article-14/WX20200611-182430.png" alt></p>
+<p><img src="/2020/06/11/article-14/WX20200611-182544.png" alt></p>
+<p>到这里就已经明确加密流程了，最外层是一个 <strong><em>AES</em></strong> 加密模式使用 <strong><em>ECB</em></strong> ，加密的 <strong><em>key</em></strong> 是 <strong><em>cookie</em></strong> 中的 <strong><em>web</em></strong> 和 <strong><em>randomYes</em></strong> 字符串拼接后使用 <strong><em>sdc</em></strong> 函数处理后的结果，经分析其实就是个 <strong><em>MD5</em></strong> 操作，最后将 <strong><em>AES</em></strong> 和结果和 <strong><em>randomYes</em></strong> 拼接返回。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>yysy很简单，值得注意的点是dom的事件监听。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>JS逆向</category>
+      </categories>
+      <tags>
+        <tag>JS逆向</tag>
+      </tags>
+  </entry>
 </search>
