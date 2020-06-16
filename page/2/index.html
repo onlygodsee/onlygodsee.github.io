@@ -198,6 +198,479 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/05/19/article-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blog_head.png">
+      <meta itemprop="name" content="青桑">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="太液池">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/05/19/article-7/" class="post-title-link" itemprop="url">MySQL基本操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-19 14:18:10" itemprop="dateCreated datePublished" datetime="2020-05-19T14:18:10+08:00">2020-05-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-05-22 17:44:51" itemprop="dateModified" datetime="2020-05-22T17:44:51+08:00">2020-05-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">数据库</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>version：8.0.17</p>
+<h2 id="常用基础命令"><a href="#常用基础命令" class="headerlink" title="常用基础命令"></a>常用基础命令</h2><h3 id="使用帮助"><a href="#使用帮助" class="headerlink" title="使用帮助"></a>使用帮助</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">help create</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Many <span class="built_in">help</span> items <span class="keyword">for</span> your request exist.</span><br><span class="line">To make a more specific request, please <span class="built_in">type</span> <span class="string">'help &lt;item&gt;'</span>,</span><br><span class="line"><span class="built_in">where</span> &lt;item&gt; is one of the following</span><br><span class="line">topics:</span><br><span class="line">   CREATE DATABASE</span><br><span class="line">   CREATE EVENT</span><br><span class="line">   CREATE FUNCTION</span><br><span class="line">   CREATE FUNCTION UDF</span><br><span class="line">   CREATE INDEX</span><br><span class="line">   CREATE LOGFILE GROUP</span><br><span class="line">   CREATE PROCEDURE</span><br><span class="line">   CREATE RESOURCE GROUP</span><br><span class="line">   CREATE ROLE</span><br><span class="line">   CREATE SCHEMA</span><br><span class="line">   CREATE SERVER</span><br><span class="line">   CREATE SPATIAL REFERENCE SYSTEM</span><br><span class="line">   CREATE TABLE</span><br><span class="line">   CREATE TABLESPACE</span><br><span class="line">   CREATE TRIGGER</span><br><span class="line">   CREATE USER</span><br><span class="line">   CREATE VIEW</span><br><span class="line">   SHOW</span><br><span class="line">   SHOW CREATE DATABASE</span><br><span class="line">   SHOW CREATE EVENT</span><br><span class="line">   SHOW CREATE FUNCTION</span><br><span class="line">   SHOW CREATE PROCEDURE</span><br><span class="line">   SHOW CREATE SCHEMA</span><br><span class="line">   SHOW CREATE TABLE</span><br><span class="line">   SHOW CREATE USER</span><br><span class="line">   SPATIAL INDEXES</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="创建、删除、查看数据库"><a href="#创建、删除、查看数据库" class="headerlink" title="创建、删除、查看数据库"></a><strong>创建、删除、查看数据库</strong></h3><h4 id="创建默认字符集的数据库（默认是拉丁字符集）"><a href="#创建默认字符集的数据库（默认是拉丁字符集）" class="headerlink" title="创建默认字符集的数据库（默认是拉丁字符集）"></a>创建默认字符集的数据库（默认是拉丁字符集）</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database test_data;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show databases like &quot;test%&quot;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="创建gbk字符集的数据库"><a href="#创建gbk字符集的数据库" class="headerlink" title="创建gbk字符集的数据库"></a><strong>创建gbk字符集的数据库</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create database test_gbk DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看创建数据库的语句"><a href="#查看创建数据库的语句" class="headerlink" title="查看创建数据库的语句"></a>查看创建数据库的语句</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show create database test_gbk;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop database test_data;</span><br></pre></td></tr></table></figure>
+
+<h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3><h4 id="进入指定数据库操作"><a href="#进入指定数据库操作" class="headerlink" title="进入指定数据库操作"></a>进入指定数据库操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use test_gbk;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看当前连接的数据库"><a href="#查看当前连接的数据库" class="headerlink" title="查看当前连接的数据库"></a><strong>查看当前连接的数据库</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select database();</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看当前连接数据库的用户"><a href="#查看当前连接数据库的用户" class="headerlink" title="查看当前连接数据库的用户"></a><strong>查看当前连接数据库的用户</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select user();</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user if not exists &#39;testuser&#39;@&#39;localhost&#39; identified by &#39;123456&#39;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user if not exists &#39;company_read_only&#39;@&#39;localhost&#39; identified with mysql_native_password by &#39;company_pass&#39; with max_queries_per_hour 500 max_updates_per_hour 100;</span><br></pre></td></tr></table></figure>
+
+<p>上述声明将为用户创建以下内容:</p>
+<ul>
+<li>用户名 : company read only</li>
+<li>仅从localhost访问</li>
+<li>可以限制对 IP范围的访问，例如 10.148.%.%。 通过给出%，用户可以从任何主机访问</li>
+<li>密码：company_pass</li>
+<li>使用 mysql_native_password（默认）身份验证</li>
+<li>还可以指定任何可选的身份验证，例如 sha256_password、LDAP 或 Kerberos</li>
+<li>用户可以在一小时内执行的最大查询数为 500</li>
+<li>用户可以在一小时内执行的最大更新次数为 100次</li>
+</ul>
+<h3 id="授予和撤销用户的访问权限"><a href="#授予和撤销用户的访问权限" class="headerlink" title="授予和撤销用户的访问权限"></a>授予和撤销用户的访问权限</h3><p>你可以限制用户访问特定数据库或表，或限制特定操作，如 SELECT 、 INSERT 和UPDATE。 你需要拥有 GRANT 权限，才能为其他用户授予权限 。</p>
+<h4 id="授予权限"><a href="#授予权限" class="headerlink" title="授予权限"></a>授予权限</h4><ul>
+<li>将READ ONLY (SELECT)权限授予testuser用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant select on company.* to &#39;testuser&#39;@&#39;localhost&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>限制查询指定的表。 将testuser用户限制为仅能查询employees 表 </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant select on employees.employees to &#39;testuser&#39;@&#39;localhost&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将访问权限限制为仅能查询指定列。限制testuser用户仅能访问employees表的first_name列和last_name列</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant select(first_name, last_name) on employees.employees to &#39;testuser&#39;@&#39;localhost&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>扩展授权。可以通过执行新授权来扩展授权。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant select(salary) on employees.salaries to &#39;company_read_only&#39;@&#39;localhost&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建 SUPER 用户 。 需要一个管理员账户来管理该服务器 。 ALL 表示除 GRANT 权限之外的所有权限 。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create user &#39;super_admin&#39;@&#39;%&#39; identified with mysql_native_password by &#39;super@admin&#39;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant all on *.* to &#39;super_admin&#39;@&#39;%&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>授予 GRANT特权。 用户拥有 GRANT OPTION权限才能授予其他用户权限。 可以将 GRANT 特权扩展到 super_admin 超级用户</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant grant option on *.* to &#39;super_admin&#39;@&#39;%&#39;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="检查授权"><a href="#检查授权" class="headerlink" title="检查授权"></a><strong>检查授权</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show grants for &#39;super_admin&#39;@&#39;%&#39;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show grants for &#39;company_read_only&#39;@&#39;localhost&#39;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show grants for &#39;testuser&#39;@&#39;localhost&#39;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="撤销权限"><a href="#撤销权限" class="headerlink" title="撤销权限"></a>撤销权限</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">revoke insert,update,select,delete on test_gbk.* from &#39;testuser&#39;@&#39;localhost&#39;;</span><br><span class="line"></span><br><span class="line"># 回收后查看权限</span><br><span class="line">mysql&gt; show grants for &#39;testuser&#39;@&#39;localhost&#39;;</span><br><span class="line">+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">| Grants for testuser@localhost                                                                                                                                                                                |</span><br><span class="line">+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">| GRANT USAGE ON *.* TO &#96;testuser&#96;@&#96;localhost&#96;                                                                                                                                                                 |</span><br><span class="line">| GRANT CREATE, DROP, REFERENCES, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON &#96;test_gbk&#96;.* TO &#96;testuser&#96;@&#96;localhost&#96; |</span><br><span class="line">+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<p>撤销 company_read_only 用户对薪水列的访问权限</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">revoke select(salary) on employees.salaries from &#39;company_read_only&#39;@&#39;localhost&#39;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-mysql-user-表"><a href="#修改-mysql-user-表" class="headerlink" title="修改 mysql.user 表"></a>修改 mysql.user 表</h4><p>所有用户信息及权限都存储在 mysql.user表中 。如果你有权访问 mysql.user表， 则可以直接通过修改 mysql.user 表来创建用户并授予权限 。</p>
+<p>如果你使用 GRANT 、 REVOKE 、 SET PASSWORD 或 RENAME USER 等账户管理语句间 接修改授权表， 则 服务器会通知这些更改，并立即再次将授权表加载到内存中 。</p>
+<p>如果使用 INSERT、 UPDATE 或 DELETE 等语句直接修改授权表，则更改不会影响权限检查，除非你重新启动服务器或指示其重新加载表 。 如果直接更改授权表，但忘记了重新加载表，那么在重新启动服务器之前，这些更改无效 。</p>
+<p>可以通过执行 FLUSH PRIVILEGES 语句来完成 GRANT 表的重新加载 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update mysql.user set host&#x3D;&#39;localhost&#39; where user&#x3D;&#39;super_admin&#39;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<h4 id="锁定用户"><a href="#锁定用户" class="headerlink" title="锁定用户"></a>锁定用户</h4><p>MySQL支持使用 CREATE USER或 ALTER USER 锁定用户</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter user &#39;company_read_only&#39;@&#39;localhost&#39; account lock;</span><br></pre></td></tr></table></figure>
+
+<p>解锁</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter user &#39;company_read_only&#39;@&#39;localhost&#39; account unlock;</span><br></pre></td></tr></table></figure>
+
+<h4 id="为用户创建角色"><a href="#为用户创建角色" class="headerlink" title="为用户创建角色"></a>为用户创建角色</h4><p>MySQL 的角色是一个权限的集合。 与用户账户一样，角色的权限可以被授予和撤销。 用户账户被授予角色后， 该角色就会将其拥有的权限授予该账户 。 之前，我们为不同的用 户创建了读取 、写入和管理权限。对于写入权限，我们已授予用户 INSERT、 DELETE 和 UPDATE 权限 。 现在你可以将这些权限授予某个角色， 然后为用户分配该角色。通过这种方式，可以避免为许多用户账户单独授予权限的麻烦。</p>
+<ul>
+<li>创建角色</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create role &#39;app_read_only&#39;, &#39;app_writes&#39;, &#39;app_developer&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 GRANT 语句为角色分自己权限</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant select on employees.* to &#39;app_read_only&#39;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant insert, update, delete on employees.* to &#39;app_writes&#39;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grant all on employees.* to &#39;app_developer&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建用户。如果你不指定主机，则将采用 %(任意主机):</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create user emp_read_only identified by &#39;123&#39;;</span><br><span class="line">create user emp_write identified by &#39;123&#39;;</span><br><span class="line">create user emp_develpoer identified by &#39;123&#39;;</span><br><span class="line">create user emp_read_write identified by &#39;123&#39;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 GRANT 语句为用户分配角色 。你可以为用户分配多个角色 。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">grant &#39;app_read_only&#39; to emp_read_only;</span><br><span class="line">grant &#39;app_writes&#39; to emp_write;</span><br><span class="line">grant &#39;app_developer&#39; to emp_develpoer;</span><br><span class="line">grant &#39;app_read_only&#39;, &#39;app_writes&#39; to emp_read_write;</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建、删除表"><a href="#创建、删除表" class="headerlink" title="创建、删除表"></a>创建、删除表</h3><p>在表中定义列时，应该指定列的名称、数据类型(整型、浮点型、字符串等)和默认 值(如果有的话) 。 MySQL 支持各种数据类型。更多有关信息请参阅MySQL文档(<a href="https://dev.mysql.com/doc/refman/8.0/en/spatial-extensions.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/8.0/en/spatial-extensions.html</a> )。下面是所有数据类型的概述，其中 JSON 数据类型是一个新的扩展类型  。</p>
+<ol>
+<li><p>数字 : TINYINT 、 SMALLINT 、 MEDIUMINT 、 INT 、 BIGINT 和 BIT。</p>
+</li>
+<li><p>浮点数 : DECIMAL、 FLOAT 和 DOUBLE。</p>
+</li>
+<li><p>字符串: CHAR、 VARCHAR、 BINARY、 VARBINARY、 BLOB、 TEXT、 ENUM 和 SET。</p>
+</li>
+<li><p>Spatial 数据类型，更多详细信息请参阅 <a href="https://dev.mysql.com/doc/refman/8.0/en/spatial-extensions.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/8.0/en/spatial-extensions.html</a> 。</p>
+</li>
+<li><p>JSON 数据类型，将在后面单独讨论。</p>
+</li>
+</ol>
+<p>你可以在一个数据库中创建多张表 。</p>
+<h4 id="建表，并且建立两个字段"><a href="#建表，并且建立两个字段" class="headerlink" title="建表，并且建立两个字段"></a><strong>建表，并且建立两个字段</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table test(</span><br><span class="line">       id int(4) not null,</span><br><span class="line">       name char(20) not null</span><br><span class="line">       );</span><br></pre></td></tr></table></figure>
+
+<h4 id="另一种方式"><a href="#另一种方式" class="headerlink" title="另一种方式"></a>另一种方式</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table if not exists test_gbk.customers(</span><br><span class="line">       id int unsigned AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">       first_name varchar(20),</span><br><span class="line">       last_name varchar(20),</span><br><span class="line">       country varchar(20)</span><br><span class="line">       ) engine&#x3D;InnoDB;</span><br></pre></td></tr></table></figure>
+
+<p>其中的选项解释如下 。</p>
+<p>• 句点符号: 表可以使用 database.table 引用。 如果已经连接到数据库， 则可 以简单地使用 customers 而不是 company . customers。</p>
+<p>• IF NOT EXISTS :如果存在一个具有相同名字的表 ， 并且你指定了这个子句， MySQL 只会抛出一个警告，告知表已经存在 。 否则 ， MySQL 将抛出 一个错误 。</p>
+<p>• id:它被声明为一个整型数，因为它只包含整型数。除此之外，还有两个关键字， AUTO_INCREMENT 和 PRIMARY KEY 。</p>
+<p>• AUTO INCREMENT: 自动生成线性递增序列，因此不必担心为每一行的 id分配 值。</p>
+<p>• PRIMARY KEY: 每行都Fl’!一个非空的UNIQUE列标识。 只有一列应该在表中定 义。 如果一个表包含 AUTO INCREMENT列， 则它会被视为 PRIMARY KEY。</p>
+<p>• first_name、 last_name 和country: 它们包含字符串 ， 因此它们被定义为 varchar 。</p>
+<p>• Engine:与列定义一起，还应该指定存储引擎。一些类型的存储引擎包括 InnoDB、 MyISAM、FEDERATED、BLACKHOLE、CSV和MEMORY。在所有引擎中， InnoDB 是唯一的事务引擎， 也是默认引擎。</p>
+<h4 id="查看表"><a href="#查看表" class="headerlink" title="查看表"></a>查看表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show tables;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看表结构"><a href="#查看表结构" class="headerlink" title="查看表结构"></a><strong>查看表结构</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">desc test;</span><br></pre></td></tr></table></figure>
+
+<h4 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a><strong>删除表</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">drop table test;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看建表"><a href="#查看建表" class="headerlink" title="查看建表"></a><strong>查看建表</strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show create table test1\G</span><br></pre></td></tr></table></figure>
+
+<h4 id="克隆表结构"><a href="#克隆表结构" class="headerlink" title="克隆表结构"></a>克隆表结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table new_customers like customers;</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入、更新和删除行"><a href="#插入、更新和删除行" class="headerlink" title="插入、更新和删除行"></a>插入、更新和删除行</h3><h4 id="INSERT-语句用于在表中创建新记录"><a href="#INSERT-语句用于在表中创建新记录" class="headerlink" title="INSERT 语句用于在表中创建新记录"></a>INSERT 语句用于在表中创建新记录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert ignore into customers</span><br><span class="line">       (first_name, last_name, country)</span><br><span class="line">       values</span><br><span class="line">       (&#39;Mike&#39;, &#39;Galler&#39;, &#39;USA&#39;),</span><br><span class="line">       (&#39;Andy&#39;, &#39;Hollands&#39;, &#39;Australia&#39;),</span><br><span class="line">       (&#39;Ravi&#39;, &#39;Vadantam&#39;, &#39;India&#39;),</span><br><span class="line">       (&#39;Rajiv&#39;, &#39;Perera&#39;, &#39;Sri Lanka&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>或者可以明确地写出 id列，如果你想插入特定的 id:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert ignore into customers</span><br><span class="line">       (id, first_name, last_name, country)</span><br><span class="line">       values</span><br><span class="line">       (1, &#39;Mike&#39;, &#39;Galler&#39;, &#39;USA&#39;),</span><br><span class="line">       (2, &#39;Andy&#39;, &#39;Hollands&#39;, &#39;Australia&#39;),</span><br><span class="line">       (3, &#39;Ravi&#39;, &#39;Vadantam&#39;, &#39;India&#39;),</span><br><span class="line">       (4, &#39;Rajiv&#39;, &#39;Perera&#39;, &#39;Sri Lanka&#39;);</span><br></pre></td></tr></table></figure>
+
+<p>IGNORE:如果该行已经存在，并给出了 IGNORE子句，则新数据将被忽略， INSERT 语句仍然会执行成功，同时生成一个警告和重复数据的数目。 反之，如果未给出 IGNORE 子句，则 INSERT 语句会生成一条错误信息 。 行的唯一性由主键标识。</p>
+<h4 id="UPDATE-语句用于修改表中的现有记录"><a href="#UPDATE-语句用于修改表中的现有记录" class="headerlink" title="UPDATE 语句用于修改表中的现有记录"></a>UPDATE 语句用于修改表中的现有记录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update customer set first_name&#x3D;&#39;Rajiv&#39;, country&#x3D;&#39;UK&#39; where id&#x3D;4;</span><br></pre></td></tr></table></figure>
+
+<p>WHERE : 这是用于过滤的子句 。 在 WHERE 子句后指定的任何条件都会用于过滤，被筛选出来的行都会被更新 。</p>
+<h4 id="DELETE-语句用于删除表中记录"><a href="#DELETE-语句用于删除表中记录" class="headerlink" title="DELETE 语句用于删除表中记录"></a>DELETE 语句用于删除表中记录</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from customers where id&#x3D;5 and first_name&#x3D;&#39;Mike&#39;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="REPLACE-、INSERT-、ON-DUPLICATE-KEY-UPDATE"><a href="#REPLACE-、INSERT-、ON-DUPLICATE-KEY-UPDATE" class="headerlink" title="REPLACE 、INSERT 、ON DUPLICATE KEY UPDATE"></a>REPLACE 、INSERT 、ON DUPLICATE KEY UPDATE</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">replace into customers values (1, &#39;Mike&#39;, &#39;Galler&#39;, &#39;America&#39;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into payments values (&#39;Mike Galler&#39;, 200) on duplicate key update payment&#x3D;payment+values(payment);</span><br></pre></td></tr></table></figure>
+
+<p>在很多情况下，我们需要处理重复项 。行的唯一性由主键标识 。如果行已经存在，则 REPLACE 会简单地删除行并插入新行;如果行不存在，则 REPLACE 等同于 INSERT。</p>
+<p>如果你想在行已经存在的情况下处理重复项，则需要使用 ON DUPLICATE KEY UPDATE。 如果指定了 ON DUPLICATE KEY UPDATE 选项，并且 INSERT 语句在 PRIMARY KEY中引发了重复值， 则MySQL会用新值更新已有行。</p>
+<p>区别：</p>
+<p>（1）在没有主键或者唯一索引重复时，replace与insert .. on deplicate udpate相同。</p>
+<p>（2）在主键或者唯一索引重复时，<strong>replace是delete老记录，而录入新的记录，所以原有的所有记录会被清除，这个时候，如果replace语句的字段不全的话，有些原有的比如c字段的值会被自动填充为默认值。</strong>而insert .. duplicate update则只执行update标记之后的sql，从表象上来看相当于一个简单的update语句。它保留了所有字段的旧值，只更新update后面的语句，而replace没有保留旧值，直接删除再insert新值。<br>从底层执行效率上来讲，replace要比insert .. on duplicate update效率要高，但是在写replace的时候，字段要写全，防止老的字段数据被删除。</p>
+<h4 id="TRUNCATING-TABLE"><a href="#TRUNCATING-TABLE" class="headerlink" title="TRUNCATING TABLE"></a>TRUNCATING TABLE</h4><p>删除整个表需要很长时间，因为 MySQL 需要逐行执行操作。 删除表的所有行(保留 表结构)的最快方法是使用TRUNCATE TABLE语句。</p>
+<p>TRUNCATING TABLE 是 MySQL 中的 DDL 操作，也就是说一旦数据被清空 ，就不能被回滚。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">truncate table test1;</span><br></pre></td></tr></table></figure>
+
+<h3 id="加载示例数据"><a href="#加载示例数据" class="headerlink" title="加载示例数据"></a>加载示例数据</h3><h4 id="下载压缩文件"><a href="#下载压缩文件" class="headerlink" title="下载压缩文件"></a>下载压缩文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="string">'https://codeload.github.com/datacharmer/test_db/zip/master'</span> -O master.zip</span><br></pre></td></tr></table></figure>
+
+<h4 id="解斥缩文件"><a href="#解斥缩文件" class="headerlink" title="解斥缩文件"></a>解斥缩文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unzip master.zip</span><br></pre></td></tr></table></figure>
+
+<h4 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> test_db-master</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p &lt; employees.sql</span><br></pre></td></tr></table></figure>
+
+<h4 id="验证数据"><a href="#验证数据" class="headerlink" title="验证数据"></a>验证数据</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p employees -A</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show tables;</span><br><span class="line">+----------------------+</span><br><span class="line">| Tables_in_employees  |</span><br><span class="line">+----------------------+</span><br><span class="line">| current_dept_emp     |</span><br><span class="line">| departments          |</span><br><span class="line">| dept_emp             |</span><br><span class="line">| dept_emp_latest_date |</span><br><span class="line">| dept_manager         |</span><br><span class="line">| employees            |</span><br><span class="line">| salaries             |</span><br><span class="line">| titles               |</span><br><span class="line">+----------------------+</span><br><span class="line">8 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; desc employees\G</span><br><span class="line">*************************** 1. row ***************************</span><br><span class="line">  Field: emp_no</span><br><span class="line">   Type: int(11)</span><br><span class="line">   Null: NO</span><br><span class="line">    Key: PRI</span><br><span class="line">Default: NULL</span><br><span class="line">  Extra:</span><br><span class="line">*************************** 2. row ***************************</span><br><span class="line">  Field: birth_date</span><br><span class="line">   Type: date</span><br><span class="line">   Null: NO</span><br><span class="line">    Key:</span><br><span class="line">Default: NULL</span><br><span class="line">  Extra:</span><br><span class="line">*************************** 3. row ***************************</span><br><span class="line">  Field: first_name</span><br><span class="line">   Type: varchar(14)</span><br><span class="line">   Null: NO</span><br><span class="line">    Key:</span><br><span class="line">Default: NULL</span><br><span class="line">  Extra:</span><br><span class="line">*************************** 4. row ***************************</span><br><span class="line">  Field: last_name</span><br><span class="line">   Type: varchar(16)</span><br><span class="line">   Null: NO</span><br><span class="line">    Key:</span><br><span class="line">Default: NULL</span><br><span class="line">  Extra:</span><br><span class="line">*************************** 5. row ***************************</span><br><span class="line">  Field: gender</span><br><span class="line">   Type: enum(&#39;M&#39;,&#39;F&#39;)</span><br><span class="line">   Null: NO</span><br><span class="line">    Key:</span><br><span class="line">Default: NULL</span><br><span class="line">  Extra:</span><br><span class="line">*************************** 6. row ***************************</span><br><span class="line">  Field: hire_date</span><br><span class="line">   Type: date</span><br><span class="line">   Null: NO</span><br><span class="line">    Key:</span><br><span class="line">Default: NULL</span><br><span class="line">  Extra:</span><br><span class="line">6 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h3><h4 id="查询所有列"><a href="#查询所有列" class="headerlink" title="查询所有列"></a>查询所有列</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from departments;</span><br></pre></td></tr></table></figure>
+
+<h4 id="选择列"><a href="#选择列" class="headerlink" title="选择列"></a>选择列</h4><p>选择 dept_manager 的 emp_no 和 dept_no 列：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select emp_no,dept_no from dept_manager;</span><br></pre></td></tr></table></figure>
+
+<h4 id="计数"><a href="#计数" class="headerlink" title="计数"></a>计数</h4><p>从 employees表中查找员工的数量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees;</span><br></pre></td></tr></table></figure>
+
+<h4 id="条件过滤"><a href="#条件过滤" class="headerlink" title="条件过滤"></a>条件过滤</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select emp_no from employees where first_name&#x3D;&#39;Georgi&#39; and last_name&#x3D;&#39;Facello&#39;;</span><br></pre></td></tr></table></figure>
+
+<h4 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h4><ul>
+<li><p>IN: 检查一个值是存在一组值中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where last_name in (&#39;Christ&#39;, &#39;Lamba&#39;, &#39;Baba&#39;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>BETWEEN …AND:检查一个值是否在一个范围内</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where hire_date between &#39;1986-12-01&#39; and &#39;1986-12-31&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>NOT 你可以简单地用 NOT 运算符来否定结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where hire_date not between &#39;1986-12-01&#39; and &#39;1986-12-31&#39;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="简单模式匹配"><a href="#简单模式匹配" class="headerlink" title="简单模式匹配"></a>简单模式匹配</h4><p>可以使用 LIKE 运算符来实现简单模式匹配。 使用下画线( _ )来精准匹配一个字符，使用( % ) 来匹配任意数量的字符 。</p>
+<ul>
+<li><p>找出名字以 Christ开头的所有员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where first_name like &#39;christ%&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找出名字以 Christ开头并以 ed结尾的所有员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where first_name like &#39;christ%ed&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找出名字中包含 sri的所有员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where first_name like &#39;%sri%&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找到名字以 er 结尾的所有员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where first_name like &#39;%er&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找出名字以任意两个字符开头、后面跟随 ka、再后面跟随任意数量字符的所有员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where first_name like &#39;__ka%&#39;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p>你可以利用 RLIKE 或 REGEXP 运算符在 WHERE 子句中使用正则表达式</p>
+<ul>
+<li><p>找出名字以 Christ开头的所有员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where first_name rlike &#39;^christ&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>找出姓氏以 ba结尾的所有员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where last_name regexp &#39;ba$&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找姓氏不包含元音 (a、 e、 i、 o和u)的所有员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from employees where last_name not regexp &#39;[aeiou]&#39;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="限定结果"><a href="#限定结果" class="headerlink" title="限定结果"></a>限定结果</h4><p>查询hire date在1986年之前的任何10名员工的姓名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select first_name, last_name from employees where hire_date &lt; &#39;1986-01-01&#39; limit 10;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用表别名"><a href="#使用表别名" class="headerlink" title="使用表别名"></a>使用表别名</h4><p>使用自别名来更改 COUNT (*)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select count(*) as count from employees where hire_date between &#39;1986-12-01&#39; and &#39;1986-12-31&#39;;</span><br><span class="line">+-------+</span><br><span class="line">| count |</span><br><span class="line">+-------+</span><br><span class="line">|  3081 |</span><br><span class="line">+-------+</span><br><span class="line">1 row in set (0.09 sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="对结果排序"><a href="#对结果排序" class="headerlink" title="对结果排序"></a>对结果排序</h3><p>查找薪水最高的前 5名员工的员工编号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select emp_no, salary from salaries order by salary desc limit 5;</span><br></pre></td></tr></table></figure>
+
+<p>你可以在 SELECT 语句中提及列的位置，而不是指定列名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select emp_no, salary from salaries order by 2 desc limit 5;</span><br></pre></td></tr></table></figure>
+
+<h3 id="对结果分组-聚合函数"><a href="#对结果分组-聚合函数" class="headerlink" title="对结果分组(聚合函数)"></a>对结果分组(聚合函数)</h3><h4 id="COUNT"><a href="#COUNT" class="headerlink" title="COUNT"></a>COUNT</h4><ul>
+<li><p>分别找出男性和女性员工的人数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select gender, count(*) as count from employees group by gender;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果你希望查找员工名字中最常见的10个名字，可以使用 GROUP BY first_name 对所有名字分组，然后使用COUNT(first_name)在各组内计数，最后使用ORDER BY计数对结果进行排序 并将返回结果行数限制为前 10行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select first_name,count(first_name) as count from employees group by first_name order by count desc limit 10;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="SUM"><a href="#SUM" class="headerlink" title="SUM"></a>SUM</h4><p>查找每年给予员工的薪水总额并按薪水高低对结果进行排序。 YEAR ()函数将返回给定日期所在的年份</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select year(from_date) as date, sum(salary) as sum from salaries group by date order by sum desc;</span><br></pre></td></tr></table></figure>
+
+<h4 id="AVERAGE"><a href="#AVERAGE" class="headerlink" title="AVERAGE"></a>AVERAGE</h4><p>查找平均工资最高的10名员工</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select emp_no, avg(salary) as avg from salaries group by emp_no order by avg desc limit 10;</span><br></pre></td></tr></table></figure>
+
+<h4 id="DISTINCT"><a href="#DISTINCT" class="headerlink" title="DISTINCT"></a>DISTINCT</h4><p>可以使用 DISTINCT 子句过滤出表中的不同条目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct title from titles;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-HAVING-过滤"><a href="#使用-HAVING-过滤" class="headerlink" title="使用 HAVING 过滤"></a>使用 HAVING 过滤</h4><p>可以通过添加HAVING子句来过滤GROUP BY子句的结果。 例如，找到平均工资超过 140,000美元的员工</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select emp_no,avg(salary) as avg from salaries group by emp_no having avg &gt; 140000 order by avg desc;</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询数据并保存到文件和表中"><a href="#查询数据并保存到文件和表中" class="headerlink" title="查询数据并保存到文件和表中"></a>查询数据并保存到文件和表中</h3><p>我们可以使用 SELECT INTO OUTFILE 语句将输出保存到文件中。</p>
+<p>可以指定列和行分隔符，然后可以将数据导入其他数据平台 。</p>
+<h4 id="另存为文件"><a href="#另存为文件" class="headerlink" title="另存为文件"></a>另存为文件</h4><ul>
+<li>要将输出结果保存到文件中，你需要拥有 FILE权限</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create user user_to_file identified by &#39;123&#39;;</span><br><span class="line">grant select on employees.* to user_to_file;</span><br><span class="line">grant file on *.* to user_to_file;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在Ubuntu系统中， 默认情况下， MySQL不允许写人文件。 你应该在配置文件中 设置secure_file_priv并重新启动MySQL，配置方法如下</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 my.cnf配置文件中添加如下信息 /usr/local/mysql/support-files/my.cnf</span></span><br><span class="line">[mysqld]</span><br><span class="line">secure-file-priv=<span class="string">"/tmp"</span></span><br></pre></td></tr></table></figure>
+
+<p>​        如果没有配置文件 my.cnf 需手动创建</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/my.cnf</span><br></pre></td></tr></table></figure>
+
+<p>​        然后在文件中太监如下信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[client]</span><br><span class="line">default-character-set=utf8</span><br><span class="line">[mysqld]</span><br><span class="line">character-set-server=utf8</span><br><span class="line"></span><br><span class="line"><span class="comment">#sql_mode='NO_AUTO_VALUE_ON_ZERO,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,PIPES_AS_CONCAT,ANSI_QUOTES'</span></span><br><span class="line"></span><br><span class="line">sql_mode=<span class="string">'STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'</span></span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8</span><br></pre></td></tr></table></figure>
+
+<p>​        最后重启mysql服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo /usr/<span class="built_in">local</span>/mysql/support-files/mysql.server restart</span><br></pre></td></tr></table></figure>
+
+<p>​        进入mysql查看配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like &#39;%secure%&#39;;</span><br><span class="line">+--------------------------+---------------+</span><br><span class="line">| Variable_name            | Value         |</span><br><span class="line">+--------------------------+---------------+</span><br><span class="line">| require_secure_transport | OFF           |</span><br><span class="line">| secure_file_priv         | &#x2F;private&#x2F;tmp&#x2F; |</span><br><span class="line">+--------------------------+---------------+</span><br><span class="line">2 rows in set (0.01 sec)</span><br></pre></td></tr></table></figure>
+
+<p>以下语句会将输出结果保存为 csv 格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select first_name, last_name into outfile &#39;&#x2F;tmp&#x2F;result.csv&#39; fields terminated by &#39;,&#39; optionally enclosed by &#39;&quot;&#39; lines terminated by  &#39;\n&#39; from employees where hire_date&lt;&#39;1986-01-01&#39; limit 10;</span><br></pre></td></tr></table></figure>
+
+<h4 id="另存为表"><a href="#另存为表" class="headerlink" title="另存为表"></a>另存为表</h4><p>我们也可以将 SELECT 语句的结果保存到表中 。 即使表不存在， 也可以使用 CREATE 和 SELECT 来创建表并加载数据 。 如果表己存在，则可以使用 INSERT 和 SELECT 加载数据。</p>
+<p>可以将标题保存到新的 titles_only 表中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table titles_only as select distinct title from titles;</span><br></pre></td></tr></table></figure>
+
+<p>如果表已经存在，则可以使用 INSERT INTO SELECT 语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into select distinct title from titles;</span><br></pre></td></tr></table></figure>
+
+<h3 id="将数据加载到表中"><a href="#将数据加载到表中" class="headerlink" title="将数据加载到表中"></a>将数据加载到表中</h3><p>创建一个表来保存数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table emplyee_names (</span><br><span class="line">       first_name varchar(14) not null,</span><br><span class="line">       last_name varchar(16) not null</span><br><span class="line">       ) engine&#x3D;innodb;</span><br></pre></td></tr></table></figure>
+
+<p>确保文件存在</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ls -lhtr /tmp/result.csv</span><br></pre></td></tr></table></figure>
+
+<p>使用 LOAD DATA INFILE 语句加载数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; load data infile &#39;&#x2F;tmp&#x2F;result.csv&#39; into table emplyee_names</span><br><span class="line">       fields terminated by &#39;,&#39;</span><br><span class="line">       optionally enclosed by &#39;&quot;&#39;</span><br><span class="line">       lines terminated by &#39;\n&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>该文件可以以完整路径名的形式给出，以指定其确切位置 。 如果以相对路径名的形式给出，则相对路径名将被解析为相对于客户机程序启动的目录 。</p>
+<ul>
+<li>如果文件开头包含一些你想忽略的行，可以用 IGNORE n Lines 指定</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; load data infile &#39;&#x2F;tmp&#x2F;result.csv&#39; into table emplyee_names</span><br><span class="line">       fields terminated by &#39;,&#39;</span><br><span class="line">       optionally enclosed by &#39;&quot;&#39;</span><br><span class="line">       lines terminated by &#39;\n&#39;</span><br><span class="line">       ignore 1 lines;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>可以用 REPLACE或者 IGNORE来处理重复的行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; load data infile &#39;&#x2F;tmp&#x2F;result.csv&#39; replace into table emplyee_names</span><br><span class="line">       fields terminated by &#39;,&#39;</span><br><span class="line">       optionally enclosed by &#39;&quot;&#39;</span><br><span class="line">       lines terminated by &#39;\n&#39;</span><br><span class="line">       ignore 1 lines;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; load data infile &#39;&#x2F;tmp&#x2F;result.csv&#39; ignore into table emplyee_names</span><br><span class="line">       fields terminated by &#39;,&#39;</span><br><span class="line">       optionally enclosed by &#39;&quot;&#39;</span><br><span class="line">       lines terminated by &#39;\n&#39;</span><br><span class="line">       ignore 1 lines;</span><br></pre></td></tr></table></figure>
+
+<h3 id="表关联"><a href="#表关联" class="headerlink" title="表关联"></a>表关联</h3><p>假设你想用 emp_no: 110022 找到员工的姓名和部门号码:</p>
+<ul>
+<li>部门编号和名称存储在 departments表中</li>
+<li>员工编号和其他详细信息(例如 first_name 和 last_name )存储在 employees 表中 </li>
+<li>员工和部门的映射关系存储在 dept_manager表中</li>
+</ul>
+<p>如果你不想使用 JOIN，可以这样做</p>
+<ol>
+<li><p>从 employee 表中查找 emp_no 为 110022 的员工姓名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select emp.emp_no, emp.first_name, emp.last_name from employees as emp where emp.emp_no&#x3D;110022;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从 dept_manager 表中查找部门编号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select dept_no from dept_manager where emp_no&#x3D;&#39;110022&#39;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>从 departments 表中查找部门名称</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select dept_name from departments dept where dept.dept_no&#x3D;&#39;d001&#39;;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h4 id="使用join操作"><a href="#使用join操作" class="headerlink" title="使用join操作"></a>使用join操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select emp.emp_no, emp.first_name, emp.last_name, dept.dept_name from employees emp</span><br><span class="line">       join dept_manager dept_mgr</span><br><span class="line">           on emp.emp_no&#x3D;dept_mgr.emp_no and emp.emp_no&#x3D;110022</span><br><span class="line">       join departments dept</span><br><span class="line">           on dept_mgr.dept_no&#x3D;dept.dept_no;</span><br></pre></td></tr></table></figure>
+
+<p>假设计、想了解每个部门的平均工资，你可以使用 AVG 函数并按照dept_no进行分组。要找出部门名称，可以将结果与departments 表通过dept_no 列进行关联</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">select dept_name, avg(salary) as avg_salary</span><br><span class="line">from</span><br><span class="line">    salaries</span><br><span class="line">join dept_emp</span><br><span class="line">    on salaries.emp_no&#x3D;dept_emp.emp_no</span><br><span class="line">join departments as dept</span><br><span class="line">    on dept_emp.dept_no&#x3D;dept.dept_no</span><br><span class="line">group by</span><br><span class="line">    dept_emp.dept_no</span><br><span class="line">order by </span><br><span class="line">	avg_salary </span><br><span class="line">desc</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="通过与自己关联来识别重复项"><a href="#通过与自己关联来识别重复项" class="headerlink" title="通过与自己关联来识别重复项"></a>通过与自己关联来识别重复项</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">select empl1.*</span><br><span class="line">from</span><br><span class="line">    employees as empl1</span><br><span class="line">join employees empl2</span><br><span class="line">    on empl1.first_name&#x3D;empl2.first_name</span><br><span class="line">    and empl1.last_name&#x3D;empl2.last_name</span><br><span class="line">    and empl1.gender&#x3D;empl2.gender</span><br><span class="line">    and empl1.hire_date&#x3D;empl2.hire_date</span><br><span class="line">    and empl1.emp_no!&#x3D;empl2.emp_no</span><br><span class="line">order by</span><br><span class="line">    first_name, last_name;</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用子查询"><a href="#使用子查询" class="headerlink" title="使用子查询"></a>使用子查询</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">    first_name, last_name</span><br><span class="line">from </span><br><span class="line">    employees</span><br><span class="line">where</span><br><span class="line">    emp_no</span><br><span class="line">in</span><br><span class="line">    (</span><br><span class="line">        select </span><br><span class="line">            emp_no </span><br><span class="line">        from </span><br><span class="line">            titles</span><br><span class="line">        where</span><br><span class="line">            title&#x3D;&quot;Senior Engineer&quot; and from_date&#x3D;&quot;1986-06-26&quot;</span><br><span class="line">    )</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<p>找到工资最高的员工</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">    emp_no</span><br><span class="line">from </span><br><span class="line">    salaries</span><br><span class="line">where </span><br><span class="line">    salary&#x3D;(</span><br><span class="line">        select </span><br><span class="line">            max(salary) </span><br><span class="line">        from </span><br><span class="line">            salaries</span><br><span class="line">    )</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<h4 id="查找表之间不匹配的行"><a href="#查找表之间不匹配的行" class="headerlink" title="查找表之间不匹配的行"></a>查找表之间不匹配的行</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table employees_list1 as select * from employees where first_name like &#39;aa%&#39;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table employees_list2 as select * from employees where emp_no between 400000 and 500000 and gender&#x3D;&#39;F&#39;;</span><br></pre></td></tr></table></figure>
+
+<p>我们已经知道如何找到两个列表中都存在的员工了 ，代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">    l1.*</span><br><span class="line">from </span><br><span class="line">    employees_list1 l1</span><br><span class="line">join employees_list2 l2</span><br><span class="line">    on l1.emp_no&#x3D;l2.emp_no</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<p>现在要找出存在于 employees_listl 但不存在于 employees_list2 中的员工</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select </span><br><span class="line">    *</span><br><span class="line">from </span><br><span class="line">    employees_list1 l1</span><br><span class="line">where </span><br><span class="line">    l1.emp_no </span><br><span class="line">not in </span><br><span class="line">    (</span><br><span class="line">        select</span><br><span class="line">            l2.emp_no</span><br><span class="line">        from </span><br><span class="line">            employees_list2 l2</span><br><span class="line">    )</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<p>或者也可以使用 OUTER JOIN</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">    l1.*</span><br><span class="line">from </span><br><span class="line">    employees_list1 l1</span><br><span class="line">left outer join employees_list2 l2</span><br><span class="line">    on l1.emp_no&#x3D;l2.emp_no</span><br><span class="line">where</span><br><span class="line">    l2.emp_no is null</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<p>outer join为第二个表中所有与第一个表中的行不匹配的行创建 NULL列。 如果使 用 RIGHT JOIN，则为第一个表中所有与第二个表中的行不匹配的行创建 NULL 列。</p>
+<p>你也可以使用 OUTER JOIN 来查找民自己的行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">select</span><br><span class="line">    l1.*</span><br><span class="line">from </span><br><span class="line">    employees_list1 l1</span><br><span class="line">left outer join employees_list2 l2</span><br><span class="line">    on l1.emp_no&#x3D;l2.emp_no</span><br><span class="line">where </span><br><span class="line">    l2.emp_no is not null</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/05/12/article-6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1024,7 +1497,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

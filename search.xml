@@ -1037,4 +1037,54 @@
         <tag>AST</tag>
       </tags>
   </entry>
+  <entry>
+    <title>认识path和node</title>
+    <url>/2020/06/16/article-17/</url>
+    <content><![CDATA[<h3 id="path-路径-常用操作"><a href="#path-路径-常用操作" class="headerlink" title="path(路径)常用操作"></a>path(路径)常用操作</h3><h4 id="获取当前路径所对应的源代码"><a href="#获取当前路径所对应的源代码" class="headerlink" title="获取当前路径所对应的源代码"></a>获取当前路径所对应的源代码</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 使用toString()</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">        VariableDeclaration(path) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(path.toString())</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="判断path是什么type"><a href="#判断path是什么type" class="headerlink" title="判断path是什么type"></a>判断path是什么type</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 使用 path.isXXX()</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">   VariableDeclarator(path)&#123;</span><br><span class="line">       <span class="built_in">console</span>.log(path.isVariableDeclarator())</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="获取path的上一级路径"><a href="#获取path的上一级路径" class="headerlink" title="获取path的上一级路径"></a>获取path的上一级路径</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> parent = path.parentPath;</span><br><span class="line"><span class="built_in">console</span>.log(parent.node)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="获取path的子路径"><a href="#获取path的子路径" class="headerlink" title="获取path的子路径"></a>获取path的子路径</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 使用 get()</span></span><br><span class="line">path.get(<span class="string">'id'</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="删除path"><a href="#删除path" class="headerlink" title="删除path"></a>删除path</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// remove()</span></span><br><span class="line">path.remove()</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="替换path"><a href="#替换path" class="headerlink" title="替换path"></a>替换path</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> t = <span class="built_in">require</span>(<span class="string">"@babel/types"</span>)</span><br><span class="line"><span class="comment">// 单路径可以使用replaceWith方法，多路径则使用replaceWithMultiple方法</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclarator(path)&#123;</span><br><span class="line">        <span class="comment">// 替换时注意路径结构</span></span><br><span class="line">        path.get(<span class="string">'init'</span>).replaceWith(t.NumericLiteral(<span class="number">996</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="path源码"><a href="#path源码" class="headerlink" title="path源码"></a>path源码</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">@babel\traverse\lib\path</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="node-节点-常用操作"><a href="#node-节点-常用操作" class="headerlink" title="node(节点)常用操作"></a>node(节点)常用操作</h3><h4 id="获取当前节点所对应的源代码"><a href="#获取当前节点所对应的源代码" class="headerlink" title="获取当前节点所对应的源代码"></a>获取当前节点所对应的源代码</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> generator = <span class="built_in">require</span>(<span class="string">"@babel/generator"</span>).default;</span><br><span class="line"><span class="keyword">let</span> &#123;code&#125; = generator(node);</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">delete</span> path.node.init</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="访问子节点"><a href="#访问子节点" class="headerlink" title="访问子节点"></a>访问子节点</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclarator(path)&#123;</span><br><span class="line">        <span class="comment">// 打印节点初始化的值</span></span><br><span class="line">        <span class="built_in">console</span>.log(path.node.init.value)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 与 JSON 之间转换</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(path.node))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ast = parser.parse(jscode);</span><br><span class="line">traverse(ast, vistor)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
 </search>
