@@ -1038,7 +1038,7 @@
       </tags>
   </entry>
   <entry>
-    <title>认识path和node</title>
+    <title>AST学习-认识path和node</title>
     <url>/2020/06/16/article-17/</url>
     <content><![CDATA[<h3 id="path-路径-常用操作"><a href="#path-路径-常用操作" class="headerlink" title="path(路径)常用操作"></a>path(路径)常用操作</h3><h4 id="获取当前路径所对应的源代码"><a href="#获取当前路径所对应的源代码" class="headerlink" title="获取当前路径所对应的源代码"></a>获取当前路径所对应的源代码</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 使用toString()</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">        VariableDeclaration(path) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(path.toString())</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -1077,6 +1077,42 @@
 
 
 <h4 id="访问子节点"><a href="#访问子节点" class="headerlink" title="访问子节点"></a>访问子节点</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclarator(path)&#123;</span><br><span class="line">        <span class="comment">// 打印节点初始化的值</span></span><br><span class="line">        <span class="built_in">console</span>.log(path.node.init.value)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 与 JSON 之间转换</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.stringify(path.node))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ast = parser.parse(jscode);</span><br><span class="line">traverse(ast, vistor)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AST学习-十六进制还原十进制</title>
+    <url>/2020/06/17/article-18/</url>
+    <content><![CDATA[<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">"\x48\x65\x6c\x6c\x6f\x2c\x4e\x69\x67\x68\x74\x54\x65\x61\x6d\x21"</span>;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="AST-TREE分析"><a href="#AST-TREE分析" class="headerlink" title="AST-TREE分析"></a>AST-TREE分析</h4><p><img src="/2020/06/17/article-18/WX20200617-115051.png" alt></p>
+<p>由上图可知影响结果的节点是 <strong><em>extra.raw</em></strong> ，接下来对这个节点进行操作</p>
+<h4 id="方式一：遍历VariableDeclarator下init节点，符合条件后将extra-raw重新赋值。"><a href="#方式一：遍历VariableDeclarator下init节点，符合条件后将extra-raw重新赋值。" class="headerlink" title="方式一：遍历VariableDeclarator下init节点，符合条件后将extra.raw重新赋值。"></a>方式一：遍历VariableDeclarator下init节点，符合条件后将extra.raw重新赋值。</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclarator(path)&#123;</span><br><span class="line">        <span class="keyword">const</span> init = path.get(<span class="string">'init'</span>);</span><br><span class="line">        <span class="keyword">if</span> (!init.isStringLiteral()) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">const</span> node = init.node;</span><br><span class="line">        <span class="keyword">let</span> &#123;value, extra&#125; = node;</span><br><span class="line">        extra.raw = <span class="string">'"'</span> + value + <span class="string">':)"'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="方式二：直接遍历type为StringLiteral的路径。"><a href="#方式二：直接遍历type为StringLiteral的路径。" class="headerlink" title="方式二：直接遍历type为StringLiteral的路径。"></a>方式二：直接遍历type为StringLiteral的路径。</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    StringLiteral(path)&#123;</span><br><span class="line">        <span class="keyword">let</span> &#123;value, extra&#125; = path.node;</span><br><span class="line">        extra.raw = <span class="string">'"'</span> + value + <span class="string">':)"'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="方式三：使用新建节点替换"><a href="#方式三：使用新建节点替换" class="headerlink" title="方式三：使用新建节点替换"></a>方式三：使用新建节点替换</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    StringLiteral(path)&#123;</span><br><span class="line">        <span class="keyword">let</span> &#123;value&#125; = path.node;</span><br><span class="line">        path.replaceWith(t.StringLiteral(value + <span class="string">":("</span>));</span><br><span class="line">        <span class="comment">// 因为新生成的节点类型也是StringLiteral，所以会一直遍历下去，最终导致栈溢出</span></span><br><span class="line">        <span class="comment">// 解决方案为使用path.stop()方法，让其遍历后立即停止。</span></span><br><span class="line">        path.stop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="方式四：删除raw节点"><a href="#方式四：删除raw节点" class="headerlink" title="方式四：删除raw节点"></a>方式四：删除raw节点</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    StringLiteral(path)&#123;</span><br><span class="line">        <span class="keyword">let</span> &#123;extra&#125; = path.node;</span><br><span class="line">        <span class="keyword">delete</span> extra.raw;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="通用步骤-十六进制数值-字符串还原十进制"><a href="#通用步骤-十六进制数值-字符串还原十进制" class="headerlink" title="通用步骤 (十六进制数值/字符串还原十进制)"></a>通用步骤 (十六进制数值/字符串还原十进制)</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    <span class="string">"StringLiteral|NumericLiteral"</span>(path)&#123;</span><br><span class="line">        <span class="comment">// 删除extra节点</span></span><br><span class="line">        <span class="keyword">delete</span> path.node.extra</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 ]]></content>
       <categories>
