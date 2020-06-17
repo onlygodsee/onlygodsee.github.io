@@ -1123,4 +1123,34 @@
         <tag>AST</tag>
       </tags>
   </entry>
+  <entry>
+    <title>AST学习-插入节点</title>
+    <url>/2020/06/17/article-19/</url>
+    <content><![CDATA[<h3 id="变量后面插入一个未被初始化的变量"><a href="#变量后面插入一个未被初始化的变量" class="headerlink" title="变量后面插入一个未被初始化的变量"></a>变量后面插入一个未被初始化的变量</h3><p>示例代码</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">996</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="新构造一个-Identifier-类型的节点，然后直接插入"><a href="#新构造一个-Identifier-类型的节点，然后直接插入" class="headerlink" title="新构造一个 Identifier 类型的节点，然后直接插入"></a>新构造一个 <strong>Identifier</strong> 类型的节点，然后直接插入</h4><p>遍历 <strong><em>VariableDeclarator</em></strong> 节点</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclarator(path)&#123;</span><br><span class="line">        path.insertAfter(t.Identifier(<span class="string">'b'</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看输出结果</p>
+<p><img src="/2020/06/17/article-19/WX20200617-144220.png" alt></p>
+<h4 id="使用ExpressionStatement表达式语句"><a href="#使用ExpressionStatement表达式语句" class="headerlink" title="使用ExpressionStatement表达式语句"></a>使用ExpressionStatement表达式语句</h4><p>遍历 <strong><em>VariableDeclaration</em></strong> 节点</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// var a = 996;b = 250;</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclaration(path)&#123;</span><br><span class="line">        <span class="keyword">const</span> operator = <span class="string">"="</span>;</span><br><span class="line">        <span class="keyword">const</span> left = t.Identifier(<span class="string">'var b'</span>);</span><br><span class="line">        <span class="keyword">const</span> right = t.NumericLiteral(<span class="number">250</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> new_assign = t.AssignmentExpression(operator, left, right);</span><br><span class="line">        <span class="keyword">const</span> new_express = t.ExpressionStatement(new_assign);</span><br><span class="line"></span><br><span class="line">        path.insertAfter(new_express);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="/2020/06/17/article-19/WX20200617-153708.png" alt></p>
+<h4 id="使用VariableDeclaration表达式语句"><a href="#使用VariableDeclaration表达式语句" class="headerlink" title="使用VariableDeclaration表达式语句"></a>使用VariableDeclaration表达式语句</h4><p>遍历 <strong><em>VariableDeclaration</em></strong> 节点</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// var a = 996;var b = 250;</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclaration(path)&#123;</span><br><span class="line">        <span class="keyword">const</span> id = t.Identifier(<span class="string">'b'</span>);</span><br><span class="line">        <span class="keyword">const</span> init = t.NumericLiteral(<span class="number">250</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> new_variable = t.VariableDeclarator(id, init)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> kind = <span class="string">'var'</span>;</span><br><span class="line">        <span class="keyword">const</span> new_variable_express = t.VariableDeclaration(kind, <span class="built_in">Array</span>(new_variable))</span><br><span class="line">        path.insertAfter(new_variable_express);</span><br><span class="line">        path.stop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="/2020/06/17/article-19/WX20200617-144713.png" alt></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
 </search>
