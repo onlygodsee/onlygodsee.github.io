@@ -1153,4 +1153,32 @@
         <tag>AST</tag>
       </tags>
   </entry>
+  <entry>
+    <title>AST学习-拆分一个Literal类型的节点</title>
+    <url>/2020/06/17/article-20/</url>
+    <content><![CDATA[<h3 id="拆分NumericLiteral节点类型"><a href="#拆分NumericLiteral节点类型" class="headerlink" title="拆分NumericLiteral节点类型"></a>拆分NumericLiteral节点类型</h3><p>示例代码</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">12345678</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="了解异或操作"><a href="#了解异或操作" class="headerlink" title="了解异或操作"></a>了解异或操作</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"># 生成随机八位负数</span><br><span class="line"><span class="keyword">const</span> first = <span class="number">0</span> - <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">10000000</span> + <span class="number">10000000</span>)</span><br><span class="line"># 与a做异或操作</span><br><span class="line"><span class="keyword">const</span> second = a ^ first;</span><br><span class="line"># 将first 与 second 进行异或操作</span><br><span class="line"><span class="keyword">const</span> res = first ^ second</span><br><span class="line">&gt;&gt;&gt;<span class="number">12345678</span></span><br></pre></td></tr></table></figure>
+
+<p>可以发现输出结果为 <strong><em>12345678</em></strong>,  <strong><em>res = first ^ second = first ^ first ^ a = 0 ^ a = a</em></strong></p>
+<p>了解了这个概念就可以在 AST 中实现了</p>
+<h4 id="在-AST-中实现"><a href="#在-AST-中实现" class="headerlink" title="在 AST 中实现"></a>在 AST 中实现</h4><p><img src="/2020/06/17/article-20/WX20200617-164925.png" alt></p>
+<p>通过 AST-TREE查看可知异或表达式属于 <strong><em>BinaryExpression</em></strong> 节点，所以我们需要构造这个节点</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> t = <span class="built_in">require</span>(<span class="string">"@babel/types"</span>)</span><br><span class="line">t.BinaryExpression(<span class="string">'^'</span>, t.NumericLiteral(first), t.NumericLiteral(second))</span><br></pre></td></tr></table></figure>
+
+<p>然后使用该节点替换原来的 <strong><em>NumericLiteral</em></strong> 节点就好了，代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    NumericLiteral(path)&#123;</span><br><span class="line">        <span class="keyword">const</span> node = path.node;</span><br><span class="line">        <span class="keyword">const</span> value = node.value;</span><br><span class="line">        <span class="keyword">const</span> first = <span class="number">0</span> - <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.random() * <span class="number">10000000</span> + <span class="number">10000000</span>);</span><br><span class="line">        <span class="keyword">const</span> second = value ^ first;</span><br><span class="line"></span><br><span class="line">        path.replaceWith(t.BinaryExpression(<span class="string">'^'</span>, t.NumericLiteral(first), t.NumericLiteral(second)));</span><br><span class="line">        path.stop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="/2020/06/17/article-20/WX20200617-165333.png" alt></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
 </search>
