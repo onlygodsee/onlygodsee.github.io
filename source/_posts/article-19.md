@@ -30,14 +30,14 @@ const vistor = {
 
 查看输出结果
 
-![](/Users/woo/Desktop/onlygodsee_git/onlygodsee.github.io/source/_posts/article-19/WX20200617-144220.png)
+![](WX20200617-144220.png)
 
-#### 使用表达式语句
+#### 使用ExpressionStatement表达式语句
 
 遍历 ***VariableDeclaration*** 节点
 
 ```javascript
-// var a = 996;var b = 250;
+// var a = 996;b = 250;
 const vistor = {
     VariableDeclaration(path){
         const operator = "=";
@@ -54,5 +54,29 @@ const vistor = {
 
 查看结果
 
-![](/Users/woo/Desktop/onlygodsee_git/onlygodsee.github.io/source/_posts/article-19/WX20200617-144713.png)
+![](WX20200617-153708.png)
 
+#### 使用VariableDeclaration表达式语句
+
+遍历 ***VariableDeclaration*** 节点
+
+```javascript
+// var a = 996;var b = 250;
+const vistor = {
+    VariableDeclaration(path){
+        const id = t.Identifier('b');
+        const init = t.NumericLiteral(250);
+
+        const new_variable = t.VariableDeclarator(id, init)
+
+        const kind = 'var';
+        const new_variable_express = t.VariableDeclaration(kind, Array(new_variable))
+        path.insertAfter(new_variable_express);
+        path.stop();
+    }
+}
+```
+
+查看结果
+
+![](WX20200617-144713.png)
