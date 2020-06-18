@@ -28,7 +28,7 @@ const res = first ^ second
 >>>12345678
 ```
 
-可以发现输出结果为 ***12345678*** *， **res = first ^ second = first ^ first ^ a = 0 ^ a = a***
+可以发现输出结果为 ***12345678***,  ***res = first ^ second = first ^ first ^ a = 0 ^ a = a***
 
 了解了这个概念就可以在 AST 中实现了
 
