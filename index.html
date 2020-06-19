@@ -198,6 +198,88 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/19/article-24/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blog_head.png">
+      <meta itemprop="name" content="司篁">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="太液池">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/19/article-24/" class="post-title-link" itemprop="url">AST学习-将a["length"]转变为a.length</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-19 18:43:46 / 修改时间：18:53:40" itemprop="dateCreated datePublished" datetime="2020-06-19T18:43:46+08:00">2020-06-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/AST/" itemprop="url" rel="index"><span itemprop="name">AST</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'hello world!'</span>;</span><br><span class="line"><span class="keyword">var</span> b = a[<span class="string">'length'</span>];</span><br></pre></td></tr></table></figure>
+
+<p>转化为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'hello world!'</span>;</span><br><span class="line"><span class="keyword">var</span> b = a.length;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2020/06/19/article-24/WX20200619-184840.png" alt></p>
+<p>经AST-Tree比较获知差距在于 <strong><em>property</em></strong> 和 <strong><em>computed</em></strong> 这两个路径，替换掉就好了</p>
+<h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">member2identify</span>(<span class="params">path</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> init = path.get(<span class="string">'init'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!init.isMemberExpression()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> member_node = init.node;</span><br><span class="line">    <span class="keyword">const</span> member_property = init.get(<span class="string">'property'</span>);</span><br><span class="line"></span><br><span class="line">    member_node.computed = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">let</span> value = member_node.property.value;</span><br><span class="line">    member_property.replaceWith(t.Identifier(value));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclarator:&#123;</span><br><span class="line">        enter: [member2identify]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="/2020/06/19/article-24/WX20200619-185204.png" alt></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/19/article-23/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1039,89 +1121,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/11/article-14/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blog_head.png">
-      <meta itemprop="name" content="司篁">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="太液池">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/11/article-14/" class="post-title-link" itemprop="url">JS逆向学习-某游戏网站登陆</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-11 18:12:50 / 修改时间：18:34:43" itemprop="dateCreated datePublished" datetime="2020-06-11T18:12:50+08:00">2020-06-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/JS%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">JS逆向</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>aHR0cDovLzk5NzE4aC5jb20vY24vcmVnaXN0ZXI=</p>
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2020/06/11/article-14/WX20200611-181630.png" alt></p>
-<p>登陆时对密码进行了加密处理，打一个xhr断点，定位到了这里</p>
-<p><img src="/2020/06/11/article-14/WX20200611-181835.png" alt></p>
-<p>跟进 <strong><em>cryptStr</em></strong> 这个函数查看</p>
-<p><img src="/2020/06/11/article-14/WX20200611-182047.png" alt></p>
-<p>这里的处理是在DOM中增加了一个button，触发click后再将其删掉，通过事件监听发现了加密代码</p>
-<p><img src="/2020/06/11/article-14/WX20200611-182300.png" alt></p>
-<p><img src="/2020/06/11/article-14/WX20200611-182430.png" alt></p>
-<p><img src="/2020/06/11/article-14/WX20200611-182544.png" alt></p>
-<p>到这里就已经明确加密流程了，最外层是一个 <strong><em>AES</em></strong> 加密模式使用 <strong><em>ECB</em></strong> ，加密的 <strong><em>key</em></strong> 是 <strong><em>cookie</em></strong> 中的 <strong><em>web</em></strong> 和 <strong><em>randomYes</em></strong> 字符串拼接后使用 <strong><em>sdc</em></strong> 函数处理后的结果，经分析其实就是个 <strong><em>MD5</em></strong> 操作，最后将 <strong><em>AES</em></strong> 和结果和 <strong><em>randomYes</em></strong> 拼接返回。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>yysy很简单，值得注意的点是dom的事件监听。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1193,7 +1192,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

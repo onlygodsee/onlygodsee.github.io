@@ -1271,4 +1271,27 @@
         <tag>AST</tag>
       </tags>
   </entry>
+  <entry>
+    <title>AST学习-将a[&quot;length&quot;]转变为a.length</title>
+    <url>/2020/06/19/article-24/</url>
+    <content><![CDATA[<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'hello world!'</span>;</span><br><span class="line"><span class="keyword">var</span> b = a[<span class="string">'length'</span>];</span><br></pre></td></tr></table></figure>
+
+<p>转化为</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'hello world!'</span>;</span><br><span class="line"><span class="keyword">var</span> b = a.length;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2020/06/19/article-24/WX20200619-184840.png" alt></p>
+<p>经AST-Tree比较获知差距在于 <strong><em>property</em></strong> 和 <strong><em>computed</em></strong> 这两个路径，替换掉就好了</p>
+<h3 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">member2identify</span>(<span class="params">path</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> init = path.get(<span class="string">'init'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!init.isMemberExpression()) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> member_node = init.node;</span><br><span class="line">    <span class="keyword">const</span> member_property = init.get(<span class="string">'property'</span>);</span><br><span class="line"></span><br><span class="line">    member_node.computed = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">let</span> value = member_node.property.value;</span><br><span class="line">    member_property.replaceWith(t.Identifier(value));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    VariableDeclarator:&#123;</span><br><span class="line">        enter: [member2identify]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="/2020/06/19/article-24/WX20200619-185204.png" alt></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
 </search>
