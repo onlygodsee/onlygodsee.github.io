@@ -1318,4 +1318,28 @@
         <tag>AST</tag>
       </tags>
   </entry>
+  <entry>
+    <title>AST学习-删除空行和空语句</title>
+    <url>/2020/06/22/article-26/</url>
+    <content><![CDATA[<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>示例代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">123</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">456</span>;</span><br></pre></td></tr></table></figure>
+
+<p>转换为</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">456</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2020/06/22/article-26/WX20200622-121701.png" alt></p>
+<p>空语句的节点type是 <strong><em>EmptyStatement</em></strong> ，空行不会被解析，所以使用generator方法处理</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 将 JS 源码转换成语法树的函数</span></span><br><span class="line"><span class="keyword">const</span> parser = <span class="built_in">require</span>(<span class="string">"@babel/parser"</span>)</span><br><span class="line"><span class="comment">// 遍历 AST 的函数</span></span><br><span class="line"><span class="keyword">const</span> traverse = <span class="built_in">require</span>(<span class="string">"@babel/traverse"</span>).default</span><br><span class="line"><span class="comment">// 操作节点的函数</span></span><br><span class="line"><span class="keyword">const</span> t = <span class="built_in">require</span>(<span class="string">"@babel/types"</span>)</span><br><span class="line"><span class="comment">// 将语法书转换成源代码的函数</span></span><br><span class="line"><span class="keyword">const</span> generator = <span class="built_in">require</span>(<span class="string">"@babel/generator"</span>).default</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jscode = <span class="string">'var a = 123;\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">';\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'var b = 456;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除空语句</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    EmptyStatement(path)&#123;</span><br><span class="line">        path.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ast = parser.parse(jscode);</span><br><span class="line">traverse(ast, vistor)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除空行</span></span><br><span class="line">options = &#123;</span><br><span class="line">    readlines: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> &#123;code&#125; = generator(ast, opts=options);</span><br><span class="line"><span class="built_in">console</span>.log(code)</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="/2020/06/22/article-26/WX20200622-122351.png" alt></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
 </search>

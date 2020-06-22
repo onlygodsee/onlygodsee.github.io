@@ -198,6 +198,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/22/article-26/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blog_head.png">
+      <meta itemprop="name" content="司篁">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="太液池">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/22/article-26/" class="post-title-link" itemprop="url">AST学习-删除空行和空语句</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-22 12:13:40 / 修改时间：12:24:13" itemprop="dateCreated datePublished" datetime="2020-06-22T12:13:40+08:00">2020-06-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/AST/" itemprop="url" rel="index"><span itemprop="name">AST</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>示例代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">123</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">456</span>;</span><br></pre></td></tr></table></figure>
+
+<p>转换为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">123</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">456</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2020/06/22/article-26/WX20200622-121701.png" alt></p>
+<p>空语句的节点type是 <strong><em>EmptyStatement</em></strong> ，空行不会被解析，所以使用generator方法处理</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将 JS 源码转换成语法树的函数</span></span><br><span class="line"><span class="keyword">const</span> parser = <span class="built_in">require</span>(<span class="string">"@babel/parser"</span>)</span><br><span class="line"><span class="comment">// 遍历 AST 的函数</span></span><br><span class="line"><span class="keyword">const</span> traverse = <span class="built_in">require</span>(<span class="string">"@babel/traverse"</span>).default</span><br><span class="line"><span class="comment">// 操作节点的函数</span></span><br><span class="line"><span class="keyword">const</span> t = <span class="built_in">require</span>(<span class="string">"@babel/types"</span>)</span><br><span class="line"><span class="comment">// 将语法书转换成源代码的函数</span></span><br><span class="line"><span class="keyword">const</span> generator = <span class="built_in">require</span>(<span class="string">"@babel/generator"</span>).default</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jscode = <span class="string">'var a = 123;\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">';\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'\n'</span> +</span><br><span class="line">    <span class="string">'var b = 456;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除空语句</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    EmptyStatement(path)&#123;</span><br><span class="line">        path.remove();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ast = parser.parse(jscode);</span><br><span class="line">traverse(ast, vistor)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除空行</span></span><br><span class="line">options = &#123;</span><br><span class="line">    readlines: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> &#123;code&#125; = generator(ast, opts=options);</span><br><span class="line"><span class="built_in">console</span>.log(code)</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="/2020/06/22/article-26/WX20200622-122351.png" alt></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/22/article-25/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1012,100 +1095,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/16/article-16/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blog_head.png">
-      <meta itemprop="name" content="司篁">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="太液池">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/16/article-16/" class="post-title-link" itemprop="url">AST学习-认识AST结构</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-16 17:16:41 / 修改时间：18:18:33" itemprop="dateCreated datePublished" datetime="2020-06-16T17:16:41+08:00">2020-06-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/AST/" itemprop="url" rel="index"><span itemprop="name">AST</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>环境：Mac  Node.js  babel</p>
-<h2 id="AST基本结构"><a href="#AST基本结构" class="headerlink" title="AST基本结构"></a>AST基本结构</h2><h3 id="变量声明-VariableDeclaration"><a href="#变量声明-VariableDeclaration" class="headerlink" title="变量声明 VariableDeclaration"></a>变量声明 VariableDeclaration</h3><p><img src="/2020/06/16/article-16/WX20200616-172515.png" alt></p>
-<h4 id="declarations-基本说明"><a href="#declarations-基本说明" class="headerlink" title="declarations 基本说明"></a>declarations 基本说明</h4><p>type 表示节点类型，变量声明就是：VariableDeclaration</p>
-<p>start end 表示节点的起始位置</p>
-<p>kind 变量声明关键字 分为 var let const</p>
-<p><strong><em>declarations</em></strong> 需要重点看下</p>
-<p><img src="/2020/06/16/article-16/WX20200616-173414.png" alt></p>
-<p>declarations 是一个数组结构，里边存放了变量的声明信息，声明了几个变量，就有几个 <strong><em>VariableDeclarator</em></strong>，注意只要声明了就会有这个节点，不管是否赋值</p>
-<p><img src="/2020/06/16/article-16/WX20200616-173817.png" alt></p>
-<h4 id="VariableDeclarator-说明"><a href="#VariableDeclarator-说明" class="headerlink" title="VariableDeclarator 说明"></a>VariableDeclarator 说明</h4><p><img src="/2020/06/16/article-16/WX20200616-175248.png" alt></p>
-<p>除了前面提到过的节点，还出现了两个新节点 <strong><em>id</em></strong> <strong><em>init</em></strong> </p>
-<p><strong><em>id</em></strong> : 对变量名的描述，包含类型、位置和名称</p>
-<p><strong><em>init</em></strong> : 表示变量初始化的情况，包含类型、位置和value</p>
-<h3 id="其他类型表示"><a href="#其他类型表示" class="headerlink" title="其他类型表示"></a>其他类型表示</h3><p>1+2，b+c 这种是 BinaryExpression<br>函数为 FunctionExpression<br>对象 ObjectExpression<br>new Object() 为 NewExpression<br>[] 数组为 ArrayExpression<br>Math.sin() 为 CallExpression</p>
-<h3 id="使用babel库操作AST"><a href="#使用babel库操作AST" class="headerlink" title="使用babel库操作AST"></a>使用babel库操作AST</h3><h4 id="打印整个AST"><a href="#打印整个AST" class="headerlink" title="打印整个AST"></a>打印整个AST</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面的导入不一定会全用，但是要知道</span></span><br><span class="line"><span class="comment">// 将 JS 源码转换成语法树的函数</span></span><br><span class="line"><span class="keyword">const</span> parser = <span class="built_in">require</span>(<span class="string">"@babel/parser"</span>)</span><br><span class="line"><span class="comment">// 遍历 AST 的函数</span></span><br><span class="line"><span class="keyword">const</span> traverse = <span class="built_in">require</span>(<span class="string">"@babel/traverse"</span>).default</span><br><span class="line"><span class="comment">// 操作节点的函数</span></span><br><span class="line"><span class="keyword">const</span> t = <span class="built_in">require</span>(<span class="string">"@babel/types"</span>)</span><br><span class="line"><span class="comment">// 将语法书转换成源代码的函数</span></span><br><span class="line"><span class="keyword">const</span> generator = <span class="built_in">require</span>(<span class="string">"@babel/generator"</span>).default</span><br><span class="line"><span class="comment">// 操作文件的函数</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> jscode = <span class="string">"var a = 123;"</span>;</span><br><span class="line"><span class="keyword">let</span> ast = parser.parse(jscode);</span><br><span class="line"></span><br><span class="line">fs.writeFile(<span class="string">'ast.json'</span>, <span class="built_in">JSON</span>.stringify(ast, <span class="literal">null</span>, <span class="string">'\t'</span>), (err)=&gt;&#123;&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>结果：</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="attr">"type"</span>: <span class="string">"File"</span>,</span><br><span class="line">	<span class="attr">"start"</span>: <span class="number">0</span>,</span><br><span class="line">	<span class="attr">"end"</span>: <span class="number">12</span>,</span><br><span class="line">	<span class="attr">"loc"</span>: &#123;</span><br><span class="line">		<span class="attr">"start"</span>: &#123;</span><br><span class="line">			<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">			<span class="attr">"column"</span>: <span class="number">0</span></span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">"end"</span>: &#123;</span><br><span class="line">			<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">			<span class="attr">"column"</span>: <span class="number">12</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"errors"</span>: [],</span><br><span class="line">	<span class="attr">"program"</span>: &#123;</span><br><span class="line">		<span class="attr">"type"</span>: <span class="string">"Program"</span>,</span><br><span class="line">		<span class="attr">"start"</span>: <span class="number">0</span>,</span><br><span class="line">		<span class="attr">"end"</span>: <span class="number">12</span>,</span><br><span class="line">		<span class="attr">"loc"</span>: &#123;</span><br><span class="line">			<span class="attr">"start"</span>: &#123;</span><br><span class="line">				<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">				<span class="attr">"column"</span>: <span class="number">0</span></span><br><span class="line">			&#125;,</span><br><span class="line">			<span class="attr">"end"</span>: &#123;</span><br><span class="line">				<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">				<span class="attr">"column"</span>: <span class="number">12</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;,</span><br><span class="line">		<span class="attr">"sourceType"</span>: <span class="string">"script"</span>,</span><br><span class="line">		<span class="attr">"interpreter"</span>: <span class="literal">null</span>,</span><br><span class="line">		<span class="attr">"body"</span>: [</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="attr">"type"</span>: <span class="string">"VariableDeclaration"</span>,</span><br><span class="line">				<span class="attr">"start"</span>: <span class="number">0</span>,</span><br><span class="line">				<span class="attr">"end"</span>: <span class="number">12</span>,</span><br><span class="line">				<span class="attr">"loc"</span>: &#123;</span><br><span class="line">					<span class="attr">"start"</span>: &#123;</span><br><span class="line">						<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">						<span class="attr">"column"</span>: <span class="number">0</span></span><br><span class="line">					&#125;,</span><br><span class="line">					<span class="attr">"end"</span>: &#123;</span><br><span class="line">						<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">						<span class="attr">"column"</span>: <span class="number">12</span></span><br><span class="line">					&#125;</span><br><span class="line">				&#125;,</span><br><span class="line">				<span class="attr">"declarations"</span>: [</span><br><span class="line">					&#123;</span><br><span class="line">						<span class="attr">"type"</span>: <span class="string">"VariableDeclarator"</span>,</span><br><span class="line">						<span class="attr">"start"</span>: <span class="number">4</span>,</span><br><span class="line">						<span class="attr">"end"</span>: <span class="number">11</span>,</span><br><span class="line">						<span class="attr">"loc"</span>: &#123;</span><br><span class="line">							<span class="attr">"start"</span>: &#123;</span><br><span class="line">								<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">								<span class="attr">"column"</span>: <span class="number">4</span></span><br><span class="line">							&#125;,</span><br><span class="line">							<span class="attr">"end"</span>: &#123;</span><br><span class="line">								<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">								<span class="attr">"column"</span>: <span class="number">11</span></span><br><span class="line">							&#125;</span><br><span class="line">						&#125;,</span><br><span class="line">						<span class="attr">"id"</span>: &#123;</span><br><span class="line">							<span class="attr">"type"</span>: <span class="string">"Identifier"</span>,</span><br><span class="line">							<span class="attr">"start"</span>: <span class="number">4</span>,</span><br><span class="line">							<span class="attr">"end"</span>: <span class="number">5</span>,</span><br><span class="line">							<span class="attr">"loc"</span>: &#123;</span><br><span class="line">								<span class="attr">"start"</span>: &#123;</span><br><span class="line">									<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">									<span class="attr">"column"</span>: <span class="number">4</span></span><br><span class="line">								&#125;,</span><br><span class="line">								<span class="attr">"end"</span>: &#123;</span><br><span class="line">									<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">									<span class="attr">"column"</span>: <span class="number">5</span></span><br><span class="line">								&#125;,</span><br><span class="line">								<span class="attr">"identifierName"</span>: <span class="string">"a"</span></span><br><span class="line">							&#125;,</span><br><span class="line">							<span class="attr">"name"</span>: <span class="string">"a"</span></span><br><span class="line">						&#125;,</span><br><span class="line">						<span class="attr">"init"</span>: &#123;</span><br><span class="line">							<span class="attr">"type"</span>: <span class="string">"NumericLiteral"</span>,</span><br><span class="line">							<span class="attr">"start"</span>: <span class="number">8</span>,</span><br><span class="line">							<span class="attr">"end"</span>: <span class="number">11</span>,</span><br><span class="line">							<span class="attr">"loc"</span>: &#123;</span><br><span class="line">								<span class="attr">"start"</span>: &#123;</span><br><span class="line">									<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">									<span class="attr">"column"</span>: <span class="number">8</span></span><br><span class="line">								&#125;,</span><br><span class="line">								<span class="attr">"end"</span>: &#123;</span><br><span class="line">									<span class="attr">"line"</span>: <span class="number">1</span>,</span><br><span class="line">									<span class="attr">"column"</span>: <span class="number">11</span></span><br><span class="line">								&#125;</span><br><span class="line">							&#125;,</span><br><span class="line">							<span class="attr">"extra"</span>: &#123;</span><br><span class="line">								<span class="attr">"rawValue"</span>: <span class="number">123</span>,</span><br><span class="line">								<span class="attr">"raw"</span>: <span class="string">"123"</span></span><br><span class="line">							&#125;,</span><br><span class="line">							<span class="attr">"value"</span>: <span class="number">123</span></span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				],</span><br><span class="line">				<span class="attr">"kind"</span>: <span class="string">"var"</span></span><br><span class="line">			&#125;</span><br><span class="line">		],</span><br><span class="line">		<span class="attr">"directives"</span>: []</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">"comments"</span>: []</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="访问AST节点内容"><a href="#访问AST节点内容" class="headerlink" title="访问AST节点内容"></a>访问AST节点内容</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 访问编译后的ast结构</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> parser = <span class="built_in">require</span>(<span class="string">"@babel/parser"</span>);</span><br><span class="line"><span class="keyword">const</span> traverse = <span class="built_in">require</span>(<span class="string">"@babel/traverse"</span>).default;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> js_code = <span class="string">"var a = 123;function b()&#123;debugger;&#125;"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const vistor = &#123;</span></span><br><span class="line"><span class="comment">//     VariableDeclaration(path) &#123;</span></span><br><span class="line"><span class="comment">//         console.log(path.type);</span></span><br><span class="line"><span class="comment">//         console.log(path.toString());</span></span><br><span class="line"><span class="comment">//     &#125;,</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 多路径查看，使用 "|"</span></span><br><span class="line"><span class="keyword">const</span> vistor = &#123;</span><br><span class="line">    <span class="string">"VariableDeclaration|VariableDeclarator"</span>(path)&#123;</span><br><span class="line">    <span class="comment">// "FunctionDeclaration|BlockStatement"(path)&#123;</span></span><br><span class="line">        <span class="built_in">console</span>.log(path.type);</span><br><span class="line">        <span class="built_in">console</span>.log(path.toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> ast = parser.parse(js_code);</span><br><span class="line"></span><br><span class="line">traverse(ast, vistor)</span><br></pre></td></tr></table></figure>
-
-
-
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1177,7 +1166,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
