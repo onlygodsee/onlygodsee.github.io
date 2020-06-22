@@ -198,6 +198,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/22/article-25/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/blog_head.png">
+      <meta itemprop="name" content="司篁">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="太液池">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/22/article-25/" class="post-title-link" itemprop="url">AST学习-删除全部注释</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-22 11:44:31 / 修改时间：11:57:16" itemprop="dateCreated datePublished" datetime="2020-06-22T11:44:31+08:00">2020-06-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/AST/" itemprop="url" rel="index"><span itemprop="name">AST</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>删除示例代码中的注释：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">123</span>; <span class="comment">//this is single line comment</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">This is a  multiline comments;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">test</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">test</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">test</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> b = <span class="number">456</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/2020/06/22/article-25/WX20200622-114717.png" alt></p>
+<p>但使用插件遍历发现如下异常</p>
+<p><img src="/2020/06/22/article-25/WX20200622-115102.png" alt></p>
+<p>这时使用generator直接操作，将comments参数声明为false，就可以去掉注释了</p>
+<p><img src="/2020/06/22/article-25/WX20200622-115311.png" alt></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> ast = parser.parse(jscode);</span><br><span class="line"><span class="comment">// traverse(ast, vistor)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> &#123;code&#125; = generator(ast, opts=&#123;<span class="attr">comments</span>:<span class="literal">false</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(code)</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="/2020/06/22/article-25/WX20200622-115557.png" alt></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/19/article-24/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1023,104 +1106,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://onlygodsee.github.io/2020/06/16/article-15/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/blog_head.png">
-      <meta itemprop="name" content="司篁">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="太液池">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/16/article-15/" class="post-title-link" itemprop="url">AST学习资料收集</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-16 16:41:22 / 修改时间：17:00:57" itemprop="dateCreated datePublished" datetime="2020-06-16T16:41:22+08:00">2020-06-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">技术</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/AST/" itemprop="url" rel="index"><span itemprop="name">AST</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本系列为AST个人学习笔记，完整知识内容请关注知识星球 <a href="https://wx.zsxq.com/" target="_blank" rel="noopener">AST入门与实战</a> 和公众号 <a href>菜鸟学Python编程</a></p>
-<p>1、AST在线解析网站</p>
-<p><a href="https://astexplorer.net/" target="_blank" rel="noopener">原版</a>  <a href="https://blogz.gitee.io/ast/" target="_blank" rel="noopener">国内镜像</a></p>
-<p>2、babel库官方文档</p>
-<p><a href="https://babeljs.io/docs/en/" target="_blank" rel="noopener">官方学习文档</a></p>
-<p>3、babel库 github地址</p>
-<p><a href="https://github.com/babel/babel" target="_blank" rel="noopener">babel</a></p>
-<p>4、babel库插件开发手册</p>
-<p><a href="https://blog.csdn.net/weixin_33826609/article/details/93164633#toc-visitors" target="_blank" rel="noopener">插件手册</a></p>
-<p>5、JavaScript在线学习网站</p>
-<p><a href="https://wangdoc.com/javascript/index.html" target="_blank" rel="noopener">入门</a></p>
-<p><a href="https://es6.ruanyifeng.com/" target="_blank" rel="noopener">es6教程</a></p>
-<p><strong>JavaScript高级程序设计（第3版）</strong></p>
-<p>6、查看JavaStript代码流程</p>
-<p><a href="https://bogdan-lyashenko.github.io/js-code-to-svg-flowchart/docs/live-editor/index.html" target="_blank" rel="noopener">代码流程</a></p>
-<p><a href="https://github.com/Bogdan-Lyashenko/js-code-to-svg-flowchart" target="_blank" rel="noopener">Github地址</a></p>
-<p>7、AST入门网站</p>
-<p><a href="https://github.com/yacan8/blog/blob/master/posts/JavaScript抽象语法树AST.md" target="_blank" rel="noopener">JavaScript抽象语法树AST</a></p>
-<p>8、其他的干货文章</p>
-<p><a href="https://github.com/babel/babylon/blob/master/ast/spec.md" target="_blank" rel="noopener"><strong>AS各个节点解释</strong></a></p>
-<p><a href="http://www.alloyteam.com/2017/04/analysis-of-babel-babel-overview/" target="_blank" rel="noopener"><strong>简单剖析babel</strong></a></p>
-<p><a href="https://fed.taobao.org/blog/taofed/do71ct/babel-plugins/" target="_blank" rel="noopener"><strong>淘系前端团队写的babel库相关</strong></a></p>
-<p><a href="http://www.alloyteam.com/2016/05/babel-code-into-a-bird-like/" target="_blank" rel="noopener"><strong>babel到底将代码转换成了什么鸟样</strong></a></p>
-<p>9、将代码转换成图片的网站</p>
-<p><a href="https://carbon.now.sh/" target="_blank" rel="noopener">漂亮代码图片在线生成</a></p>
-<p>10、查看AST结构图</p>
-<p><a href="https://resources.jointjs.com/demos/rappid/apps/Ast/index.html" target="_blank" rel="noopener">AST结构图</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1192,7 +1177,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
