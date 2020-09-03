@@ -749,7 +749,7 @@ secure-file-priv="/tmp"
 sudo vim /etc/my.cnf
 ```
 
-​		然后在文件中太监如下信息
+​		然后在文件中添加如下信息
 
 ```bash
 [client]
@@ -803,7 +803,7 @@ create table titles_only as select distinct title from titles;
 如果表已经存在，则可以使用 INSERT INTO SELECT 语句
 
 ```mysql
-insert into select distinct title from titles;
+insert into titles_only select distinct title from titles;
 ```
 
 ### 将数据加载到表中
@@ -900,7 +900,7 @@ mysql> select emp.emp_no, emp.first_name, emp.last_name, dept.dept_name from emp
            on dept_mgr.dept_no=dept.dept_no;
 ```
 
-假设计、想了解每个部门的平均工资，你可以使用 AVG 函数并按照dept_no进行分组。要找出部门名称，可以将结果与departments 表通过dept_no 列进行关联
+假设想了解每个部门的平均工资，你可以使用 AVG 函数并按照dept_no进行分组。要找出部门名称，可以将结果与departments 表通过dept_no 列进行关联
 
 ```mysql
 select dept_name, avg(salary) as avg_salary
@@ -1043,11 +1043,742 @@ where
 ;
 ```
 
+### 存储过程
+
+存储过程处理的事一组SQL语句，且没有返回值
+
+#### 如何操作
+
+
+
+```mysql
+/* 删除已存在的存储过程 */
+drop procedure if exists create_employee;
+/* 分隔符修改为 $$ */
+delimiter $$
+
+/* IN 指定作为参数的变量，INOUT指定输出的变量 */
+create procedure create_employee (
+	Out new_emp_no INT,
+	IN first_name varchar(20),
+	IN last_name varchar(20),
+	IN gender enum('M', 'F'),
+	IN birth_date date,
+	IN emp_dept_name varchar(40),
+	IN title varchar(50)
+)
+BEGIN
+	/* 为emp_dept_no 和 salary 声明变量 */
+		declare emp_dept_no char(4);
+		declare salary int default 60000;
+
+	/* 查询employees表中emp_no的最大值，赋值给变量 new_emp_no */
+	select max(emp_no) into new_emp_no from employees;
+
+	/* 增加 new_emp_no */
+	set new_emp_no = new_emp_no + 1;
+
+	/* 插入数据到 employees 表中 */
+	/* curdate() 函数给出当前日期 */
+	insert into employees values(new_emp_no, birth_date, first_name, last_name, gender, curdate());
+
+	/* 找到 dept_name对应的dept_no */
+	select emp_dept_name;
+
+	select dept_no into emp_dept_no from departments where dept_name=emp_dept_name;
+
+	select emp_dept_no;
+
+	/* 插入dept_emp */
+	insert into dept_emp values(new_emp_no, emp_dept_no, curdate(), '9999-01-01');
+
+	/* 插入 title */
+	insert into titles values(new_emp_no, title, curdate(), '9999-01-01');
+	
+	/* 以title为条件查询的薪水 */
+	if title = 'Staff'
+		then set salary = 100000;
+	elseif title = 'Senior Staff'
+		then set salary = 120000;
+
+	end if;
+
+	/* 插入 salaries */
+	insert into salaries values(new_emp_no, salary, curdate(), '9999-01-01');
+
+END
+$$
+
+/* 将分隔符改回 ; */
+DELIMITER ;
+```
+
+- 在mysql命令行终端执行代码
+
+- 保存为文件，使用命令 mysql -u root -p employees < stored_procedure.sql
+
+- 使用 source 从文件加载 mysql> source stored_procedure.sql
+
+  
+
+要使用存储过程，需要将 execute 权限授予 emp_read_only 用户：
+
+```mysql
+grant execute on employees.* to 'emp_read_only'@'%';
+```
+
+使用CALL stored_procedure(OUT 变量， IN值) 语句和例程的名称调用存储过程。
+
+使用emp_read_only 账户链接到MySQL
+
+```bash
+mysql -u emp_read_only -p123 employees -A
+```
+
+把想要传递的输出值存储在@new_emp_no变量中的emp_no的值：
+
+```mysql
+select @new_emp_no;
+```
+
+检查是否在employees表、salaries表和tiltes表创建了行：
+
+```mysql
+mysql> select * from employees where emp_no=500001;
++--------+------------+------------+-----------+--------+------------+
+| emp_no | birth_date | first_name | last_name | gender | hire_date  |
++--------+------------+------------+-----------+--------+------------+
+| 500001 | 1984-06-19 | John       | Smith     | M      | 2020-07-15 |
++--------+------------+------------+-----------+--------+------------+
+1 row in set (0.01 sec)
+
+mysql> select * from salaries where emp_no=500001;
++--------+--------+------------+------------+
+| emp_no | salary | from_date  | to_date    |
++--------+--------+------------+------------+
+| 500001 | 100000 | 2020-07-15 | 9999-01-01 |
++--------+--------+------------+------------+
+1 row in set (0.01 sec)
+
+mysql> select * from titles where emp_no=500001;
++--------+-------+------------+------------+
+| emp_no | title | from_date  | to_date    |
++--------+-------+------------+------------+
+| 500001 | Staff | 2020-07-15 | 9999-01-01 |
++--------+-------+------------+------------+
+1 row in set (0.00 sec)
+```
+
+
+
+### 触发器
+
+触发器用于在触发器事件之前或之后激活某些内容。
+
+#### 如何操作
+
+例如：假设你希望在将薪水插入 salaries 表之前对其进行四舍五入 。 NEW 指的是正在插入的新值 :
+
+```mysql
+drop trigger if exists salary_round;
+delimiter $$
+create trigger salary_round before insert on salaries
+for each row
+BEGIN
+	set NEW.salary=ROUND(NEW.salary);
+END
+$$
+delimiter ;
+```
+
+```mysql
+source /tmp/before_insert_trigger.sql
+```
+
+```mysql
+mysql> insert into salaries values(10002, 100000.79, curdate(), '9999-01-01');
+Query OK, 1 row affected (0.01 sec)
+mysql> select * from salaries where emp_no=10002 and from_date=curdate();
++--------+--------+------------+------------+
+| emp_no | salary | from_date  | to_date    |
++--------+--------+------------+------------+
+|  10002 | 100001 | 2020-07-15 | 9999-01-01 |
++--------+--------+------------+------------+
+1 row in set (0.01 sec)
+```
+
+假设你要记录 salaries 表中新增的薪水记录：
+
+创建审计表：
+
+```mysql
+create table salary_audit (emp_no int, user varchar(50), date_modified date);
+```
+
+请注意， 以下触发器 PRECEDES salary_round 指定在 salary_round 触发器之前执行:
+
+```mysql
+delimiter $$
+create trigger salary_audit
+BEFORE INSERT
+	on salaries for each row precedes salary_round
+BEGIN
+	insert into salary_audit value(NEW.emp_no, USER(), curdate());
+END;$$
+delimiter ;
+```
+
+```mysql
+mysql> insert into salaries values(10003, 100000.79, curdate(), '9999-01-01');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from salary_audit where emp_no=10003;
++--------+----------------+---------------+
+| emp_no | user           | date_modified |
++--------+----------------+---------------+
+|  10003 | root@localhost | 2020-07-15    |
++--------+----------------+---------------+
+1 row in set (0.00 sec)
+```
+
+### 
+
+### 视图
+
+视图是一个基于 SQL语句的结果集的虚拟表。我们可以使用视图来限制用户对特定行的访问 。
+
+#### 如何操作
+
+创建只对salaries表的emp_no 和 salary 列，且from_date在 ‘2002-01-01’ 之后的数据的访问权限.
+
+```mysql
+create ALGORITHM=UNDEFINED
+DEFINER=`root`@`localhost`
+SQL security DEFINER view salary_view
+as
+select emp_no, salary from salaries where from_date > '2002-01-01';
+```
+
+```mysql
+mysql> select emp_no, avg(salary) as avg from salary_view group by emp_no order by avg desc limit 5;
++--------+-------------+
+| emp_no | avg         |
++--------+-------------+
+|  43624 | 158220.0000 |
+|  47978 | 155709.0000 |
+| 253939 | 155513.0000 |
+| 109334 | 155190.0000 |
+|  80823 | 154459.0000 |
++--------+-------------+
+5 rows in set (1.54 sec)
+```
+
+列出所有视图
+
+```mysql
+show full tables where table_type like 'VIEW';
+```
+
+检查视图的定义
+
+```mysql
+show create view salary_view\G
+```
+
+我们可以更新没有子查询、 JOINS 、 GROUP BY 子句、 union 等的简单视阁 。 如果基础表有默认值， 那么 salary_view 就是一个可以被更新或插入的简单视图 :
+
+```mysql
+mysql> update salary_view set salary=100000 where emp_no=10001;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+```
+
+```mysql
+mysql> insert into salary_view values(10001, 100001);
+ERROR 1423 (HY000): Field of view 'employees.salary_view' underlying table doesn't have a default value
+```
+
+如果该表有 一个默认值，即使它不符合视图中的过滤器条件，你也可以向其中插入一行 。 为了避免这种情况，为了只允许插入符合视图条件的行，必须在定义里面提供 WITH CHECK OPTION。
+
+VIEW算法:
+
+- MERGE: MySQL 将输入查询和视图定义合并到一个查询中，然后执行组合查询。 仅允许在简单视图上使用 MERGE 算法 。
+- TEMPTABLE: MySQL将结果存储到临时表中，然后对这个临时表执行输入查询。
+- UNDEFINED: MySQL 自动选择MERGE 或 TEMPTABLE 算法。MySQL 把MERGE 算法作为首选的 TEMPTABLE 算法， 因为 MERGE 算法效率更高。
+
+### 事件
+
+就像 Linux 服务器上的 cron 一样， MySQL 的 EVENTS 是用来处理计划任务的 。MySQL 使用称为事件调度线程的特妹线程来执行所有预定事件。 默认情况下， 事件调度线程是未 启用(版本低于 8.0.3 )的状态，如果要启用它，执行以下命令 :
+
+```mysql
+mysql> set global event_scheduler = ON;
+Query OK, 0 rows affected (0.01 sec)
+```
+
+#### 如何操作
+
+假设你不再需要保留一个月之前的薪水审计记录， 则可以设定一个每日运行的事件，用它从 salary audit 表中删除一个月之前的记录。
+
+```mysql
+drop EVENT if exists purge_salary_audit;
+delimiter $$
+create EVENT if not exists purge_salary_audit
+on SCHEDULE
+	every 1 week
+	starts current_date
+	DO BEGIN
+		delete from salary_audit where date_modified < date_add(curdate(), interval - 7 day);
+	END;$$
+delimiter ;
+```
+
+检查事件:
+
+```mysql
+show EVENTS\G
+```
+
+检查事件定义：
+
+```mysql
+show create EVENT purge_salary_audit\G
+```
+
+禁用/启用事件:
+
+```mysql
+ALTER EVENT purge_salary_audit DISABLE;
+ALTER EVENT purge_salary_audit ENABLE;
+```
+
+### 获取有关数据库和表的信息
+
+#### TABLES
+
+例如，假设你想知道 employees 数据库中的 DATA LENGTH 、 INDEX LENGTH 和DATE FREE，代码如下:
+
+```mysql
+select 
+	sum(data_length)/1024/1024 as data_size_mb, 
+	sum(index_length)/1024/2014 as index_size_mb, 
+	sum(data_free)/1024/1-24 as data_free_mb 
+from 
+	information_schema.tables 
+where 
+	table_schema='employees';
++--------------+---------------+----------------+
+| data_size_mb | index_size_mb | data_free_mb   |
++--------------+---------------+----------------+
+| 142.85937500 |    2.82025819 | 20456.00000000 |
++--------------+---------------+----------------+
+1 row in set (0.00 sec)
+```
+
+#### COLUMNS
+
+列出每个表的所有列及其定义:
+
+```mysql
+select * from columns where table_name='employees'\G
+```
+
+#### FILES
+
+```mysql
+select * from files where file_name like './employees/employees.ibd'\G
+```
+
+#### INNODB_TABLESPACES
+
+```mysql
+select * from innodb_tablespaces where name='employees/employees'\G
+```
+
+#### INNODB_TABLESTATS
+
+```mysql
+select * from innodb_tablestats where name='employees/employees'\G
+```
+
+#### PROCESSLIST
+
+```mysql
+mysql> select * from processlist\G
+*************************** 1. row ***************************
+     ID: 4
+   USER: event_scheduler
+   HOST: localhost
+     DB: NULL
+COMMAND: Daemon
+   TIME: 3290
+  STATE: Waiting for next activation
+   INFO: NULL
+*************************** 2. row ***************************
+     ID: 21
+   USER: root
+   HOST: localhost
+     DB: information_schema
+COMMAND: Query
+   TIME: 0
+  STATE: executing
+   INFO: select * from processlist
+2 rows in set (0.00 sec)
+```
+
+```mysql
+mysql> show processlist;
++----+-----------------+-----------+--------------------+---------+------+-----------------------------+------------------+
+| Id | User            | Host      | db                 | Command | Time | State                       | Info             |
++----+-----------------+-----------+--------------------+---------+------+-----------------------------+------------------+
+|  4 | event_scheduler | localhost | NULL               | Daemon  | 3337 | Waiting for next activation | NULL             |
+| 21 | root            | localhost | information_schema | Query   |    0 | starting                    | show processlist |
++----+-----------------+-----------+--------------------+---------+------+-----------------------------+------------------+
+2 rows in set (0.00 sec)
+```
 
 
 
 
 
+## 进阶使用
+
+#### 使用JSON
+
+使用JSON保存更多的员工信息
+
+```mysql
+create table emp_details(
+	emp_no int primary key,
+	details json
+);
+```
+
+##### 插入JSON
+
+```mysql
+insert into emp_details(emp_no, details)
+values (1,
+	'{
+		"location": "IN",
+		"phone": "+86111111111",
+		"email": "kiding@kid.com",
+		"address": {
+			"line1": "abc",
+			"line2": "xyz street",
+			"city": "Bangalore",
+			"pin": "560103"
+		}
+	}'
+);
+```
+
+##### 检索JSON
+
+使用 -> 和 ->> 运算符检索JSON列的字段
+
+```mysql
+mysql> select emp_no, details->'$.address.pin' pin from emp_details;
++--------+----------+
+| emp_no | pin      |
++--------+----------+
+|      1 | "560103" |
++--------+----------+
+1 row in set (0.01 sec)
+```
+
+```mysql
+mysql> select emp_no, details->>'$.address.pin' pin from emp_details;
++--------+--------+
+| emp_no | pin    |
++--------+--------+
+|      1 | 560103 |
++--------+--------+
+1 row in set (0.03 sec)
+```
+
+#### JSON函数
+
+##### 优雅预览
+
+```mysql
+mysql> select emp_no, JSON_PRETTY(details) from emp_details\G
+*************************** 1. row ***************************
+              emp_no: 1
+JSON_PRETTY(details): {
+  "email": "kiding@kid.com",
+  "phone": "+86111111111",
+  "address": {
+    "pin": "560103",
+    "city": "Bangalore",
+    "line1": "abc",
+    "line2": "xyz street"
+  },
+  "location": "IN"
+}
+1 row in set (0.00 sec)
+```
+
+##### 查找
+
+可以在 WHERE 子句中使用 col->>path 运算符来引用 JSON 的某一列 :
+
+```mysql
+select emp_no from emp_details where details->>'$.address.pin' = "560103";
+```
+
+也可以使用 ***JSON_CONTAINS*** 函数查询数据。如果找到了数据，则返回 1，否则返回 0:
+
+```mysql
+select JSON_CONTAINS(details->>'$.adress.pin', '560103') from emp_details;
+```
+
+如何查询一个 key? 假设要检查 address.line1 是否存在:
+
+```mysql
+mysql> select JSON_CONTAINS(details->>'$.adress.pin', '560103') from emp_details;
++---------------------------------------------------+
+| JSON_CONTAINS(details->>'$.adress.pin', '560103') |
++---------------------------------------------------+
+|                                              NULL |
++---------------------------------------------------+
+1 row in set (0.01 sec)
+```
+
+这里，one表示至少应该存在一个键。
+
+```mysql
+mysql> select JSON_CONTAINS_PATH(details, 'one', "$.address.line1") from emp_details;
++-------------------------------------------------------+
+| JSON_CONTAINS_PATH(details, 'one', "$.address.line1") |
++-------------------------------------------------------+
+|                                                     1 |
++-------------------------------------------------------+
+1 row in set (0.01 sec)
+```
+
+如果要检查 address.line1 和 address. Line5 是否同时存在，可以使用 all，而不是 one:
+
+```mysql
+mysql> select JSON_CONTAINS_PATH(details, 'all', '$.address.line1', '$.address.line5') from emp_details;
++--------------------------------------------------------------------------+
+| JSON_CONTAINS_PATH(details, 'all', '$.address.line1', '$.address.line5') |
++--------------------------------------------------------------------------+
+|                                                                        0 |
++--------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+```
+
+##### 修改
+
+- JSON_SET(): 天环现有值并添加不存在的值。
+
+  假设要替换员工的pin码，并添加昵称的详细信息
+
+  ```mysql
+  update 
+  	emp_details
+  set
+  	details = JSON_SET(details, "$.address.pin", "560100", "$.nickname", "kai")
+  where
+  	emp_no = 1;
+  ```
+
+- JSON_INSERT(): 插入值，但不替换现有值。
+
+  假设你希望添加新列而不更新现有值
+
+  ```mysql
+  update
+  	emp_details
+  set 
+  	details=JSON_INSERT(details, "$.address.pin", "560132", "$.address.line4", "A Wing")
+  where
+  	emp_no=1;
+  ```
+
+- JSON_REPLACE(): 仅替换现有值。
+
+  假设只需要替换现有字段，不需要添加新字段
+
+  ```mysql
+  update 
+  	emp_details
+  set 
+  	details=JSON_REPLACE(details, "$.address.pin", "560132", "$.adress.line5", "Landmark")
+  where
+  	emp_no=1;
+  ```
+
+##### 删除
+
+JSON_REMOVE 能从 JSON文档中删除数据。
+
+```mysql
+update 
+	emp_details
+set
+	details=JSON_REMOVE(details, "$.address.line5")
+where
+	emp_no=1;
+```
+
+##### 其他函数
+
+- JSON_KEYS(): 获取JSON文档中的所有键。
+
+  ```mysql
+  select 
+  	JSON_KEYS(details) 
+  from 
+  	emp_details
+  where
+  	emp_no=1;
+  ```
+
+- JSON_LENGTH(): 给出 JSON文档中的元素数。
+
+  ```mysql
+  select 
+  	JSON_LENGTH(details) 
+  from 
+  	emp_details 
+  where
+  	emp_no=1;
+  
+  ```
+
+### 公用表表达式(CTE)
+
+MySQL8 支持公用表表达式 ，包括非递归和递归两种 。
+公用表表达式允许使用命名的临时结果集， 这是通过允许在 SELECT 语句和某些其他语句前面使用 WITH 子句来实现的。
+
+#### 非递归（CTE）
+
+**公用表表达式（CTE）**与派生表类似，但它的声明会放在查询块之前，而不是FROM子句中。
+
+##### 派生表
+
+
+
+
+
+## 事务
+
+### ACID属性
+
+#### 原子性（Atomicity）
+
+所有的SQL语句要么全部成功，要么全部失败，不会存在部分更新。
+
+#### 一致性（Coonsistency）
+
+事务只能以允许的方式改变受其影响的数据 。
+
+#### 隔离性（Isolation）
+
+同时发生的事务(并发事务)不应该导致数据库处于不一致的状态中。系统中每个事务都应该像唯一事务一样执行。 任何事务都不应影响其他事务的存在。
+
+#### 持久性（Durability）
+
+无论数据库或系统是否发生故障，数据都会永久保存在磁盘上，并且不会丢失。
+
+### 执行事务
+
+创建操作表
+
+```mysql
+create database bank;
+use bank;
+
+create table account(
+	account_number varchar(10) primary key,
+	balance int
+);
+
+insert into account values('A', 600), ('B', 400);
+```
+
+启动事务 ```start TRANSACTION``` 或者 ```BEGIN```
+
+```mysql
+BEGIN
+
+select 
+	balance INTO @a.bal 
+from 
+	account 
+where 
+	account_number='A';
+
+update
+	account
+set
+	balance=@a.bal-100 
+where
+	account_number='A';
+
+select
+	balance INTO @b.bal
+from 
+	account
+where
+	account_number='B';
+
+update
+	account
+set
+	balance=@b.bal+100
+where
+	account_number='B';
+
+COMMIT;
+```
+
+如果遇到错误并希望中止事务， 可以发送 **ROLLBACK** 语句而非 **COMMIT** 语句 。
+
+```mysql
+start TRANSACTION
+select balance into @a.bal from account where account_number='A';
+update account set balance=@a.bal-100 where account_number='A';
+select balance into @c.bal from account where account_number='C';
+show warnings;
+select @c.bal;
+rollback;
+```
+
+**autocommit**
+
+默认情况下，autocommit 的状态是ON，这意味着所有单独的语句一旦被执行就会 被提交，除非该语句在 BEGIN... COMMIT 块中 。 如果 autocommit 的状态为 OFF， 则需要明确发出 COMMIT 语句来提交事务 。 要禁用 autocommit ，请执行 :
+
+```mysql
+set autocommit=0;
+```
+
+DDL 语句，如数据库的 CREATE 或 DROP 语句，以及表或存储例程的 CREATE、DROP或 ALTER 语句，都是无法回滚的 。
+
+### 使用保存点
+
+使用保存点可以回滚到事务中的某些点，而且无须中止事务。你可以使用 SAVEPOINT 标识符为 事务设置名称，并使用 ROLLBACK TO 标识语句将事务回滚到指定的保存点而不中止事务。
+
+```mysql
+BEGIN;
+select balance INTO @a.bal from account where account_number='A';
+update account set balance=@a.bal-100 where account_number='A';
+update account set balance=balance+100 where account_number='B';
+SAVEPOINT transfer_to_b;
+select balance INTO @a.bal from account where account_number='A';
+update account set balance=balance+100 where account_number='C';
+ROLLBACK TO transfer_to_b;
+commit;
+```
+
+### 隔离级别
+
+当两个或多个事务同时发生时，隔离级别定义了一个事务与其他事务在资源或者数据修改方面的隔离程度 。有 4 种类型的隔离级别，要更改隔离级别，需要设置 tx_isolatio口变量，该变量是动态的并具有会话级别的作用范围。
+
+更改隔离级别 ```SET @@ transaction_islocation='READ-COMMITTED';``
+
+#### 读取未提交（read uncommitted）
 
 
 
