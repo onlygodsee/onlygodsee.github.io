@@ -2208,7 +2208,7 @@
   <entry>
     <title>排序优化</title>
     <url>/2020/09/01/article-40/</url>
-    <content><![CDATA[<h2 id="排序优化"><a href="#排序优化" class="headerlink" title="排序优化"></a>排序优化</h2><h3 id="如何选择合适的排序算法？"><a href="#如何选择合适的排序算法？" class="headerlink" title="如何选择合适的排序算法？"></a>如何选择合适的排序算法？</h3><p><img src="/Users/woo/Desktop/onlygodsee_git/onlygodsee.github.io/source/_posts/article-40/1f6ef7e0a5365d6e9d68f0ccc71755fd.jpg" alt></p>
+    <content><![CDATA[<h2 id="排序优化"><a href="#排序优化" class="headerlink" title="排序优化"></a>排序优化</h2><h3 id="如何选择合适的排序算法？"><a href="#如何选择合适的排序算法？" class="headerlink" title="如何选择合适的排序算法？"></a>如何选择合适的排序算法？</h3><p><img src="/2020/09/01/article-40/1f6ef7e0a5365d6e9d68f0ccc71755fd.jpg" alt></p>
 <p>线性排序算法的时间复杂度比较低，适用场景比较特殊。所以如果要写一个通用的排序函数，不能选择线性排序算法。</p>
 <p>如果对小规模数据进行排序，可以选择时间复杂度是 O(n^2) 的算法；如果对大规模数据进行排序，时间复杂度是 O(nlogn) 的算法更加高效。所以，为了兼顾任意规模数据的排序，一般都会首选时间复杂度是 O(nlogn) 的排序算法来实现排序函数。</p>
 <p>归并排序虽然时间复杂度是 O(nlogn) ，但并不是原地排序，需要消耗掉额外的空间，所以一般用快排来实现通用排序。</p>
