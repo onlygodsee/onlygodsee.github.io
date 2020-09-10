@@ -21,15 +21,15 @@
     var CONFIG = {"hostname":"onlygodsee.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="栈结构特点后进先出，先进后出。 如何实现一个“栈”用数组实现的栈，我们叫作顺序栈*，用链表实现的栈，我们叫作链式栈。* 顺序栈1234567891011121314151617181920212223242526272829303132333435class MyStack:    def __init__(self):        self.my_stack &#x3D; []        self.">
+  <meta name="description" content="初识栈">
 <meta property="og:type" content="article">
 <meta property="og:title" content="栈">
 <meta property="og:url" content="http://onlygodsee.github.io/2020/08/31/article-34/index.html">
 <meta property="og:site_name" content="太液池">
-<meta property="og:description" content="栈结构特点后进先出，先进后出。 如何实现一个“栈”用数组实现的栈，我们叫作顺序栈*，用链表实现的栈，我们叫作链式栈。* 顺序栈1234567891011121314151617181920212223242526272829303132333435class MyStack:    def __init__(self):        self.my_stack &#x3D; []        self.">
+<meta property="og:description" content="初识栈">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-31T06:50:33.000Z">
-<meta property="article:modified_time" content="2020-09-03T07:10:46.744Z">
+<meta property="article:modified_time" content="2020-09-10T05:35:38.952Z">
 <meta property="article:author" content="涧石">
 <meta property="article:tag" content="基础篇">
 <meta property="article:tag" content="数据结构与算法">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-03 15:10:46" itemprop="dateModified" datetime="2020-09-03T15:10:46+08:00">2020-09-03</time>
+                <time title="修改时间：2020-09-10 13:35:38" itemprop="dateModified" datetime="2020-09-10T13:35:38+08:00">2020-09-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -265,7 +265,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="结构特点"><a href="#结构特点" class="headerlink" title="结构特点"></a>结构特点</h3><p>后进先出，先进后出。</p>
+        <p>初识栈</p>
+<a id="more"></a>
+
+<h3 id="结构特点"><a href="#结构特点" class="headerlink" title="结构特点"></a>结构特点</h3><p>后进先出，先进后出。</p>
 <h3 id="如何实现一个“栈”"><a href="#如何实现一个“栈”" class="headerlink" title="如何实现一个“栈”"></a>如何实现一个“栈”</h3><p>用数组实现的栈，我们叫作<strong><em>顺序栈*</em></strong>，用链表实现的栈，我们叫作<strong>链式栈</strong>。*</p>
 <h4 id="顺序栈"><a href="#顺序栈" class="headerlink" title="顺序栈"></a>顺序栈</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyStack</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.my_stack = []</span><br><span class="line">        self.length = <span class="number">10</span></span><br><span class="line">        self.count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self, value)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        入栈</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 栈空间已满</span></span><br><span class="line">        <span class="keyword">if</span> self.count == self.length:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        print(<span class="string">f"before push, now length is : <span class="subst">&#123;self.count&#125;</span>"</span>)</span><br><span class="line">        self.my_stack.insert(<span class="number">0</span>, value)</span><br><span class="line">        print(<span class="string">f"push <span class="subst">&#123;value&#125;</span>"</span>)</span><br><span class="line">        self.count += <span class="number">1</span></span><br><span class="line">        print(<span class="string">f"after push, now length is : <span class="subst">&#123;self.count&#125;</span>"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pop</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        出栈</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="comment"># 栈为空</span></span><br><span class="line">        <span class="keyword">if</span> self.count == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">        print(<span class="string">f"before pop, now length is : <span class="subst">&#123;self.count&#125;</span>"</span>)</span><br><span class="line">        value = self.my_stack.pop(<span class="number">0</span>)</span><br><span class="line">        print(<span class="string">f"pop <span class="subst">&#123;value&#125;</span>"</span>)</span><br><span class="line">        self.count -= <span class="number">1</span></span><br><span class="line">        print(<span class="string">f"after pop, now length is : <span class="subst">&#123;self.count&#125;</span>"</span>)</span><br></pre></td></tr></table></figure>
 
@@ -366,7 +369,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#栈"><span class="nav-number">1.</span> <span class="nav-text">栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构特点"><span class="nav-number">1.1.</span> <span class="nav-text">结构特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何实现一个“栈”"><span class="nav-number">1.2.</span> <span class="nav-text">如何实现一个“栈”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#顺序栈"><span class="nav-number">1.2.1.</span> <span class="nav-text">顺序栈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈在函数调用中的应用"><span class="nav-number">1.3.</span> <span class="nav-text">栈在函数调用中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈在表达式求值中的应用"><span class="nav-number">1.4.</span> <span class="nav-text">栈在表达式求值中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈在括号匹配中的应用"><span class="nav-number">1.5.</span> <span class="nav-text">栈在括号匹配中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考"><span class="nav-number">1.6.</span> <span class="nav-text">思考</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么函数调用要用“栈”来保存临时变量呢？用其他数据结构不行吗？"><span class="nav-number">1.6.1.</span> <span class="nav-text">为什么函数调用要用“栈”来保存临时变量呢？用其他数据结构不行吗？</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构特点"><span class="nav-number">1.</span> <span class="nav-text">结构特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何实现一个“栈”"><span class="nav-number">2.</span> <span class="nav-text">如何实现一个“栈”</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#顺序栈"><span class="nav-number">2.1.</span> <span class="nav-text">顺序栈</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈在函数调用中的应用"><span class="nav-number">3.</span> <span class="nav-text">栈在函数调用中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈在表达式求值中的应用"><span class="nav-number">4.</span> <span class="nav-text">栈在表达式求值中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈在括号匹配中的应用"><span class="nav-number">5.</span> <span class="nav-text">栈在括号匹配中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思考"><span class="nav-number">6.</span> <span class="nav-text">思考</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么函数调用要用“栈”来保存临时变量呢？用其他数据结构不行吗？"><span class="nav-number">6.1.</span> <span class="nav-text">为什么函数调用要用“栈”来保存临时变量呢？用其他数据结构不行吗？</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -382,20 +385,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
