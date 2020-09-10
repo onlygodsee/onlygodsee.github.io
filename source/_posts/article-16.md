@@ -10,7 +10,9 @@ categories:
 
 环境：Mac  Node.js  babel
 
+认识AST结构
 
+<!-- more -->
 
 ## AST基本结构
 

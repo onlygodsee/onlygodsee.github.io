@@ -8,6 +8,10 @@ categories:
 - AST
 ---
 
+将a["length"]转变为a.length
+
+<!-- more -->
+
 ### 目标
 
 ```javascript

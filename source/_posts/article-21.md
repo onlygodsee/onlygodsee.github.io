@@ -8,7 +8,9 @@ categories:
 - AST
 ---
 
+合并Literal类型的计算表达式
 
+<!-- more -->
 
 将如下示例代码进行合并
 

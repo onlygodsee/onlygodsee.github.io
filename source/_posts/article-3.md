@@ -10,6 +10,10 @@ categories:
 - 环境管理
 ---
 
+Python环境管理--pipenv管理库
+
+<!-- more -->
+
 ## 安装pipenv
 
 ```shell

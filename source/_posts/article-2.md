@@ -10,6 +10,10 @@ categories:
 - 环境管理
 ---
 
+Python环境管理--pyenv管理环境
+
+<!-- more -->
+
 ## 安装pyenv
 
 ### Linux

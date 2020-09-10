@@ -8,6 +8,10 @@ categories:
 - AST
 ---
 
+拆分一个Literal类型的节点
+
+<!-- more -->
+
 ### 拆分NumericLiteral节点类型
 
 示例代码

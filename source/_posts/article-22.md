@@ -8,6 +8,10 @@ categories:
 - AST
 ---
 
+将 BinaryExpression 类型转换为 CallExpression 类型
+
+<!-- more -->
+
 ### 目标
 
 ```javascript

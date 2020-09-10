@@ -8,6 +8,10 @@ categories:
 - AST
 ---
 
+还原简单的 CallExpression 类型
+
+<!-- more -->
+
 #### 目标
 
 ```javascript

@@ -234,7 +234,11 @@ chat:
 # ---------------------------------------------------------------
 
 # Automatically excerpt description in homepage as preamble text.
-excerpt_description: true
+excerpt_description: false
+
+auto_excerpt: 
+  enable: true #自动截取一定程度的摘要
+  length: 150
 
 # Read more button
 # If true, the read more button will be displayed in excerpt section.
@@ -429,7 +433,6 @@ font:
   # Font settings for site title (.site-title).
   title:
     external: true
-    family:
     size:
 
   # Font settings for headlines (<h1> to <h6>).

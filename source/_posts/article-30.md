@@ -1,8 +1,15 @@
 ---
-title: article-30
+title: Python面试题收集
 date: 2020-07-30 11:00:50
 tags:
+- 面试
+categories:
+- 面试
 ---
+
+Python面试题收集
+
+<!-- more -->
 
 ## 字符串
 

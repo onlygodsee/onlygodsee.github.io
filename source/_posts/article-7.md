@@ -10,6 +10,10 @@ categories:
 
 version：8.0.17
 
+MySQL基本操作
+
+<!-- more -->
+
 
 
 ## 常用基础命令

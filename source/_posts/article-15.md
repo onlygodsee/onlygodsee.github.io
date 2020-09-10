@@ -11,7 +11,7 @@ categories:
 
 本系列为AST个人学习笔记，完整知识内容请关注知识星球 [AST入门与实战](https://wx.zsxq.com/) 和公众号 [菜鸟学Python编程]()
 
-
+<!-- more -->
 
 1、AST在线解析网站
 

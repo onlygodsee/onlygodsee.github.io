@@ -8,6 +8,10 @@ categories:
 - AST
 ---
 
+认识path和node
+
+<!-- more -->
+
 ### path(路径)常用操作
 
 #### 获取当前路径所对应的源代码
