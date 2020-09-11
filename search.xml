@@ -3019,4 +3019,64 @@
         <tag>数据结构与算法</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Trie树</title>
+    <url>/2020/09/11/article-59/</url>
+    <content><![CDATA[<p>搜索引擎最基本的原理-Trie树</p>
+<a id="more"></a>
+
+<h3 id="什么是“Trie-树”？"><a href="#什么是“Trie-树”？" class="headerlink" title="什么是“Trie 树”？"></a>什么是“Trie 树”？</h3><p>Trie 树的本质，就是利用字符串之间的公共前缀，将重复的前缀合并在一起。</p>
+<p><img src="280fbc0bfdef8380fcb632af39e84b32.jpg" alt=""></p>
+<h3 id="如何实现一棵-Trie-树？"><a href="#如何实现一棵-Trie-树？" class="headerlink" title="如何实现一棵 Trie 树？"></a>如何实现一棵 Trie 树？</h3><h4 id="Trie-树主要有两个操作"><a href="#Trie-树主要有两个操作" class="headerlink" title="Trie 树主要有两个操作"></a>Trie 树主要有两个操作</h4><ul>
+<li>一个是将字符串集合构造成 Trie 树</li>
+<li>一个是在 Trie 树中查询一个字符串</li>
+</ul>
+<h4 id="如何存储一个-Trie-树？"><a href="#如何存储一个-Trie-树？" class="headerlink" title="如何存储一个 Trie 树？"></a>如何存储一个 Trie 树？</h4><h5 id="经典的存储方式"><a href="#经典的存储方式" class="headerlink" title="经典的存储方式"></a>经典的存储方式</h5><p>通过一个下标与字符一一映射的数组，来存储子节点的指针。</p>
+<p><img src="f5a4a9cb7f0fe9dcfbf29eb1e5da6d35.jpg" alt=""></p>
+<p>时间复杂度 O(k)， k表示目标查询字符串长度</p>
+<h4 id="Trie树的内存消耗"><a href="#Trie树的内存消耗" class="headerlink" title="Trie树的内存消耗"></a>Trie树的内存消耗</h4><p>Trie树非常内存消耗内存，采用的是空间换取时间的策略。</p>
+<h3 id="Trie-树与散列表、红黑树的比较"><a href="#Trie-树与散列表、红黑树的比较" class="headerlink" title="Trie 树与散列表、红黑树的比较"></a>Trie 树与散列表、红黑树的比较</h3><ul>
+<li>字符串中包含的字符集不能太大。我们前面讲到，如果字符集太大，那存储空间可能就会浪费很多。即便可以优化，但也要付出牺牲查询、插入效率的代价。</li>
+<li>要求字符串的前缀重合比较多，不然空间消耗会变大很多。</li>
+<li>如果要用 Trie 树解决问题，那我们就要自己从零开始实现一个 Trie 树，还要保证没有 bug，这个在工程上是将简单问题复杂化，除非必须，一般不建议这样做。</li>
+<li>我们知道，通过指针串起来的数据块是不连续的，而 Trie 树中用到了指针，所以，对缓存并不友好，性能上会打个折扣。</li>
+</ul>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="如果现在给你一个很大的字符串集合，比如包含-1-万条记录，如何通过编程量化分析这组字符串集合是否比较适合用-Trie-树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？"><a href="#如果现在给你一个很大的字符串集合，比如包含-1-万条记录，如何通过编程量化分析这组字符串集合是否比较适合用-Trie-树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？" class="headerlink" title="如果现在给你一个很大的字符串集合，比如包含 1 万条记录，如何通过编程量化分析这组字符串集合是否比较适合用 Trie 树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？"></a>如果现在给你一个很大的字符串集合，比如包含 1 万条记录，如何通过编程量化分析这组字符串集合是否比较适合用 Trie 树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？</h4>]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AC自动机</title>
+    <url>/2020/09/11/article-60/</url>
+    <content><![CDATA[<p>用多模式串匹配实现敏感词过滤</p>
+<a id="more"></a>
+
+<h3 id="基于单模式串和-Trie-树实现的敏感词过滤"><a href="#基于单模式串和-Trie-树实现的敏感词过滤" class="headerlink" title="基于单模式串和 Trie 树实现的敏感词过滤"></a>基于单模式串和 Trie 树实现的敏感词过滤</h3><p>BF 算法、RK 算法、BM 算法、KMP 算法，还有 Trie 树这几种算法中，只有Trie树是多模式串匹配算法。</p>
+<p>单模式串匹配中，匹配每个模式串时都需要遍历一遍主串，相比之下，多模式串匹配只需要遍历一遍主串，所以后者效率会更高。</p>
+<h4 id="如何用-Trie-树实现敏感词过滤功能"><a href="#如何用-Trie-树实现敏感词过滤功能" class="headerlink" title="如何用 Trie 树实现敏感词过滤功能"></a>如何用 Trie 树实现敏感词过滤功能</h4><p>我们可以对敏感词字典进行预处理，构建成 Trie 树结构。这个预处理的操作只需要做一次，如果敏感词字典动态更新了，比如删除、添加了一个敏感词，那我们只需要动态更新一下 Trie 树就可以了。</p>
+<p>当用户输入一个文本内容后，我们把用户输入的内容作为主串，从第一个字符（假设是字符 C）开始，在 Trie 树中匹配。当匹配到 Trie 树的叶子节点，或者中途遇到不匹配字符的时候，我们将主串的开始匹配位置后移一位，也就是从字符 C 的下一个字符开始，重新在 Trie 树中匹配。</p>
+<p>基于 Trie 树的这种处理方法，有点类似单模式串匹配的 BF 算法。所以可以进一步改进–&gt;<strong><em>AC 自动机</em></strong></p>
+<h3 id="经典的多模式串匹配算法：AC-自动机"><a href="#经典的多模式串匹配算法：AC-自动机" class="headerlink" title="经典的多模式串匹配算法：AC 自动机"></a>经典的多模式串匹配算法：AC 自动机</h3><h4 id="构建AC自动机"><a href="#构建AC自动机" class="headerlink" title="构建AC自动机"></a>构建AC自动机</h4><p>类似KMP算法的next失效数组构建方式，这里叫做<strong><em>失效指针</em></strong></p>
+<p>我们可以逐层依次来求解每个节点的失败指针。</p>
+<p>构建好的样子如下图：</p>
+<p><img src="5150d176502dda4adfc63e9b2915b23c.jpg" alt=""></p>
+<h4 id="如何在-AC-自动机上匹配主串？"><a href="#如何在-AC-自动机上匹配主串？" class="headerlink" title="如何在 AC 自动机上匹配主串？"></a>如何在 AC 自动机上匹配主串？</h4><p>在匹配过程中，主串从 i=0 开始，AC 自动机从指针 p=root 开始，假设模式串是 b，主串是 a。</p>
+<ul>
+<li>如果 p 指向的节点有一个等于 b[i]的子节点 x，我们就更新 p 指向 x，这个时候我们需要通过失败指针，检测一系列失败指针为结尾的路径是否是模式串。这一句不好理解，你可以结合代码看。处理完之后，我们将 i 加一，继续这两个过程；</li>
+<li>如果 p 指向的节点没有等于 b[i]的子节点，那失败指针就派上用场了，我们让 p=p-&gt;fail，然后继续这 2 个过程。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
 </search>
