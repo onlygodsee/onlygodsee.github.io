@@ -1592,7 +1592,7 @@
     <content><![CDATA[<p>Python面试题收集</p>
 <a id="more"></a>
 
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><h4 id="将”hello-world”转换为首字母大写”Hello-World”"><a href="#将”hello-world”转换为首字母大写”Hello-World”" class="headerlink" title="将”hello world”转换为首字母大写”Hello World”"></a>将”hello world”转换为首字母大写”Hello World”</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"hello world"</span>.title()</span><br></pre></td></tr></table></figure>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><h4 id="将”hello-world”转换为首字母大写”Hello-World”"><a href="#将”hello-world”转换为首字母大写”Hello-World”" class="headerlink" title="将”hello world”转换为首字母大写”Hello World”"></a>将”hello world”转换为首字母大写”Hello World”</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"hello world"</span>.title()</span><br></pre></td></tr></table></figure>
 
 
 
