@@ -1,0 +1,480 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/my_ico.ico">
+  <link rel="icon" type="image/png" href="/img/my_ico.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="涧石">
+  <meta name="keywords" content="">
+  <title>排序（上）- 冒泡、插入和选择 - 太液池</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"onlygodsee.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>太液池</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="排序（上）- 冒泡、插入和选择">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-09-01 10:50" pubdate>
+        2020年9月1日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">排序（上）- 冒泡、插入和选择</h1>
+            
+            <div class="markdown-body">
+              <p>冒泡、插入和选择</p>
+<a id="more"></a>
+
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>最经典的、最常用的：冒泡排序、插入排序、选择排序、归并排序、快速排序、计数排序、基数排序、桶排序。</p>
+<h3 id="分为三类"><a href="#分为三类" class="headerlink" title="分为三类"></a>分为三类</h3><h4 id="冒泡排序、插入排序、选择排序"><a href="#冒泡排序、插入排序、选择排序" class="headerlink" title="冒泡排序、插入排序、选择排序"></a>冒泡排序、插入排序、选择排序</h4><p>时间复杂度O(n^2), 基于比较</p>
+<h4 id="归并排序、快速排序"><a href="#归并排序、快速排序" class="headerlink" title="归并排序、快速排序"></a>归并排序、快速排序</h4><p>时间复杂度O(nlogn), 基于比较</p>
+<h4 id="计数排序、基数排序、桶排序"><a href="#计数排序、基数排序、桶排序" class="headerlink" title="计数排序、基数排序、桶排序"></a>计数排序、基数排序、桶排序</h4><p>时间复杂度O(n), 不基于比较</p>
+<h3 id="如何分析一个“排序算法”？"><a href="#如何分析一个“排序算法”？" class="headerlink" title="如何分析一个“排序算法”？"></a>如何分析一个“排序算法”？</h3><h4 id="排序算法的执行效率"><a href="#排序算法的执行效率" class="headerlink" title="排序算法的执行效率"></a>排序算法的执行效率</h4><h6 id="最好情况、最坏情况、平均情况时间复杂度"><a href="#最好情况、最坏情况、平均情况时间复杂度" class="headerlink" title="最好情况、最坏情况、平均情况时间复杂度"></a>最好情况、最坏情况、平均情况时间复杂度</h6><h6 id="时间复杂度的系数、常数-、低阶"><a href="#时间复杂度的系数、常数-、低阶" class="headerlink" title="时间复杂度的系数、常数 、低阶"></a>时间复杂度的系数、常数 、低阶</h6><h6 id="比较次数和交换（或移动）次数"><a href="#比较次数和交换（或移动）次数" class="headerlink" title="比较次数和交换（或移动）次数"></a>比较次数和交换（或移动）次数</h6><h4 id="排序算法的内存消耗"><a href="#排序算法的内存消耗" class="headerlink" title="排序算法的内存消耗"></a>排序算法的内存消耗</h4><p>我们前面讲过，算法的内存消耗可以通过空间复杂度来衡量，排序算法也不例外。不过，针对排序算法的空间复杂度，我们还引入了一个新的概念，原地排序（Sorted in place）。原地排序算法，就是特指空间复杂度是 O(1) 的排序算法。</p>
+<h4 id="排序算法的稳定性"><a href="#排序算法的稳定性" class="headerlink" title="排序算法的稳定性"></a>排序算法的稳定性</h4><p>这个概念是说，如果待排序的序列中存在值相等的元素，经过排序之后，相等元素之间原有的先后顺序不变。</p>
+<h3 id="冒泡排序（Bubble-Sort）"><a href="#冒泡排序（Bubble-Sort）" class="headerlink" title="冒泡排序（Bubble Sort）"></a>冒泡排序（Bubble Sort）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">arrays = [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bubble_sort</span><span class="hljs-params">(arrays)</span>:</span><br>    length = len(arrays)<br>    <span class="hljs-keyword">if</span> length &lt; <span class="hljs-number">2</span>:<br>        <span class="hljs-keyword">return</span> arrays<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(length):<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(length-i<span class="hljs-number">-1</span>):<br>            <span class="hljs-keyword">if</span> arrays[j+<span class="hljs-number">1</span>] &lt; arrays[j]:<br>                arrays[j+<span class="hljs-number">1</span>], arrays[j] = arrays[j], arrays[j+<span class="hljs-number">1</span>]<br><br>    print(arrays)<br></code></pre></td></tr></table></figure>
+
+<h6 id="冒泡排序是原地排序，空间复杂度为O-1"><a href="#冒泡排序是原地排序，空间复杂度为O-1" class="headerlink" title="冒泡排序是原地排序，空间复杂度为O(1)"></a>冒泡排序是原地排序，空间复杂度为O(1)</h6><h6 id="当相邻两元素相等时不做交换时为稳定排序"><a href="#当相邻两元素相等时不做交换时为稳定排序" class="headerlink" title="当相邻两元素相等时不做交换时为稳定排序"></a>当相邻两元素相等时不做交换时为稳定排序</h6><h4 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h4><p>最好时间复杂度为O(n), 最坏时间复杂度为O(n^2)</p>
+<h5 id="平均时间复杂度"><a href="#平均时间复杂度" class="headerlink" title="平均时间复杂度"></a>平均时间复杂度</h5><p>又称加权平均期望复杂度。</p>
+<p>如果用概率论方法定量分析平均时间复杂度，涉及的数学推理和计算就会很复杂。我这里还有一种思路，通过“<strong><em>有序度</em></strong>”和“<strong><em>逆序度</em></strong>”这两个概念来进行分析。</p>
+<p><strong><em>有序度</em></strong>是数组中具有有序关系的元素对的个数。其数学表达式为：</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs matlab">有序元素对：a[<span class="hljs-built_in">i</span>] &lt;= a[<span class="hljs-built_in">j</span>], 如果<span class="hljs-built_in">i</span> &lt; <span class="hljs-built_in">j</span>。<br></code></pre></td></tr></table></figure>
+
+<p>完全有序的数组，其有序度为:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">n</span><span class="hljs-params">(n-<span class="hljs-number">1</span>)</span></span> / <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<p>完全有序的数组的有序度叫作<strong><em>满有序度</em></strong></p>
+<p>逆序度的定义正好跟有序度相反。</p>
+<p>三者的关系</p>
+<p><strong><em>满有序度 = 有序度 + 逆序度</em></strong></p>
+<p>我们排序的过程就是一种增加有序度，减少逆序度的过程，最后达到满有序度，就说明排序完成了。</p>
+<p>所以冒泡排序的平均时间复杂度为O(n^2)</p>
+<h3 id="插入排序（Insertion-Sort）"><a href="#插入排序（Insertion-Sort）" class="headerlink" title="插入排序（Insertion Sort）"></a>插入排序（Insertion Sort）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python">arrays = [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]<br><br><span class="hljs-comment"># 插入排序</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">insertionsort</span><span class="hljs-params">(arrays)</span>:</span><br>    length = len(arrays)<br><br>    <span class="hljs-keyword">if</span> length &lt; <span class="hljs-number">2</span>:<br>        <span class="hljs-keyword">return</span> arrays<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, length):<br>        j = i - <span class="hljs-number">1</span><br>        val = arrays[i]<br><br>        <span class="hljs-keyword">while</span> j &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> arrays[j] &gt; val:<br>            arrays[j+<span class="hljs-number">1</span>] = arrays[j]<br>            j -= <span class="hljs-number">1</span><br><br>        arrays[j+<span class="hljs-number">1</span>] = val<br><br>    print(arrays)<br></code></pre></td></tr></table></figure>
+
+<h6 id="冒泡排序是原地排序，空间复杂度为O-1-1"><a href="#冒泡排序是原地排序，空间复杂度为O-1-1" class="headerlink" title="冒泡排序是原地排序，空间复杂度为O(1)"></a>冒泡排序是原地排序，空间复杂度为O(1)</h6><h6 id="当相邻两元素相等时不做交换时为稳定排序-1"><a href="#当相邻两元素相等时不做交换时为稳定排序-1" class="headerlink" title="当相邻两元素相等时不做交换时为稳定排序"></a>当相邻两元素相等时不做交换时为稳定排序</h6><h6 id="最好时间复杂度O-n-最坏时间复杂度O-n-2-平均时间复杂度O-n-2"><a href="#最好时间复杂度O-n-最坏时间复杂度O-n-2-平均时间复杂度O-n-2" class="headerlink" title="最好时间复杂度O(n), 最坏时间复杂度O(n^2), 平均时间复杂度O(n^2)"></a>最好时间复杂度O(n), 最坏时间复杂度O(n^2), 平均时间复杂度O(n^2)</h6><h3 id="选择排序（Selection-Sort）"><a href="#选择排序（Selection-Sort）" class="headerlink" title="选择排序（Selection Sort）"></a>选择排序（Selection Sort）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 选择排序</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">selectionsort</span><span class="hljs-params">(arrays)</span>:</span><br>    length = len(arrays)<br><br>    <span class="hljs-keyword">if</span> len(arrays) &lt; <span class="hljs-number">2</span>:<br>        <span class="hljs-keyword">return</span> arrays<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(length):<br>        min_val = arrays[i]<br>        min_idx = i<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(i+<span class="hljs-number">1</span>, length):<br>            <span class="hljs-keyword">if</span> arrays[j] &lt; min_val:<br>                min_val = arrays[j]<br>                min_idx = j<br><br>        <span class="hljs-keyword">if</span> min_idx != i:<br>            arrays[i], arrays[min_idx] = arrays[min_idx], arrays[i]<br><br>    print(arrays)<br></code></pre></td></tr></table></figure>
+
+<h6 id="空间复杂度-O-1"><a href="#空间复杂度-O-1" class="headerlink" title="空间复杂度 O(1)"></a>空间复杂度 O(1)</h6><h6 id="不稳定排序"><a href="#不稳定排序" class="headerlink" title="不稳定排序"></a>不稳定排序</h6><h6 id="最好时间复杂度O-n-2-最坏时间复杂度O-n-2-，平均时间复杂度O-n-2"><a href="#最好时间复杂度O-n-2-最坏时间复杂度O-n-2-，平均时间复杂度O-n-2" class="headerlink" title="最好时间复杂度O(n^2), 最坏时间复杂度O(n^2)，平均时间复杂度O(n^2)"></a>最好时间复杂度O(n^2), 最坏时间复杂度O(n^2)，平均时间复杂度O(n^2)</h6><h3 id="为什么插入排序要比冒泡排序更受欢迎呢"><a href="#为什么插入排序要比冒泡排序更受欢迎呢" class="headerlink" title="为什么插入排序要比冒泡排序更受欢迎呢"></a>为什么插入排序要比冒泡排序更受欢迎呢</h3><p>因为冒泡排序需要两个位置进行数据交换，对于C语言这种就需要三个变量进行操作；但插入排序，只需要将数据后移，可以省略交换的操作。假设赋值语句时时间是K，那么冒泡排序需要的就是3K，而插入排序就是K，差距显而易见。</p>
+<p>另外，<strong><em>希尔排序</em></strong> 是对插入排序的优化。</p>
+<h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>冒泡、插入和选择对于小规模数据非常高效，但当数据规模很大时，就不再适用了。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="数据存储在链表中，这三种排序算法还能工作吗？如果能，那相应的时间、空间复杂度又是多少呢？"><a href="#数据存储在链表中，这三种排序算法还能工作吗？如果能，那相应的时间、空间复杂度又是多少呢？" class="headerlink" title="数据存储在链表中，这三种排序算法还能工作吗？如果能，那相应的时间、空间复杂度又是多少呢？"></a>数据存储在链表中，这三种排序算法还能工作吗？如果能，那相应的时间、空间复杂度又是多少呢？</h4><p>考虑只能改变节点位置，冒泡排序相比于数组实现，比较次数一致，但交换时操作更复杂；插入排序，比较次数一致，不需要再有后移操作，找到位置后可以直接插入，但排序完毕后可能需要倒置链表；选择排序比较次数一致，交换操作同样比较麻烦。综上，时间复杂度和空间复杂度并无明显变化，若追求极致性能，冒泡排序的时间复杂度系数会变大，插入排序系数会减小，选择排序无明显变化。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80%E7%AF%87/">基础篇</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/01/article-38/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">排序（下）- 归并和快排</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/31/article-36/">
+                        <span class="hidden-mobile">递归</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>

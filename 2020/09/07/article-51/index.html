@@ -1,0 +1,549 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/my_ico.ico">
+  <link rel="icon" type="image/png" href="/img/my_ico.ico">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="涧石">
+  <meta name="keywords" content="">
+  <title>红黑树（下） - 太液池</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"onlygodsee.github.io","root":"/","version":"1.8.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"onlypost":false},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>太液池</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="红黑树（下）">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-09-07 16:44" pubdate>
+        2020年9月7日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      21
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">红黑树（下）</h1>
+            
+            <div class="markdown-body">
+              <p>掌握这些技巧，你也可以实现一个红黑树</p>
+<a id="more"></a>
+
+<h3 id="实现红黑树的基本思想"><a href="#实现红黑树的基本思想" class="headerlink" title="实现红黑树的基本思想"></a>实现红黑树的基本思想</h3><p>主体流程：遇到什么样的节点排布，我们就对应怎么去调整。</p>
+<p>两个重要操作：<strong><em>左旋、右旋</em></strong></p>
+<p><img src="0e37e597737012593a93105ebbf4591e.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="插入操作的平衡调整"><a href="#插入操作的平衡调整" class="headerlink" title="插入操作的平衡调整"></a>插入操作的平衡调整</h3><h4 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h4><p><strong><em>红黑树规定，插入的节点必须是红色的。而且，二叉查找树中新插入的节点都是放在叶子节点上。</em></strong>所以，关于插入操作的平衡调整，有这样两种特殊情况，但是也都非常好处理。</p>
+<ul>
+<li>如果插入节点的父节点是黑色的，那我们什么都不用做，它仍然满足红黑树的定义。</li>
+<li>如果插入的节点是根节点，那我们直接改变它的颜色，把它变成黑色就可以了。</li>
+</ul>
+<p>除此之外，其他情况都会违背红黑树的定义，于是我们就需要进行调整，调整的过程包含两种基础的操作：<strong><em>左右旋转和改变颜色</em></strong>。</p>
+<p>红黑树的平衡调整过程是一个迭代的过程。我们把正在处理的节点叫做<strong><em>关注节点</em></strong>。关注节点会随着不停地迭代处理，而不断发生变化。最开始的关注节点就是新插入的节点。</p>
+<p>一般有三种情况：</p>
+<h5 id="CASE-1："><a href="#CASE-1：" class="headerlink" title="CASE 1："></a>CASE 1：</h5><p>如果关注节点是 a，它的叔叔节点 d 是红色，我们就依次执行下面的操作：</p>
+<ul>
+<li>将关注节点 a 的父节点 b、叔叔节点 d 的颜色都设置成黑色；</li>
+<li>将关注节点 a 的祖父节点 c 的颜色设置成红色；</li>
+<li>关注节点变成 a 的祖父节点 c；</li>
+<li>跳到 CASE 2 或者 CASE 3。</li>
+</ul>
+<p><img src="603cf91f54b5db21bd02c6c5678ecf40.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="CASE-2："><a href="#CASE-2：" class="headerlink" title="CASE 2："></a>CASE 2：</h5><p>如果关注节点是 a，它的叔叔节点 d 是黑色，关注节点 a 是其父节点 b 的右子节点，我们就依次执行下面的操作：</p>
+<ul>
+<li>关注节点变成节点 a 的父节点 b；</li>
+<li>围绕新的关注节点b 左旋；</li>
+<li>跳到 CASE 3。</li>
+</ul>
+<p><img src="4480a314f9d83c343b8adbb28b6782ad.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="CASE-3："><a href="#CASE-3：" class="headerlink" title="CASE 3："></a>CASE 3：</h5><p>如果关注节点是 a，它的叔叔节点 d 是黑色，关注节点 a 是其父节点 b 的左子节点，我们就依次执行下面的操作：</p>
+<ul>
+<li>围绕关注节点 a 的祖父节点 c 右旋；</li>
+<li>将关注节点 a 的父节点 b、兄弟节点 c 的颜色互换。</li>
+<li>调整结束。</li>
+</ul>
+<p><img src="04650d9470b1e67899f5b8b7b8e33212.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="删除操作的平衡调整"><a href="#删除操作的平衡调整" class="headerlink" title="删除操作的平衡调整"></a>删除操作的平衡调整</h3><p>删除操作的平衡调整分为两步：</p>
+<p>第一步是<strong><em>针对删除节点初步调整</em></strong>。初步调整只是保证整棵红黑树在一个节点删除之后，仍然满足最后一条定义的要求，也就是说，每个节点，从该节点到达其可达叶子节点的所有路径，都包含相同数目的黑色节点；</p>
+<p>第二步是<strong><em>针对关注节点进行二次调整</em></strong>，让它满足红黑树的第三条定义，即不存在相邻的两个红色节点。</p>
+<h4 id="针对删除节点初步调整"><a href="#针对删除节点初步调整" class="headerlink" title="针对删除节点初步调整"></a>针对删除节点初步调整</h4><p>红黑树的定义中“只包含红色节点和黑色节点”，经过初步调整之后，为了保证满足红黑树定义的最后一条要求，<strong><em>有些节点会被标记成两种颜色，“红 - 黑”或者“黑 - 黑”。如果一个节点被标记为了“黑 - 黑”</em></strong>，那在计算黑色节点个数的时候，要算成两个黑色节点。</p>
+<h5 id="CASE-1：-1"><a href="#CASE-1：-1" class="headerlink" title="CASE 1："></a>CASE 1：</h5><p>如果要删除的节点是 a，它只有一个子节点 b，那我们就依次进行下面的操作：</p>
+<ul>
+<li>删除节点 a，并且把节点 b 替换到节点 a 的位置，这一部分操作跟普通的二叉查找树的删除操作一样；</li>
+<li>节点 a 只能是黑色，节点 b 也只能是红色，其他情况均不符合红黑树的定义。这种情况下，我们把节点 b 改为黑色；</li>
+<li>调整结束，不需要进行二次调整。</li>
+</ul>
+<p><img src="a6c4c347b7cbdf57662bab399ed36cc3.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="CASE-2：-1"><a href="#CASE-2：-1" class="headerlink" title="CASE 2："></a>CASE 2：</h5><p><strong><em>如果要删除的节点 a 有两个非空子节点，并且它的后继节点就是节点 a 的右子节点 c。</em></strong>我们就依次进行下面的操作：</p>
+<ul>
+<li>如果节点 a 的后继节点就是右子节点 c，那右子节点 c 肯定没有左子树。我们把节点 a 删除，并且将节点 c 替换到节点 a 的位置。这一部分操作跟普通的二叉查找树的删除操作无异；</li>
+<li>然后把节点 c 的颜色设置为跟节点 a 相同的颜色；</li>
+<li>如果节点 c 是黑色，为了不违反红黑树的最后一条定义，我们给节点 c 的右子节点 d 多加一个黑色，这个时候节点 d 就成了“红 - 黑”或者“黑 - 黑”；</li>
+<li>这个时候，关注节点变成了节点 d，第二步的调整操作就会针对关注节点来做。</li>
+</ul>
+<p><img src="48e3bd2cdd66cb635f8a4df8fb8fd64e.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="CASE-3：-1"><a href="#CASE-3：-1" class="headerlink" title="CASE 3："></a>CASE 3：</h5><p><strong><em>如果要删除的是节点 a，它有两个非空子节点，并且节点 a 的后继节点不是右子节点</em></strong>，我们就依次进行下面的操作：</p>
+<ul>
+<li>找到后继节点 d，并将它删除，删除后继节点 d 的过程参照 CASE 1；</li>
+<li>将节点 a 替换成后继节点 d；</li>
+<li>把节点 d 的颜色设置为跟节点 a 相同的颜色；</li>
+<li>如果节点 d 是黑色，为了不违反红黑树的最后一条定义，我们给节点 d 的右子节点 c 多加一个黑色，这个时候节点 c 就成了“红 - 黑”或者“黑 - 黑”；</li>
+<li>这个时候，关注节点变成了节点 c，第二步的调整操作就会针对关注节点来做。</li>
+</ul>
+<p><img src="b93c1fa4de16aee5482424ddf49f3c29.jpg" srcset="/img/loading.gif" alt=""></p>
+<h4 id="针对关注节点进行二次调整"><a href="#针对关注节点进行二次调整" class="headerlink" title="针对关注节点进行二次调整"></a>针对关注节点进行二次调整</h4><p>二次调整是为了让红黑树中不存在相邻的红色节点。</p>
+<h5 id="CASE-1：-2"><a href="#CASE-1：-2" class="headerlink" title="CASE 1："></a>CASE 1：</h5><p><strong><em>如果关注节点是 a，它的兄弟节点 c 是红色的，</em></strong>我们就依次进行下面的操作：</p>
+<ul>
+<li>围绕关注节点 a 的父节点 b 左旋；</li>
+<li>关注节点 a 的父节点 b 和祖父节点 c 交换颜色；</li>
+<li>关注节点不变；</li>
+<li>继续从四种情况中选择适合的规则来调整。</li>
+</ul>
+<p><img src="ac76d78c064a2486e2a5b4c4903acb91.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="CASE-2：-2"><a href="#CASE-2：-2" class="headerlink" title="CASE 2："></a>CASE 2：</h5><p><strong><em>如果关注节点是 a，它的兄弟节点 c 是黑色的，并且节点 c 的左右子节点 d、e 都是黑色的，</em></strong>我们就依次进行下面的操作：</p>
+<ul>
+<li>将关注节点 a 的兄弟节点 c 的颜色变成红色；</li>
+<li>从关注节点 a 中去掉一个黑色，这个时候节点 a 就是单纯的红色或者黑色；</li>
+<li>给关注节点 a 的父节点 b 添加一个黑色，这个时候节点 b 就变成了“红 - 黑”或者“黑 - 黑”；</li>
+<li>关注节点从 a 变成其父节点 b；</li>
+<li>继续从四种情况中选择符合的规则来调整。</li>
+</ul>
+<p><img src="eca118d673c607eb2b103f3476fb24ec.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="CASE-3：-2"><a href="#CASE-3：-2" class="headerlink" title="CASE 3："></a>CASE 3：</h5><p><strong><em>如果关注节点是 a，它的兄弟节点 c 是黑色，c 的左子节点 d 是红色，c 的右子节点 e 是黑色，</em></strong>我们就依次进行下面的操作：</p>
+<ul>
+<li>围绕关注节点 a 的兄弟节点 c 右旋；</li>
+<li>节点 c 和节点 d 交换颜色；</li>
+<li>关注节点不变；</li>
+<li>跳转到 CASE 4，继续调整。</li>
+</ul>
+<p><img src="44075213100edd70315e1492422c92af.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="CASE-4："><a href="#CASE-4：" class="headerlink" title="CASE 4："></a>CASE 4：</h5><p><strong><em>如果关注节点 a 的兄弟节点 c 是黑色的，并且 c 的右子节点是红色的，</em></strong>我们就依次进行下面的操作：</p>
+<ul>
+<li>围绕关注节点 a 的父节点 b 左旋；</li>
+<li>将关注节点 a 的兄弟节点 c 的颜色，跟关注节点 a 的父节点 b 设置成相同的颜色；</li>
+<li>将关注节点 a 的父节点 b 的颜色设置为黑色；</li>
+<li>从关注节点 a 中去掉一个黑色，节点 a 就变成了单纯的红色或者黑色；</li>
+<li>将关注节点 a 的叔叔节点 e 设置为黑色；</li>
+<li>调整结束。</li>
+</ul>
+<p><img src="5f73f61bf77a7f2bb75f168cf432ec44.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="内容总结"><a href="#内容总结" class="headerlink" title="内容总结"></a>内容总结</h3><p>第一点，<strong><em>把红黑树的平衡调整的过程比作魔方复原，不要过于深究这个算法的正确性。</em></strong></p>
+<p>第二点，<strong><em>找准关注节点，不要搞丢、搞错关注节点。</em></strong></p>
+<p>第三点，<strong><em>插入操作的平衡调整比较简单，但是删除操作就比较复杂。</em></strong></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E7%A1%80%E7%AF%87/">基础篇</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">数据结构与算法</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/08/article-52/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">递归树</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/07/article-50/">
+                        <span class="hidden-mobile">红黑树（上）</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      var inputArea = document.querySelector("#local-search-input");
+      inputArea.onclick = function () {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+        this.onclick = null
+      }
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+
+</body>
+</html>
