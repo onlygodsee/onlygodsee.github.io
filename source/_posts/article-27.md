@@ -1,7 +1,11 @@
 ---
-title: article-27
+title: 某数记录
 date: 2020-06-23 16:21:43
 tags:
+- JS逆向
+categories:
+- 技术
+- JS逆向
 ---
 
 #### 某数特征
