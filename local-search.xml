@@ -968,39 +968,54 @@
   
   
   <entry>
-    <title>article-29</title>
+    <title>网易云音乐歌曲列表</title>
     <link href="/2020/07/01/article-29/"/>
     <url>/2020/07/01/article-29/</url>
     
     <content type="html"><![CDATA[<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>aHR0cHM6Ly9tdXNpYy4xNjMuY29tLyMvcGxheWxpc3Q/aWQ9MjcyODMyNDM5Ng==</p><p>获取歌曲列表的歌手信息</p><h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="/Users/woo/Desktop/onlygodsee_git/onlygodsee.github.io/source/_posts/article-29/WX20200701-110758.png" srcset="/img/loading.gif" alt=""></p><p>看到 <strong><em>textarea</em></strong> 的数据是经过处理的，全局搜索，发现啥也没有，说明有混淆</p>]]></content>
     
     
+    <categories>
+      
+      <category>技术</category>
+      
+      <category>JS逆向</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JS逆向</tag>
+      
+    </tags>
     
   </entry>
   
   
   
   <entry>
-    <title>article-28</title>
-    <link href="/2020/06/29/article-28/"/>
-    <url>/2020/06/29/article-28/</url>
-    
-    <content type="html"><![CDATA[<h3 id="Base"><a href="#Base" class="headerlink" title="Base"></a>Base</h3><h4 id="List-与-Tuple-的区别"><a href="#List-与-Tuple-的区别" class="headerlink" title="List 与 Tuple 的区别"></a>List 与 Tuple 的区别</h4><p>列表可变，元组不可变。列表表示顺序，元组表示结构（例如内存中数据库记录）。</p><h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><h4 id="Redis-为什么这么快？"><a href="#Redis-为什么这么快？" class="headerlink" title="Redis 为什么这么快？"></a>Redis 为什么这么快？</h4><ul><li>基于内存操作</li><li>数据结构简单：针对redis专门设计的数据结构，查找等操作的时间复杂度都是O(1)</li><li>多路复用和非阻塞I/O：减少了线程切换和避免了I/O阻塞</li><li>避免上下文切换</li></ul><h4 id="Redis-I-O多路复用"><a href="#Redis-I-O多路复用" class="headerlink" title="Redis I/O多路复用"></a>Redis I/O多路复用</h4><p>套接字的读写方法默认情况下是阻塞的，例如当调用读取操作 read 方法时，缓冲区没有任何数据，那么这个线程就会阻塞卡在这里，直到缓冲区有数据或者是连接被关闭时，read 方法才可以返回，线程才可以继续处理其他业务。</p><p>但这样显然降低了程序的整体执行效率，而 Redis 使用的就是非阻塞的 I/O，这就意味着 I/O 的读写流程不再是阻塞的，读写方法都是瞬间完成并返回的，也就是他会采用能读多少读多少能写多少写多少的策略来执行 I/O 操作，这显然更符合我们对性能的追求。</p><p>但这种非阻塞的 I/O 依然存在一个问题，那就是当我们执行读取数据操作时，有可能只读取了一部分数据，同样写入数据也是这种情况，当缓存区满了之后我们的数据还没写完，剩余的数据何时写何时读就成了一个问题。</p><p>而 I/O 多路复用就是解决上面的这个问题的，使用 I/O 多路复用最简单的实现方式就是使用 select 函数，此函数为操作系统提供给用户程序的 API 接口，是用于监控多个文件描述符的可读和可写情况的，这样就可以监控到文件描述符的读写事件了，当监控到相应的事件之后就可以通知线程处理相应的业务了，这样就保证了 Redis 读写功能的正常执行了。</p><h4 id="Redis-多线程"><a href="#Redis-多线程" class="headerlink" title="Redis 多线程"></a>Redis 多线程</h4><p>Redis 单线程的优点很明显，不但降低了 Redis 内部的实现复杂性，也让所有操作都可以在无锁的情况下进行操作，并且不存在死锁和线程切换带来的性能和时间上的消耗，但缺点也很明显，单线程的机制导致 Redis 的 QPS（Query Per Second，每秒查询率）很难得到有效的提高。</p><p>Redis 4.0 版本中虽然引入了多线程，但此版本中的多线程只能用于大数据量的异步删除，然而对于非删除操作的意义并不是很大。</p><p>如果我们使用多线程就可以分摊 Redis 同步读写 I/O 的压力，以及充分的利用多核 CPU 的资源，并且可以有效的提升 Redis 的 QPS。在 Redis 中虽然使用了 I/O 多路复用，并且是基于非阻塞 I/O 进行操作的，但 I/O 的读和写本身是堵塞的，比如当 socket 中有数据时，Redis 会通过调用先将数据从内核态空间拷贝到用户态空间，再交给 Redis 调用，而这个拷贝的过程就是阻塞的，当数据量越大时拷贝所需要的时间就越多，而这些操作都是基于单线程完成的。</p><p>因此在 Redis 6.0 中新增了多线程的功能来提高 I/O 的读写性能，他的主要实现思路是将主线程的 IO 读写任务拆分给一组独立的线程去执行，这样就可以使多个 socket 的读写可以并行化了，但 Redis 的命令依旧是由主线程串行执行的。</p><p>需要注意的是 Redis 6.0 默认是禁用多线程的，可以通过修改 Redis 的配置文件 redis.conf 中的 <code>io-threads-do-reads</code> 等于 <code>true</code> 来开启多线程，完整配置为 <code>io-threads-do-reads true</code>，除此之外我们还需要设置线程的数量才能正确的开启多线程的功能，同样是修改 Redis 的配置，例如设置 <code>io-threads 4</code> 表示开启 4 个线程。</p>]]></content>
-    
-    
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>article-27</title>
+    <title>某数记录</title>
     <link href="/2020/06/23/article-27/"/>
     <url>/2020/06/23/article-27/</url>
     
     <content type="html"><![CDATA[<h4 id="某数特征"><a href="#某数特征" class="headerlink" title="某数特征"></a>某数特征</h4><p>最常见的cookie里面的参数。</p><p>最经典的80s和80t。</p><p>还有其他但都是以4或5开头。（版本号）</p><p>最常见的param里面的参数</p><p>以4或者5开头的</p><p>或者是8位乱七八糟的参数名后面跟着一长串乱七八糟的字符</p><p>只要是在html页面中看到 &lt;meta content=“一长串字符”</p><p>r = “m”</p><p>script中出现混淆JS</p><p>这三个点可以直接确认是某数</p><p><img src="/Users/woo/Desktop/onlygodsee_git/onlygodsee.github.io/source/_posts/article-27/WX20200623-162231.png" srcset="/img/loading.gif" alt=""></p><h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>可选中监听script</p>]]></content>
     
     
+    <categories>
+      
+      <category>技术</category>
+      
+      <category>JS逆向</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>JS逆向</tag>
+      
+    </tags>
     
   </entry>
   
