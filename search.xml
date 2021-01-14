@@ -710,6 +710,33 @@
       </tags>
   </entry>
   <entry>
+    <title>AST学习-删除全部注释</title>
+    <url>/2020/06/22/article-25/</url>
+    <content><![CDATA[<p>删除全部注释</p>
+<a id="more"></a>
+
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>删除示例代码中的注释：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">123</span>; <span class="hljs-comment">//this is single line comment</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">This is a  multiline comments;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-keyword">var</span> b = <span class="hljs-number">456</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="WX20200622-114717.png" srcset="/img/loading.gif" alt=""></p>
+<p>但使用插件遍历发现如下异常</p>
+<p><img src="WX20200622-115102.png" srcset="/img/loading.gif" alt=""></p>
+<p>这时使用generator直接操作，将comments参数声明为false，就可以去掉注释了</p>
+<p><img src="WX20200622-115311.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> ast = parser.parse(jscode);<br><span class="hljs-comment">// traverse(ast, vistor)</span><br><br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast, opts=&#123;<span class="hljs-attr">comments</span>:<span class="hljs-literal">false</span>&#125;)<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="WX20200622-115557.png" srcset="/img/loading.gif" alt=""></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AST学习-删除空行和空语句</title>
     <url>/2020/06/22/article-26/</url>
     <content><![CDATA[<p>删除空行和空语句</p>
@@ -737,30 +764,27 @@
       </tags>
   </entry>
   <entry>
-    <title>AST学习-删除全部注释</title>
-    <url>/2020/06/22/article-25/</url>
-    <content><![CDATA[<p>删除全部注释</p>
-<a id="more"></a>
-
-<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>删除示例代码中的注释：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">123</span>; <span class="hljs-comment">//this is single line comment</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">This is a  multiline comments;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-keyword">var</span> b = <span class="hljs-number">456</span>;<br></code></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="WX20200622-114717.png" srcset="/img/loading.gif" alt=""></p>
-<p>但使用插件遍历发现如下异常</p>
-<p><img src="WX20200622-115102.png" srcset="/img/loading.gif" alt=""></p>
-<p>这时使用generator直接操作，将comments参数声明为false，就可以去掉注释了</p>
-<p><img src="WX20200622-115311.png" srcset="/img/loading.gif" alt=""></p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> ast = parser.parse(jscode);<br><span class="hljs-comment">// traverse(ast, vistor)</span><br><br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast, opts=&#123;<span class="hljs-attr">comments</span>:<span class="hljs-literal">false</span>&#125;)<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
-
-<p>查看结果</p>
-<p><img src="WX20200622-115557.png" srcset="/img/loading.gif" alt=""></p>
+    <title>某数记录</title>
+    <url>/2020/06/23/article-27/</url>
+    <content><![CDATA[<h4 id="某数特征"><a href="#某数特征" class="headerlink" title="某数特征"></a>某数特征</h4><p>最常见的cookie里面的参数。</p>
+<p>最经典的80s和80t。</p>
+<p>还有其他但都是以4或5开头。（版本号）</p>
+<p>最常见的param里面的参数</p>
+<p>以4或者5开头的</p>
+<p>或者是8位乱七八糟的参数名后面跟着一长串乱七八糟的字符</p>
+<p>只要是在html页面中看到 &lt;meta content=“一长串字符”</p>
+<p>r = “m”</p>
+<p>script中出现混淆JS</p>
+<p>这三个点可以直接确认是某数</p>
+<p><img src="/Users/woo/Desktop/onlygodsee_git/onlygodsee.github.io/source/_posts/article-27/WX20200623-162231.png" srcset="/img/loading.gif" alt=""></p>
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>可选中监听script</p>
 ]]></content>
       <categories>
         <category>技术</category>
-        <category>AST</category>
+        <category>JS逆向</category>
       </categories>
       <tags>
-        <tag>AST</tag>
+        <tag>JS逆向</tag>
       </tags>
   </entry>
   <entry>
@@ -811,30 +835,6 @@
         <tag>Python</tag>
         <tag>环境管理</tag>
         <tag>pipenv</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>某数记录</title>
-    <url>/2020/06/23/article-27/</url>
-    <content><![CDATA[<h4 id="某数特征"><a href="#某数特征" class="headerlink" title="某数特征"></a>某数特征</h4><p>最常见的cookie里面的参数。</p>
-<p>最经典的80s和80t。</p>
-<p>还有其他但都是以4或5开头。（版本号）</p>
-<p>最常见的param里面的参数</p>
-<p>以4或者5开头的</p>
-<p>或者是8位乱七八糟的参数名后面跟着一长串乱七八糟的字符</p>
-<p>只要是在html页面中看到 &lt;meta content=“一长串字符”</p>
-<p>r = “m”</p>
-<p>script中出现混淆JS</p>
-<p>这三个点可以直接确认是某数</p>
-<p><img src="/Users/woo/Desktop/onlygodsee_git/onlygodsee.github.io/source/_posts/article-27/WX20200623-162231.png" srcset="/img/loading.gif" alt=""></p>
-<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><p>可选中监听script</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>JS逆向</category>
-      </categories>
-      <tags>
-        <tag>JS逆向</tag>
       </tags>
   </entry>
   <entry>
@@ -1058,40 +1058,6 @@
       </tags>
   </entry>
   <entry>
-    <title>排序（下）- 归并和快排</title>
-    <url>/2020/09/01/article-38/</url>
-    <content><![CDATA[<p>归并排序和快速排序</p>
-<a id="more"></a>
-
-<h3 id="归并排序（Merge-Sort）"><a href="#归并排序（Merge-Sort）" class="headerlink" title="归并排序（Merge Sort）"></a>归并排序（Merge Sort）</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起，这样整个数组就都有序了。利用分治法的思想，和递归的编程技巧。</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法一</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge</span><span class="hljs-params">(arrays, l, mid, r)</span>:</span><br>    output = []<br>    i = l<br>    j = mid + <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">while</span> i &lt;= mid <span class="hljs-keyword">and</span> j &lt;= r:<br>        <span class="hljs-keyword">if</span> arrays[i] &lt;= arrays[j]:<br>            output.append(arrays[i])<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            output.append(arrays[j])<br>            j += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> arrays[i:mid+<span class="hljs-number">1</span>] + arrays[j:r+<span class="hljs-number">1</span>]:<br>        output.append(k)<br><br>    <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> range(len(output)):<br>        arrays[l+idx] = output[idx]<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mergesort</span><span class="hljs-params">(arrays, l, r)</span>:</span><br><br>    <span class="hljs-keyword">if</span> l &lt; r:<br>        mid = l + ((r - l) &gt;&gt; <span class="hljs-number">1</span>)<br>        mergesort(arrays, l, mid)<br>        mergesort(arrays, mid + <span class="hljs-number">1</span>, r)<br>        merge(arrays, l, mid, r)<br></code></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法二</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge</span><span class="hljs-params">(arrays, arr1, arr2)</span>:</span><br>    i = j = <span class="hljs-number">0</span><br>    length = len(arrays)<br><br>    <span class="hljs-keyword">while</span> i+j&lt;length:<br>        <span class="hljs-keyword">if</span> j == len(arr2) <span class="hljs-keyword">or</span> (i &lt; len(arr1) <span class="hljs-keyword">and</span> arr1[i] &lt;= arr2[j]):<br>            arrays[i+j] = arr1[i]<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            arrays[i+j] = arr2[j]<br>            j += <span class="hljs-number">1</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_sort</span><span class="hljs-params">(arrays)</span>:</span><br>    length = len(arrays)<br><br>    <span class="hljs-keyword">if</span> length &lt; <span class="hljs-number">2</span>:<br>        <span class="hljs-keyword">return</span> arrays<br><br>    mid = length // <span class="hljs-number">2</span><br>    arr1 = arrays[:mid]<br>    arr2 = arrays[mid:]<br><br>    merge_sort(arr1)<br>    merge_sort(arr2)<br><br>    merge(arrays, arr1, arr2)<br></code></pre></td></tr></table></figure>
-
-<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><h6 id="构造合理的merge函数，可以使得归并排序成为稳定排序"><a href="#构造合理的merge函数，可以使得归并排序成为稳定排序" class="headerlink" title="构造合理的merge函数，可以使得归并排序成为稳定排序"></a>构造合理的merge函数，可以使得归并排序成为稳定排序</h6><h6 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h6><p>设b，c是a的子问题，由此可得到一下公式：</p>
-<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml"><span class="hljs-constructor">T(<span class="hljs-params">a</span>)</span> = <span class="hljs-constructor">T(<span class="hljs-params">b</span>)</span> + <span class="hljs-constructor">T(<span class="hljs-params">c</span>)</span> + K<br># 其中 K 等于将两个子问题 b、c 的结果合并成问题 a 的结果所消耗的时间<br></code></pre></td></tr></table></figure>
-
-<p>可以得到一个重要的结论：<strong><em>不仅递归求解的问题可以写成递推公式，递归代码的时间复杂度也可以写成递推公式</em></strong>。</p>
-<p>最终递推公式为：<strong><em>T(n) = 2^kT(n/2^k)+kn</em></strong></p>
-<p>所以，<strong><em>归并排序的时间复杂度为nlogn</em></strong></p>
-<h6 id="空间复杂度O-n"><a href="#空间复杂度O-n" class="headerlink" title="空间复杂度O(n)"></a>空间复杂度O(n)</h6><h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p>如果要排序数组中下标从 p 到 r 之间的一组数据，我们选择 p 到 r 之间的任意一个数据作为 pivot（分区点）。我们遍历 p 到 r 之间的数据，将小于 pivot 的放到左边，将大于 pivot 的放到右边，将 pivot 放到中间。经过这一步骤之后，数组 p 到 r 之间的数据就被分成了三个部分，前面 p 到 q-1 之间都是小于 pivot 的，中间是 pivot，后面的 q+1 到 r 之间是大于 pivot 的。</p>
-<p>根据分治、递归的处理思想，我们可以用递归排序下标从 p 到 q-1 之间的数据和下标从 q+1 到 r 之间的数据，直到区间缩小为 1，就说明所有的数据都有序了。</p>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 快速排序</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">partition</span><span class="hljs-params">(arrays, l, r)</span>:</span><br>    val = arrays[r]<br>    idx = l - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(l, r):<br>        <span class="hljs-keyword">if</span> arrays[i] &lt;= val:<br>            idx += <span class="hljs-number">1</span><br>            arrays[idx], arrays[i] = arrays[i], arrays[idx]<br><br>    arrays[idx+<span class="hljs-number">1</span>], arrays[r] = arrays[r], arrays[idx+<span class="hljs-number">1</span>]<br><br>    <span class="hljs-keyword">return</span> idx+<span class="hljs-number">1</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">quick_sort</span><span class="hljs-params">(arrays, l, r)</span>:</span><br>    <span class="hljs-comment"># 分区区间小于1时退出</span><br>    <span class="hljs-keyword">if</span> l&lt;r:<br>        idx = partition(arrays, l, r)<br>        quick_sort(arrays, l, idx<span class="hljs-number">-1</span>)<br>        quick_sort(arrays, idx+<span class="hljs-number">1</span>, r)<br></code></pre></td></tr></table></figure>
-
-<h4 id="与归并排序区别"><a href="#与归并排序区别" class="headerlink" title="与归并排序区别"></a>与归并排序区别</h4><p>归并排序的处理过程是<strong><em>由下到上</em></strong>的，先处理子问题，然后再合并。而快排正好相反，它的处理过程是<strong><em>由上到下</em></strong>的，先分区，然后再处理子问题。</p>
-<h4 id="性能分析-1"><a href="#性能分析-1" class="headerlink" title="性能分析"></a>性能分析</h4><p>最坏时间复杂度O(n^2)，平均复杂度O(nlogn)</p>
-<h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>归并排序算法是一种在任何情况下时间复杂度都比较稳定的排序算法，这也使它存在致命的缺点，即归并排序不是原地排序算法，空间复杂度比较高，是 O(n)。</p>
-<p>快速排序算法虽然最坏情况下的时间复杂度是 O(n2)，但是平均情况下时间复杂度都是 O(nlogn)。不仅如此，快速排序算法时间复杂度退化到 O(n2) 的概率非常小，我们可以通过合理地选择 pivot 来避免这种情况。</p>
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>基础篇</tag>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>排序（上）- 冒泡、插入和选择</title>
     <url>/2020/09/01/article-37/</url>
     <content><![CDATA[<p>冒泡、插入和选择</p>
@@ -1138,6 +1104,40 @@
       </tags>
   </entry>
   <entry>
+    <title>排序（下）- 归并和快排</title>
+    <url>/2020/09/01/article-38/</url>
+    <content><![CDATA[<p>归并排序和快速排序</p>
+<a id="more"></a>
+
+<h3 id="归并排序（Merge-Sort）"><a href="#归并排序（Merge-Sort）" class="headerlink" title="归并排序（Merge Sort）"></a>归并排序（Merge Sort）</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>把数组从中间分成前后两部分，然后对前后两部分分别排序，再将排好序的两部分合并在一起，这样整个数组就都有序了。利用分治法的思想，和递归的编程技巧。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法一</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge</span><span class="hljs-params">(arrays, l, mid, r)</span>:</span><br>    output = []<br>    i = l<br>    j = mid + <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">while</span> i &lt;= mid <span class="hljs-keyword">and</span> j &lt;= r:<br>        <span class="hljs-keyword">if</span> arrays[i] &lt;= arrays[j]:<br>            output.append(arrays[i])<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            output.append(arrays[j])<br>            j += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> arrays[i:mid+<span class="hljs-number">1</span>] + arrays[j:r+<span class="hljs-number">1</span>]:<br>        output.append(k)<br><br>    <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> range(len(output)):<br>        arrays[l+idx] = output[idx]<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mergesort</span><span class="hljs-params">(arrays, l, r)</span>:</span><br><br>    <span class="hljs-keyword">if</span> l &lt; r:<br>        mid = l + ((r - l) &gt;&gt; <span class="hljs-number">1</span>)<br>        mergesort(arrays, l, mid)<br>        mergesort(arrays, mid + <span class="hljs-number">1</span>, r)<br>        merge(arrays, l, mid, r)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法二</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge</span><span class="hljs-params">(arrays, arr1, arr2)</span>:</span><br>    i = j = <span class="hljs-number">0</span><br>    length = len(arrays)<br><br>    <span class="hljs-keyword">while</span> i+j&lt;length:<br>        <span class="hljs-keyword">if</span> j == len(arr2) <span class="hljs-keyword">or</span> (i &lt; len(arr1) <span class="hljs-keyword">and</span> arr1[i] &lt;= arr2[j]):<br>            arrays[i+j] = arr1[i]<br>            i += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            arrays[i+j] = arr2[j]<br>            j += <span class="hljs-number">1</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_sort</span><span class="hljs-params">(arrays)</span>:</span><br>    length = len(arrays)<br><br>    <span class="hljs-keyword">if</span> length &lt; <span class="hljs-number">2</span>:<br>        <span class="hljs-keyword">return</span> arrays<br><br>    mid = length // <span class="hljs-number">2</span><br>    arr1 = arrays[:mid]<br>    arr2 = arrays[mid:]<br><br>    merge_sort(arr1)<br>    merge_sort(arr2)<br><br>    merge(arrays, arr1, arr2)<br></code></pre></td></tr></table></figure>
+
+<h4 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h4><h6 id="构造合理的merge函数，可以使得归并排序成为稳定排序"><a href="#构造合理的merge函数，可以使得归并排序成为稳定排序" class="headerlink" title="构造合理的merge函数，可以使得归并排序成为稳定排序"></a>构造合理的merge函数，可以使得归并排序成为稳定排序</h6><h6 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h6><p>设b，c是a的子问题，由此可得到一下公式：</p>
+<figure class="highlight reasonml"><table><tr><td class="code"><pre><code class="hljs reasonml"><span class="hljs-constructor">T(<span class="hljs-params">a</span>)</span> = <span class="hljs-constructor">T(<span class="hljs-params">b</span>)</span> + <span class="hljs-constructor">T(<span class="hljs-params">c</span>)</span> + K<br># 其中 K 等于将两个子问题 b、c 的结果合并成问题 a 的结果所消耗的时间<br></code></pre></td></tr></table></figure>
+
+<p>可以得到一个重要的结论：<strong><em>不仅递归求解的问题可以写成递推公式，递归代码的时间复杂度也可以写成递推公式</em></strong>。</p>
+<p>最终递推公式为：<strong><em>T(n) = 2^kT(n/2^k)+kn</em></strong></p>
+<p>所以，<strong><em>归并排序的时间复杂度为nlogn</em></strong></p>
+<h6 id="空间复杂度O-n"><a href="#空间复杂度O-n" class="headerlink" title="空间复杂度O(n)"></a>空间复杂度O(n)</h6><h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p>如果要排序数组中下标从 p 到 r 之间的一组数据，我们选择 p 到 r 之间的任意一个数据作为 pivot（分区点）。我们遍历 p 到 r 之间的数据，将小于 pivot 的放到左边，将大于 pivot 的放到右边，将 pivot 放到中间。经过这一步骤之后，数组 p 到 r 之间的数据就被分成了三个部分，前面 p 到 q-1 之间都是小于 pivot 的，中间是 pivot，后面的 q+1 到 r 之间是大于 pivot 的。</p>
+<p>根据分治、递归的处理思想，我们可以用递归排序下标从 p 到 q-1 之间的数据和下标从 q+1 到 r 之间的数据，直到区间缩小为 1，就说明所有的数据都有序了。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 快速排序</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">partition</span><span class="hljs-params">(arrays, l, r)</span>:</span><br>    val = arrays[r]<br>    idx = l - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(l, r):<br>        <span class="hljs-keyword">if</span> arrays[i] &lt;= val:<br>            idx += <span class="hljs-number">1</span><br>            arrays[idx], arrays[i] = arrays[i], arrays[idx]<br><br>    arrays[idx+<span class="hljs-number">1</span>], arrays[r] = arrays[r], arrays[idx+<span class="hljs-number">1</span>]<br><br>    <span class="hljs-keyword">return</span> idx+<span class="hljs-number">1</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">quick_sort</span><span class="hljs-params">(arrays, l, r)</span>:</span><br>    <span class="hljs-comment"># 分区区间小于1时退出</span><br>    <span class="hljs-keyword">if</span> l&lt;r:<br>        idx = partition(arrays, l, r)<br>        quick_sort(arrays, l, idx<span class="hljs-number">-1</span>)<br>        quick_sort(arrays, idx+<span class="hljs-number">1</span>, r)<br></code></pre></td></tr></table></figure>
+
+<h4 id="与归并排序区别"><a href="#与归并排序区别" class="headerlink" title="与归并排序区别"></a>与归并排序区别</h4><p>归并排序的处理过程是<strong><em>由下到上</em></strong>的，先处理子问题，然后再合并。而快排正好相反，它的处理过程是<strong><em>由上到下</em></strong>的，先分区，然后再处理子问题。</p>
+<h4 id="性能分析-1"><a href="#性能分析-1" class="headerlink" title="性能分析"></a>性能分析</h4><p>最坏时间复杂度O(n^2)，平均复杂度O(nlogn)</p>
+<h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>归并排序算法是一种在任何情况下时间复杂度都比较稳定的排序算法，这也使它存在致命的缺点，即归并排序不是原地排序算法，空间复杂度比较高，是 O(n)。</p>
+<p>快速排序算法虽然最坏情况下的时间复杂度是 O(n2)，但是平均情况下时间复杂度都是 O(nlogn)。不仅如此，快速排序算法时间复杂度退化到 O(n2) 的概率非常小，我们可以通过合理地选择 pivot 来避免这种情况。</p>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>线性排序</title>
     <url>/2020/09/01/article-39/</url>
     <content><![CDATA[<p>桶排序、计数排序、基数排序。因为这些排序算法的时间复杂度是线性的，所以我们把这类排序算法叫作线性排序。</p>
@@ -1153,45 +1153,6 @@
 <h3 id="基数排序（Radix-sort）"><a href="#基数排序（Radix-sort）" class="headerlink" title="基数排序（Radix sort）"></a>基数排序（Radix sort）</h3><p>以手机号排序为例（长度一致），需从末尾开始遍历然后递进排序。</p>
 <h4 id="局限性-2"><a href="#局限性-2" class="headerlink" title="局限性"></a>局限性</h4><p>基数排序对要排序的数据是有要求的，需要可以分割出独立的“位”来比较，而且位之间有递进的关系，如果 a 数据的高位比 b 数据大，那剩下的低位就不用比较了。除此之外，每一位的数据范围不能太大，要可以用线性排序算法来排序，否则，基数排序的时间复杂度就无法做到 O(n) 了</p>
 <h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>桶排序和计数排序的排序思想是非常相似的，都是针对范围不大的数据，将数据划分成不同的桶来实现排序。基数排序要求数据可以划分成高低位，位之间有递进关系。比较两个数，我们只需要比较高位，高位相同的再比较低位。而且每一位的数据范围不能太大，因为基数排序算法需要借助桶排序或者计数排序来完成每一个位的排序工作。</p>
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>基础篇</tag>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>排序优化</title>
-    <url>/2020/09/01/article-40/</url>
-    <content><![CDATA[<p>找到合适的排序算法</p>
-<a id="more"></a>
-
-<h3 id="如何选择合适的排序算法？"><a href="#如何选择合适的排序算法？" class="headerlink" title="如何选择合适的排序算法？"></a>如何选择合适的排序算法？</h3><p><img src="1f6ef7e0a5365d6e9d68f0ccc71755fd.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>线性排序算法的时间复杂度比较低，适用场景比较特殊。所以如果要写一个通用的排序函数，不能选择线性排序算法。</p>
-<p>如果对小规模数据进行排序，可以选择时间复杂度是 O(n^2) 的算法；如果对大规模数据进行排序，时间复杂度是 O(nlogn) 的算法更加高效。所以，为了兼顾任意规模数据的排序，一般都会首选时间复杂度是 O(nlogn) 的排序算法来实现排序函数。</p>
-<p>归并排序虽然时间复杂度是 O(nlogn) ，但并不是原地排序，需要消耗掉额外的空间，所以一般用快排来实现通用排序。</p>
-<h3 id="如何优化快速排序？"><a href="#如何优化快速排序？" class="headerlink" title="如何优化快速排序？"></a>如何优化快速排序？</h3><p>当序列本身就是有序的，然后依然每次选择最后一个数据进行分区，此时时间复杂度就会退化为O(n^2)。所以快排的优化关键在于分区点选择的合理性。</p>
-<p>最理想的分区点是：<strong><em>被分区点分开的两个分区中，数据的数量差不多</em></strong>。</p>
-<p>下面介绍两个分区方法。</p>
-<h4 id="三数取中法"><a href="#三数取中法" class="headerlink" title="三数取中法"></a>三数取中法</h4><p>我们从区间的首、尾、中间，分别取出一个数，然后对比大小，取这 3 个数的中间值作为分区点。这样每间隔某个固定的长度，取数据出来比较，将中间值作为分区点的分区算法，肯定要比单纯取某一个数据更好。但是，如果要排序的数组比较大，那“三数取中”可能就不够了，可能要“五数取中”或者“十数取中”。</p>
-<h4 id="随机法"><a href="#随机法" class="headerlink" title="随机法"></a>随机法</h4><p>随机法就是每次从要排序的区间中，随机选择一个元素作为分区点。这种方法并不能保证每次分区点都选的比较好，但是从概率的角度来看，也不大可能会出现每次分区点都选得很差的情况，所以平均情况下，这样选的分区点是比较好的。时间复杂度退化为最糟糕的 O(n2) 的情况，出现的可能性不大。</p>
-<h3 id="快排如何避免栈溢出"><a href="#快排如何避免栈溢出" class="headerlink" title="快排如何避免栈溢出"></a>快排如何避免栈溢出</h3><ul>
-<li>第一种是限制递归深度。一旦递归过深，超过了我们事先设定的阈值，就停止递归。</li>
-<li>第二种是通过在堆上模拟实现一个函数调用栈，手动模拟递归压栈、出栈的过程，这样就没有了系统栈大小的限制。</li>
-</ul>
-<h3 id="快排一定是最优解吗？"><a href="#快排一定是最优解吗？" class="headerlink" title="快排一定是最优解吗？"></a>快排一定是最优解吗？</h3><p>排序算法需要根据使用场景选择，比如数据量小于4时，插入排序的效率就比快排更高，所以在小规模数据面前，O(n2) 时间复杂度的算法并不一定比 O(nlogn) 的算法执行时间长。</p>
-<p>而当数据占用空间比较小时，归并排序也优于快排。</p>
-<h3 id="Python的sorted排序使用什么方式实现"><a href="#Python的sorted排序使用什么方式实现" class="headerlink" title="Python的sorted排序使用什么方式实现"></a>Python的sorted排序使用什么方式实现</h3><p>Python的sorted使用了timsort排序。</p>
-<p>timsort结合了归并排序和插入排序（二分插入算法）。</p>
-<h4 id="Timsort核心过程"><a href="#Timsort核心过程" class="headerlink" title="Timsort核心过程"></a>Timsort核心过程</h4><p>TimSort 算法为了减少对升序部分的回溯和对降序部分的性能倒退，将输入按其升序和降序特点进行了分区。排序的输入的单位不是一个个单独的数字，而是一个个的块-分区。其中每一个分区叫一个run。针对这些 run 序列，每次拿一个 run 出来按规则进行合并。每次合并会将两个 run合并成一个 run。合并的结果保存到栈中。合并直到消耗掉所有的 run，这时将栈上剩余的 run合并到只剩一个 run 为止。这时这个仅剩的 run 便是排好序的结果。</p>
-<ul>
-<li>如何数组长度小于某个值，直接用二分插入排序算法</li>
-<li>找到各个run，并入栈</li>
-<li>按规则合并ru</li>
-</ul>
-<h4 id="Timsort性能"><a href="#Timsort性能" class="headerlink" title="Timsort性能"></a>Timsort性能</h4><p>在平均情况下，比较排序不会比O(n log n)更快。由于Timsort算法利用了现实中大多数数据中会有一些排好序的区，所以Timsort会比O(n log n)快些。对于随机数没有可以利用的排好序的区，Timsort时间复杂度会是log(n!)。</p>
 ]]></content>
       <categories>
         <category>数据结构与算法</category>
@@ -1234,6 +1195,45 @@
       </categories>
       <tags>
         <tag>JS逆向</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>排序优化</title>
+    <url>/2020/09/01/article-40/</url>
+    <content><![CDATA[<p>找到合适的排序算法</p>
+<a id="more"></a>
+
+<h3 id="如何选择合适的排序算法？"><a href="#如何选择合适的排序算法？" class="headerlink" title="如何选择合适的排序算法？"></a>如何选择合适的排序算法？</h3><p><img src="1f6ef7e0a5365d6e9d68f0ccc71755fd.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>线性排序算法的时间复杂度比较低，适用场景比较特殊。所以如果要写一个通用的排序函数，不能选择线性排序算法。</p>
+<p>如果对小规模数据进行排序，可以选择时间复杂度是 O(n^2) 的算法；如果对大规模数据进行排序，时间复杂度是 O(nlogn) 的算法更加高效。所以，为了兼顾任意规模数据的排序，一般都会首选时间复杂度是 O(nlogn) 的排序算法来实现排序函数。</p>
+<p>归并排序虽然时间复杂度是 O(nlogn) ，但并不是原地排序，需要消耗掉额外的空间，所以一般用快排来实现通用排序。</p>
+<h3 id="如何优化快速排序？"><a href="#如何优化快速排序？" class="headerlink" title="如何优化快速排序？"></a>如何优化快速排序？</h3><p>当序列本身就是有序的，然后依然每次选择最后一个数据进行分区，此时时间复杂度就会退化为O(n^2)。所以快排的优化关键在于分区点选择的合理性。</p>
+<p>最理想的分区点是：<strong><em>被分区点分开的两个分区中，数据的数量差不多</em></strong>。</p>
+<p>下面介绍两个分区方法。</p>
+<h4 id="三数取中法"><a href="#三数取中法" class="headerlink" title="三数取中法"></a>三数取中法</h4><p>我们从区间的首、尾、中间，分别取出一个数，然后对比大小，取这 3 个数的中间值作为分区点。这样每间隔某个固定的长度，取数据出来比较，将中间值作为分区点的分区算法，肯定要比单纯取某一个数据更好。但是，如果要排序的数组比较大，那“三数取中”可能就不够了，可能要“五数取中”或者“十数取中”。</p>
+<h4 id="随机法"><a href="#随机法" class="headerlink" title="随机法"></a>随机法</h4><p>随机法就是每次从要排序的区间中，随机选择一个元素作为分区点。这种方法并不能保证每次分区点都选的比较好，但是从概率的角度来看，也不大可能会出现每次分区点都选得很差的情况，所以平均情况下，这样选的分区点是比较好的。时间复杂度退化为最糟糕的 O(n2) 的情况，出现的可能性不大。</p>
+<h3 id="快排如何避免栈溢出"><a href="#快排如何避免栈溢出" class="headerlink" title="快排如何避免栈溢出"></a>快排如何避免栈溢出</h3><ul>
+<li>第一种是限制递归深度。一旦递归过深，超过了我们事先设定的阈值，就停止递归。</li>
+<li>第二种是通过在堆上模拟实现一个函数调用栈，手动模拟递归压栈、出栈的过程，这样就没有了系统栈大小的限制。</li>
+</ul>
+<h3 id="快排一定是最优解吗？"><a href="#快排一定是最优解吗？" class="headerlink" title="快排一定是最优解吗？"></a>快排一定是最优解吗？</h3><p>排序算法需要根据使用场景选择，比如数据量小于4时，插入排序的效率就比快排更高，所以在小规模数据面前，O(n2) 时间复杂度的算法并不一定比 O(nlogn) 的算法执行时间长。</p>
+<p>而当数据占用空间比较小时，归并排序也优于快排。</p>
+<h3 id="Python的sorted排序使用什么方式实现"><a href="#Python的sorted排序使用什么方式实现" class="headerlink" title="Python的sorted排序使用什么方式实现"></a>Python的sorted排序使用什么方式实现</h3><p>Python的sorted使用了timsort排序。</p>
+<p>timsort结合了归并排序和插入排序（二分插入算法）。</p>
+<h4 id="Timsort核心过程"><a href="#Timsort核心过程" class="headerlink" title="Timsort核心过程"></a>Timsort核心过程</h4><p>TimSort 算法为了减少对升序部分的回溯和对降序部分的性能倒退，将输入按其升序和降序特点进行了分区。排序的输入的单位不是一个个单独的数字，而是一个个的块-分区。其中每一个分区叫一个run。针对这些 run 序列，每次拿一个 run 出来按规则进行合并。每次合并会将两个 run合并成一个 run。合并的结果保存到栈中。合并直到消耗掉所有的 run，这时将栈上剩余的 run合并到只剩一个 run 为止。这时这个仅剩的 run 便是排好序的结果。</p>
+<ul>
+<li>如何数组长度小于某个值，直接用二分插入排序算法</li>
+<li>找到各个run，并入栈</li>
+<li>按规则合并ru</li>
+</ul>
+<h4 id="Timsort性能"><a href="#Timsort性能" class="headerlink" title="Timsort性能"></a>Timsort性能</h4><p>在平均情况下，比较排序不会比O(n log n)更快。由于Timsort算法利用了现实中大多数数据中会有一些排好序的区，所以Timsort会比O(n log n)快些。对于随机数没有可以利用的排好序的区，Timsort时间复杂度会是log(n!)。</p>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
       </tags>
   </entry>
   <entry>
@@ -1468,6 +1468,50 @@
       </tags>
   </entry>
   <entry>
+    <title>二叉树基础（上）</title>
+    <url>/2020/09/04/article-48/</url>
+    <content><![CDATA[<p>什么样的二叉树适合用数组来存储？</p>
+<a id="more"></a>
+
+<p><img src="6ce8707f43e1a3e7e5368167cca6a4c9.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="树（Tree）"><a href="#树（Tree）" class="headerlink" title="树（Tree）"></a>树（Tree）</h3><p><img src="b7043bf29a253bb36221eaec62b2e129.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>这里面每个元素我们叫做“节点”；用来连接相邻节点之间的关系，我们叫做“父子关系”。</p>
+<p><img src="220043e683ea33b9912425ef759556ae.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>上图中，A 节点就是 B 节点的<strong><em>父节点</em></strong>，B 节点是 A 节点的<strong><em>子节点</em></strong>。B、C、D 这三个节点的父节点是同一个节点，所以它们之间互称为<strong><em>兄弟节点</em></strong>。我们把没有父节点的节点叫做<strong><em>根节点</em></strong>，也就是图中的节点 E。我们把没有子节点的节点叫做<strong><em>叶子节点</em></strong>或者<strong><em>叶节点</em></strong>，比如图中的 G、H、I、J、K、L 都是叶子节点。</p>
+<h4 id="高度、深度、层"><a href="#高度、深度、层" class="headerlink" title="高度、深度、层"></a>高度、深度、层</h4><p><img src="4094a733986073fedb6b9d03f877d71e.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>图文举例</p>
+<p><img src="50f89510ad1f7570791dd12f4e9adeb4.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="二叉树（Binary-Tree）"><a href="#二叉树（Binary-Tree）" class="headerlink" title="二叉树（Binary Tree）"></a>二叉树（Binary Tree）</h3><p>二叉树，顾名思义，每个节点最多有两个“叉”，也就是两个子节点，分别是左子节点和右子节点。不过，二叉树并不要求每个节点都有两个子节点，有的节点只有左子节点，有的节点只有右子节点。</p>
+<p><img src="09c2972d56eb0cf67e727deda0e9412b.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>编号 2 的二叉树中，叶子节点全都在最底层，除了叶子节点之外，每个节点都有左右两个子节点，这种二叉树就叫做<strong><em>满二叉树</em></strong>。</p>
+<p>编号 3 的二叉树中，叶子节点都在最底下两层，最后一层的叶子节点都靠左排列，并且除了最后一层，其他层的节点个数都要达到最大，这种二叉树叫做<strong><em>完全二叉树</em></strong>。</p>
+<p><img src="18413c6597c2850b75367393b401ad60.jpg" srcset="/img/loading.gif" alt=""></p>
+<h4 id="如何表示（或者存储）一棵二叉树？"><a href="#如何表示（或者存储）一棵二叉树？" class="headerlink" title="如何表示（或者存储）一棵二叉树？"></a>如何表示（或者存储）一棵二叉树？</h4><h5 id="链式存储法"><a href="#链式存储法" class="headerlink" title="链式存储法"></a>链式存储法</h5><p><img src="12cd11b2432ed7c4dfc9a2053cb70b8e.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="顺序存储法"><a href="#顺序存储法" class="headerlink" title="顺序存储法"></a>顺序存储法</h5><p><img src="14eaa820cb89a17a7303e8847a412330.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>如果节点 X 存储在数组中下标为 i 的位置，下标为 2 * i 的位置存储的就是左子节点，下标为 2 * i + 1 的位置存储的就是右子节点。反过来，下标为 i/2 的位置存储就是它的父节点。</p>
+<p>但这只是完全二叉树，<strong><em>非完全二叉树会浪费比较多的数组存储空间</em></strong>。</p>
+<p><strong><em>如果某棵二叉树是一棵完全二叉树，那用数组存储无疑是最节省内存的一种方式。</em></strong></p>
+<h4 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h4><p>前序遍历、中序遍历和后序遍历</p>
+<p><strong><em>其中，前、中、后序，表示的是节点与它的左右子树节点遍历打印的先后顺序</em></strong></p>
+<p><img src="ab103822e75b5b15c615b68560cb2416.jpg" srcset="/img/loading.gif" alt=""></p>
+<h5 id="代码实现三种遍历"><a href="#代码实现三种遍历" class="headerlink" title="代码实现三种遍历"></a>代码实现三种遍历</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, value)</span>:</span><br>        self.value = value<br>        self.left = <span class="hljs-literal">None</span><br>        self.right = <span class="hljs-literal">None</span><br><br>A = Node(<span class="hljs-string">'A'</span>)<br>B = Node(<span class="hljs-string">'B'</span>)<br>C = Node(<span class="hljs-string">'C'</span>)<br>D = Node(<span class="hljs-string">'D'</span>)<br>E = Node(<span class="hljs-string">'E'</span>)<br>F = Node(<span class="hljs-string">'F'</span>)<br>G = Node(<span class="hljs-string">'G'</span>)<br><br>A.left = B<br>A.right = C<br><br>B.left = D<br>B.right = E<br><br>C.left = F<br>C.right = G<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BinaryTree</span>:</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">preOrder</span><span class="hljs-params">(self, node)</span>:</span><br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        前序遍历</span><br><span class="hljs-string">        :param node:</span><br><span class="hljs-string">        :return:</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-keyword">if</span> node == <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span><br>        print(node.value, end=<span class="hljs-string">" "</span>)<br>        self.preOrder(node.left)<br>        self.preOrder(node.right)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inOreder</span><span class="hljs-params">(self, node)</span>:</span><br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        中序遍历</span><br><span class="hljs-string">        :param node:</span><br><span class="hljs-string">        :return:</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-keyword">if</span> node == <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span><br>        self.inOreder(node.left)<br>        print(node.value, end=<span class="hljs-string">" "</span>)<br>        self.inOreder(node.right)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">postOrder</span><span class="hljs-params">(self, node)</span>:</span><br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        后序遍历</span><br><span class="hljs-string">        :param node:</span><br><span class="hljs-string">        :return:</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-keyword">if</span> node == <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span><br>        self.postOrder(node.left)<br>        self.postOrder(node.right)<br>        print(node.value, end=<span class="hljs-string">" "</span>)<br></code></pre></td></tr></table></figure>
+
+<p>从我前面画的前、中、后序遍历的顺序图，可以看出来，每个节点最多会被访问两次，所以遍历操作的时间复杂度，跟节点的个数 n 成正比，也就是说二叉树遍历的时间复杂度是 O(n)。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="给定一组数据，比如-1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？"><a href="#给定一组数据，比如-1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？" class="headerlink" title="给定一组数据，比如 1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？"></a>给定一组数据，比如 1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？</h4><p>既然是数组，那就是完全二叉树，所以有 <strong><em>n!</em></strong> 种，由此引申出 <strong><em>卡特兰数</em></strong></p>
+<h4 id="我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？"><a href="#我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？" class="headerlink" title="我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？"></a>我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？</h4><p>使用队列实现。出队的同时，把他的子节点依次入队。</p>
+<p>代码实现</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 层级遍历</span><br>nodes = [A]<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">lineOrder</span><span class="hljs-params">(nodes)</span>:</span><br>    <span class="hljs-keyword">if</span> nodes:<br>        node = nodes.pop(<span class="hljs-number">0</span>)<br>        print(node.value, end=<span class="hljs-string">' '</span>)<br>        <span class="hljs-keyword">if</span> node.left:<br>            nodes.append(node.left)<br>        <span class="hljs-keyword">if</span> node.right:<br>            nodes.append(node.right)<br><br>        lineOrder(nodes)<br></code></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>二叉树基础（下）</title>
     <url>/2020/09/04/article-49/</url>
     <content><![CDATA[<p>有了如此高效的散列表，为什么还需要二叉树？</p>
@@ -1510,50 +1554,6 @@
 <p>第四，散列表的构造比二叉查找树要复杂，需要考虑的东西很多。比如散列函数的设计、冲突解决办法、扩容、缩容等。平衡二叉查找树只需要考虑平衡性这一个问题，而且这个问题的解决方案比较成熟、固定。</p>
 <p>最后，为了避免过多的散列冲突，散列表装载因子不能太大，特别是基于开放寻址法解决冲突的散列表，不然会浪费一定的存储空间。</p>
 <h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="求一棵给定二叉树的确切高度？"><a href="#求一棵给定二叉树的确切高度？" class="headerlink" title="求一棵给定二叉树的确切高度？"></a>求一棵给定二叉树的确切高度？</h4><p>使用递归，遍历左子树和右子树，根节点高度=max(左子树高度，右子树高度) + 1</p>
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>基础篇</tag>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>二叉树基础（上）</title>
-    <url>/2020/09/04/article-48/</url>
-    <content><![CDATA[<p>什么样的二叉树适合用数组来存储？</p>
-<a id="more"></a>
-
-<p><img src="6ce8707f43e1a3e7e5368167cca6a4c9.jpg" srcset="/img/loading.gif" alt=""></p>
-<h3 id="树（Tree）"><a href="#树（Tree）" class="headerlink" title="树（Tree）"></a>树（Tree）</h3><p><img src="b7043bf29a253bb36221eaec62b2e129.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>这里面每个元素我们叫做“节点”；用来连接相邻节点之间的关系，我们叫做“父子关系”。</p>
-<p><img src="220043e683ea33b9912425ef759556ae.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>上图中，A 节点就是 B 节点的<strong><em>父节点</em></strong>，B 节点是 A 节点的<strong><em>子节点</em></strong>。B、C、D 这三个节点的父节点是同一个节点，所以它们之间互称为<strong><em>兄弟节点</em></strong>。我们把没有父节点的节点叫做<strong><em>根节点</em></strong>，也就是图中的节点 E。我们把没有子节点的节点叫做<strong><em>叶子节点</em></strong>或者<strong><em>叶节点</em></strong>，比如图中的 G、H、I、J、K、L 都是叶子节点。</p>
-<h4 id="高度、深度、层"><a href="#高度、深度、层" class="headerlink" title="高度、深度、层"></a>高度、深度、层</h4><p><img src="4094a733986073fedb6b9d03f877d71e.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>图文举例</p>
-<p><img src="50f89510ad1f7570791dd12f4e9adeb4.jpg" srcset="/img/loading.gif" alt=""></p>
-<h3 id="二叉树（Binary-Tree）"><a href="#二叉树（Binary-Tree）" class="headerlink" title="二叉树（Binary Tree）"></a>二叉树（Binary Tree）</h3><p>二叉树，顾名思义，每个节点最多有两个“叉”，也就是两个子节点，分别是左子节点和右子节点。不过，二叉树并不要求每个节点都有两个子节点，有的节点只有左子节点，有的节点只有右子节点。</p>
-<p><img src="09c2972d56eb0cf67e727deda0e9412b.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>编号 2 的二叉树中，叶子节点全都在最底层，除了叶子节点之外，每个节点都有左右两个子节点，这种二叉树就叫做<strong><em>满二叉树</em></strong>。</p>
-<p>编号 3 的二叉树中，叶子节点都在最底下两层，最后一层的叶子节点都靠左排列，并且除了最后一层，其他层的节点个数都要达到最大，这种二叉树叫做<strong><em>完全二叉树</em></strong>。</p>
-<p><img src="18413c6597c2850b75367393b401ad60.jpg" srcset="/img/loading.gif" alt=""></p>
-<h4 id="如何表示（或者存储）一棵二叉树？"><a href="#如何表示（或者存储）一棵二叉树？" class="headerlink" title="如何表示（或者存储）一棵二叉树？"></a>如何表示（或者存储）一棵二叉树？</h4><h5 id="链式存储法"><a href="#链式存储法" class="headerlink" title="链式存储法"></a>链式存储法</h5><p><img src="12cd11b2432ed7c4dfc9a2053cb70b8e.jpg" srcset="/img/loading.gif" alt=""></p>
-<h5 id="顺序存储法"><a href="#顺序存储法" class="headerlink" title="顺序存储法"></a>顺序存储法</h5><p><img src="14eaa820cb89a17a7303e8847a412330.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>如果节点 X 存储在数组中下标为 i 的位置，下标为 2 * i 的位置存储的就是左子节点，下标为 2 * i + 1 的位置存储的就是右子节点。反过来，下标为 i/2 的位置存储就是它的父节点。</p>
-<p>但这只是完全二叉树，<strong><em>非完全二叉树会浪费比较多的数组存储空间</em></strong>。</p>
-<p><strong><em>如果某棵二叉树是一棵完全二叉树，那用数组存储无疑是最节省内存的一种方式。</em></strong></p>
-<h4 id="二叉树的遍历"><a href="#二叉树的遍历" class="headerlink" title="二叉树的遍历"></a>二叉树的遍历</h4><p>前序遍历、中序遍历和后序遍历</p>
-<p><strong><em>其中，前、中、后序，表示的是节点与它的左右子树节点遍历打印的先后顺序</em></strong></p>
-<p><img src="ab103822e75b5b15c615b68560cb2416.jpg" srcset="/img/loading.gif" alt=""></p>
-<h5 id="代码实现三种遍历"><a href="#代码实现三种遍历" class="headerlink" title="代码实现三种遍历"></a>代码实现三种遍历</h5><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>:</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, value)</span>:</span><br>        self.value = value<br>        self.left = <span class="hljs-literal">None</span><br>        self.right = <span class="hljs-literal">None</span><br><br>A = Node(<span class="hljs-string">'A'</span>)<br>B = Node(<span class="hljs-string">'B'</span>)<br>C = Node(<span class="hljs-string">'C'</span>)<br>D = Node(<span class="hljs-string">'D'</span>)<br>E = Node(<span class="hljs-string">'E'</span>)<br>F = Node(<span class="hljs-string">'F'</span>)<br>G = Node(<span class="hljs-string">'G'</span>)<br><br>A.left = B<br>A.right = C<br><br>B.left = D<br>B.right = E<br><br>C.left = F<br>C.right = G<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BinaryTree</span>:</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">preOrder</span><span class="hljs-params">(self, node)</span>:</span><br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        前序遍历</span><br><span class="hljs-string">        :param node:</span><br><span class="hljs-string">        :return:</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-keyword">if</span> node == <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span><br>        print(node.value, end=<span class="hljs-string">" "</span>)<br>        self.preOrder(node.left)<br>        self.preOrder(node.right)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">inOreder</span><span class="hljs-params">(self, node)</span>:</span><br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        中序遍历</span><br><span class="hljs-string">        :param node:</span><br><span class="hljs-string">        :return:</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-keyword">if</span> node == <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span><br>        self.inOreder(node.left)<br>        print(node.value, end=<span class="hljs-string">" "</span>)<br>        self.inOreder(node.right)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">postOrder</span><span class="hljs-params">(self, node)</span>:</span><br>        <span class="hljs-string">"""</span><br><span class="hljs-string">        后序遍历</span><br><span class="hljs-string">        :param node:</span><br><span class="hljs-string">        :return:</span><br><span class="hljs-string">        """</span><br>        <span class="hljs-keyword">if</span> node == <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">return</span><br>        self.postOrder(node.left)<br>        self.postOrder(node.right)<br>        print(node.value, end=<span class="hljs-string">" "</span>)<br></code></pre></td></tr></table></figure>
-
-<p>从我前面画的前、中、后序遍历的顺序图，可以看出来，每个节点最多会被访问两次，所以遍历操作的时间复杂度，跟节点的个数 n 成正比，也就是说二叉树遍历的时间复杂度是 O(n)。</p>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="给定一组数据，比如-1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？"><a href="#给定一组数据，比如-1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？" class="headerlink" title="给定一组数据，比如 1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？"></a>给定一组数据，比如 1，3，5，6，9，10。你来算算，可以构建出多少种不同的二叉树？</h4><p>既然是数组，那就是完全二叉树，所以有 <strong><em>n!</em></strong> 种，由此引申出 <strong><em>卡特兰数</em></strong></p>
-<h4 id="我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？"><a href="#我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？" class="headerlink" title="我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？"></a>我们讲了三种二叉树的遍历方式，前、中、后序。实际上，还有另外一种遍历方式，也就是按层遍历，你知道如何实现吗？</h4><p>使用队列实现。出队的同时，把他的子节点依次入队。</p>
-<p>代码实现</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 层级遍历</span><br>nodes = [A]<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">lineOrder</span><span class="hljs-params">(nodes)</span>:</span><br>    <span class="hljs-keyword">if</span> nodes:<br>        node = nodes.pop(<span class="hljs-number">0</span>)<br>        print(node.value, end=<span class="hljs-string">' '</span>)<br>        <span class="hljs-keyword">if</span> node.left:<br>            nodes.append(node.left)<br>        <span class="hljs-keyword">if</span> node.right:<br>            nodes.append(node.right)<br><br>        lineOrder(nodes)<br></code></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>数据结构与算法</category>
@@ -1758,6 +1758,37 @@
       </tags>
   </entry>
   <entry>
+    <title>递归树</title>
+    <url>/2020/09/08/article-52/</url>
+    <content><![CDATA[<p>如何借助树来求解递归算法的时间复杂度？</p>
+<a id="more"></a>
+
+<h3 id="递归树与时间复杂度分析"><a href="#递归树与时间复杂度分析" class="headerlink" title="递归树与时间复杂度分析"></a>递归树与时间复杂度分析</h3><p>如果我们把这个一层一层的分解过程画成图，它其实就是一棵树。我们给这棵树起一个名字，叫作<strong><em>递归树</em></strong>。</p>
+<h3 id="实战一：分析快速排序的时间复杂度"><a href="#实战一：分析快速排序的时间复杂度" class="headerlink" title="实战一：分析快速排序的时间复杂度"></a>实战一：分析快速排序的时间复杂度</h3><p><img src="44972a3531dae0b7a0ccc935bc13f243.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>快速排序的过程中，每次分区都要遍历待分区区间的所有数据，所以，每一层分区操作所遍历的数据的个数之和就是 n。我们现在只要求出递归树的高度 h，这个快排过程遍历的数据个数就是 h∗n ，也就是说，<strong><em>时间复杂度就是 O(h∗n)</em></strong>。<strong><em>因为每次分区并不是均匀地一分为二，所以递归树并不是满二叉树。</em></strong></p>
+<h3 id="实战二：分析斐波那契数列的时间复杂度"><a href="#实战二：分析斐波那契数列的时间复杂度" class="headerlink" title="实战二：分析斐波那契数列的时间复杂度"></a>实战二：分析斐波那契数列的时间复杂度</h3><p><img src="9ccbce1a70c7e2def52701dcf176a4ce.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>f(n) 分解为 f(n−1) 和 f(n−2)，每次数据规模都是 −1 或者 −2，叶子节点的数据规模是 1 或者 2。所以，从根节点走到叶子节点，每条路径是长短不一的。如果每次都是 −1，那最长路径大约就是 n；如果每次都是 −2，那最短路径大约就是 2n。</p>
+<p>如果路径长度都为 n，那这个总和就是 2n−1。</p>
+<p>如果路径长度都是 2n ，那整个算法的总的时间消耗就是 2^(n/2)−1。</p>
+<p><strong><em>所以，这个算法的时间复杂度就介于 O(2n) 和 O(22n) 之间。</em></strong></p>
+<h3 id="实战三：分析全排列的时间复杂度"><a href="#实战三：分析全排列的时间复杂度" class="headerlink" title="实战三：分析全排列的时间复杂度"></a>实战三：分析全排列的时间复杂度</h3><h4 id="python代码"><a href="#python代码" class="headerlink" title="python代码"></a>python代码</h4><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">permutations</span><span class="hljs-params">(arrays, position, end)</span>:</span><br>    <span class="hljs-keyword">if</span> position == end:<br>        print(arrays)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> range(position, end):<br>            arrays[index], arrays[position] = arrays[position], arrays[index]<br>            permutations(arrays, position+<span class="hljs-number">1</span>, end)<br>            arrays[index], arrays[position] = arrays[position], arrays[index]<br></code></pre></td></tr></table></figure>
+
+<p><img src="82f40bed489cf29b14192b44decf059b.jpg" srcset="/img/loading.gif" alt=""></p>
+<p><strong><em>全排列时间复杂度大于O(n!) 小于 O(n*n!)</em></strong></p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="1-个细胞的生命周期是-3-小时，1-小时分裂一次。求-n-小时后，容器内有多少细胞？请你用已经学过的递归时间复杂度的分析方法，分析一下这个递归问题的时间复杂度。"><a href="#1-个细胞的生命周期是-3-小时，1-小时分裂一次。求-n-小时后，容器内有多少细胞？请你用已经学过的递归时间复杂度的分析方法，分析一下这个递归问题的时间复杂度。" class="headerlink" title="1 个细胞的生命周期是 3 小时，1 小时分裂一次。求 n 小时后，容器内有多少细胞？请你用已经学过的递归时间复杂度的分析方法，分析一下这个递归问题的时间复杂度。"></a>1 个细胞的生命周期是 3 小时，1 小时分裂一次。求 n 小时后，容器内有多少细胞？请你用已经学过的递归时间复杂度的分析方法，分析一下这个递归问题的时间复杂度。</h4><figure class="highlight angelscript"><table><tr><td class="code"><pre><code class="hljs angelscript"><span class="hljs-number">2</span>*f(n<span class="hljs-number">-1</span>) + f(n<span class="hljs-number">-4</span>) # 注意需要减去的是新生的细胞<br></code></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>堆和堆排序</title>
     <url>/2020/09/09/article-53/</url>
     <content><![CDATA[<p>为什么说堆排序没有快速排序快？</p>
@@ -1802,37 +1833,6 @@
       </tags>
   </entry>
   <entry>
-    <title>递归树</title>
-    <url>/2020/09/08/article-52/</url>
-    <content><![CDATA[<p>如何借助树来求解递归算法的时间复杂度？</p>
-<a id="more"></a>
-
-<h3 id="递归树与时间复杂度分析"><a href="#递归树与时间复杂度分析" class="headerlink" title="递归树与时间复杂度分析"></a>递归树与时间复杂度分析</h3><p>如果我们把这个一层一层的分解过程画成图，它其实就是一棵树。我们给这棵树起一个名字，叫作<strong><em>递归树</em></strong>。</p>
-<h3 id="实战一：分析快速排序的时间复杂度"><a href="#实战一：分析快速排序的时间复杂度" class="headerlink" title="实战一：分析快速排序的时间复杂度"></a>实战一：分析快速排序的时间复杂度</h3><p><img src="44972a3531dae0b7a0ccc935bc13f243.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>快速排序的过程中，每次分区都要遍历待分区区间的所有数据，所以，每一层分区操作所遍历的数据的个数之和就是 n。我们现在只要求出递归树的高度 h，这个快排过程遍历的数据个数就是 h∗n ，也就是说，<strong><em>时间复杂度就是 O(h∗n)</em></strong>。<strong><em>因为每次分区并不是均匀地一分为二，所以递归树并不是满二叉树。</em></strong></p>
-<h3 id="实战二：分析斐波那契数列的时间复杂度"><a href="#实战二：分析斐波那契数列的时间复杂度" class="headerlink" title="实战二：分析斐波那契数列的时间复杂度"></a>实战二：分析斐波那契数列的时间复杂度</h3><p><img src="9ccbce1a70c7e2def52701dcf176a4ce.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>f(n) 分解为 f(n−1) 和 f(n−2)，每次数据规模都是 −1 或者 −2，叶子节点的数据规模是 1 或者 2。所以，从根节点走到叶子节点，每条路径是长短不一的。如果每次都是 −1，那最长路径大约就是 n；如果每次都是 −2，那最短路径大约就是 2n。</p>
-<p>如果路径长度都为 n，那这个总和就是 2n−1。</p>
-<p>如果路径长度都是 2n ，那整个算法的总的时间消耗就是 2^(n/2)−1。</p>
-<p><strong><em>所以，这个算法的时间复杂度就介于 O(2n) 和 O(22n) 之间。</em></strong></p>
-<h3 id="实战三：分析全排列的时间复杂度"><a href="#实战三：分析全排列的时间复杂度" class="headerlink" title="实战三：分析全排列的时间复杂度"></a>实战三：分析全排列的时间复杂度</h3><h4 id="python代码"><a href="#python代码" class="headerlink" title="python代码"></a>python代码</h4><figure class="highlight python"><table><tr><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">permutations</span><span class="hljs-params">(arrays, position, end)</span>:</span><br>    <span class="hljs-keyword">if</span> position == end:<br>        print(arrays)<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> range(position, end):<br>            arrays[index], arrays[position] = arrays[position], arrays[index]<br>            permutations(arrays, position+<span class="hljs-number">1</span>, end)<br>            arrays[index], arrays[position] = arrays[position], arrays[index]<br></code></pre></td></tr></table></figure>
-
-<p><img src="82f40bed489cf29b14192b44decf059b.jpg" srcset="/img/loading.gif" alt=""></p>
-<p><strong><em>全排列时间复杂度大于O(n!) 小于 O(n*n!)</em></strong></p>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="1-个细胞的生命周期是-3-小时，1-小时分裂一次。求-n-小时后，容器内有多少细胞？请你用已经学过的递归时间复杂度的分析方法，分析一下这个递归问题的时间复杂度。"><a href="#1-个细胞的生命周期是-3-小时，1-小时分裂一次。求-n-小时后，容器内有多少细胞？请你用已经学过的递归时间复杂度的分析方法，分析一下这个递归问题的时间复杂度。" class="headerlink" title="1 个细胞的生命周期是 3 小时，1 小时分裂一次。求 n 小时后，容器内有多少细胞？请你用已经学过的递归时间复杂度的分析方法，分析一下这个递归问题的时间复杂度。"></a>1 个细胞的生命周期是 3 小时，1 小时分裂一次。求 n 小时后，容器内有多少细胞？请你用已经学过的递归时间复杂度的分析方法，分析一下这个递归问题的时间复杂度。</h4><figure class="highlight angelscript"><table><tr><td class="code"><pre><code class="hljs angelscript"><span class="hljs-number">2</span>*f(n<span class="hljs-number">-1</span>) + f(n<span class="hljs-number">-4</span>) # 注意需要减去的是新生的细胞<br></code></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>基础篇</tag>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>图的表示</title>
     <url>/2020/09/09/article-54/</url>
     <content><![CDATA[<p>微博、微信等社交网络中的好友关系是如何存储的？</p>
@@ -1855,6 +1855,32 @@
 <p><img src="039bc254b97bd11670cdc4bf2a8e1394.jpg" srcset="/img/loading.gif" alt=""></p>
 <p><strong><em>邻接表存储起来比较节省空间，但是使用起来就比较耗时间。</em></strong></p>
 <h3 id="内容总结"><a href="#内容总结" class="headerlink" title="内容总结"></a>内容总结</h3><p>邻接矩阵存储方法的缺点是比较浪费空间，但是优点是查询效率高，而且方便矩阵运算。邻接表存储方法中每个顶点都对应一个链表，存储与其相连接的其他顶点。尽管邻接表的存储方式比较节省存储空间，但链表不方便查找，所以查询效率没有邻接矩阵存储方式高。针对这个问题，邻接表还有改进升级版，即将链表换成更加高效的动态数据结构，比如平衡二叉查找树、跳表、散列表等。</p>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度和广度优先搜索</title>
+    <url>/2020/09/09/article-55/</url>
+    <content><![CDATA[<p>图上的搜索算法，最直接的理解就是，在图中找出从一个顶点出发，到另一个顶点的路径。</p>
+<a id="more"></a>
+
+<h3 id="什么是“搜索”算法？"><a href="#什么是“搜索”算法？" class="headerlink" title="什么是“搜索”算法？"></a>什么是“搜索”算法？</h3><p>图上的搜索算法，最直接的理解就是，在图中找出从一个顶点出发，到另一个顶点的路径。</p>
+<h3 id="广度优先搜索（BFS）"><a href="#广度优先搜索（BFS）" class="headerlink" title="广度优先搜索（BFS）"></a>广度优先搜索（BFS）</h3><p>广度优先搜索（Breadth-First-Search），我们平常都简称 BFS。直观地讲，它其实就是一种“地毯式”层层推进的搜索策略，即先查找离起始顶点最近的，然后是次近的，依次往外搜索。</p>
+<p><strong><em>时间复杂度O(V+E)， V表示顶点的个数，E表示边的个数</em></strong></p>
+<p><strong><em>空间复杂度为O(V)，即需要额外存储顶点的个数</em></strong></p>
+<p><img src="002e9e54fb0d4dbf5462226d946fa1ea.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="深度优先搜索（DFS）"><a href="#深度优先搜索（DFS）" class="headerlink" title="深度优先搜索（DFS）"></a>深度优先搜索（DFS）</h3><p>深度优先搜索（Depth-First-Search），简称 DFS。</p>
+<p>深度优先搜索用的是一种比较著名的算法思想，<strong><em>回溯思想</em></strong>。</p>
+<p><strong><em>时间复杂度 O(E), E 表示边数</em></strong></p>
+<p><strong><em>空间复杂度 O(V), V表示顶点个数</em></strong></p>
+<p><img src="8778201ce6ff7037c0b3f26b83efba85.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>广度优先搜索，通俗的理解就是，地毯式层层推进，从起始顶点开始，依次往外遍历。广度优先搜索需要借助队列来实现，遍历得到的路径就是，起始顶点到终止顶点的最短路径。深度优先搜索用的是回溯思想，非常适合用递归实现。换种说法，深度优先搜索是借助栈来实现的。在执行效率方面，深度优先和广度优先搜索的时间复杂度都是 O(E)，空间复杂度是 O(V)。</p>
 ]]></content>
       <categories>
         <category>数据结构与算法</category>
@@ -1900,32 +1926,6 @@
       </tags>
   </entry>
   <entry>
-    <title>深度和广度优先搜索</title>
-    <url>/2020/09/09/article-55/</url>
-    <content><![CDATA[<p>图上的搜索算法，最直接的理解就是，在图中找出从一个顶点出发，到另一个顶点的路径。</p>
-<a id="more"></a>
-
-<h3 id="什么是“搜索”算法？"><a href="#什么是“搜索”算法？" class="headerlink" title="什么是“搜索”算法？"></a>什么是“搜索”算法？</h3><p>图上的搜索算法，最直接的理解就是，在图中找出从一个顶点出发，到另一个顶点的路径。</p>
-<h3 id="广度优先搜索（BFS）"><a href="#广度优先搜索（BFS）" class="headerlink" title="广度优先搜索（BFS）"></a>广度优先搜索（BFS）</h3><p>广度优先搜索（Breadth-First-Search），我们平常都简称 BFS。直观地讲，它其实就是一种“地毯式”层层推进的搜索策略，即先查找离起始顶点最近的，然后是次近的，依次往外搜索。</p>
-<p><strong><em>时间复杂度O(V+E)， V表示顶点的个数，E表示边的个数</em></strong></p>
-<p><strong><em>空间复杂度为O(V)，即需要额外存储顶点的个数</em></strong></p>
-<p><img src="002e9e54fb0d4dbf5462226d946fa1ea.jpg" srcset="/img/loading.gif" alt=""></p>
-<h3 id="深度优先搜索（DFS）"><a href="#深度优先搜索（DFS）" class="headerlink" title="深度优先搜索（DFS）"></a>深度优先搜索（DFS）</h3><p>深度优先搜索（Depth-First-Search），简称 DFS。</p>
-<p>深度优先搜索用的是一种比较著名的算法思想，<strong><em>回溯思想</em></strong>。</p>
-<p><strong><em>时间复杂度 O(E), E 表示边数</em></strong></p>
-<p><strong><em>空间复杂度 O(V), V表示顶点个数</em></strong></p>
-<p><img src="8778201ce6ff7037c0b3f26b83efba85.jpg" srcset="/img/loading.gif" alt=""></p>
-<h3 id="内容小结"><a href="#内容小结" class="headerlink" title="内容小结"></a>内容小结</h3><p>广度优先搜索，通俗的理解就是，地毯式层层推进，从起始顶点开始，依次往外遍历。广度优先搜索需要借助队列来实现，遍历得到的路径就是，起始顶点到终止顶点的最短路径。深度优先搜索用的是回溯思想，非常适合用递归实现。换种说法，深度优先搜索是借助栈来实现的。在执行效率方面，深度优先和广度优先搜索的时间复杂度都是 O(E)，空间复杂度是 O(V)。</p>
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>基础篇</tag>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>字符串匹配基础（中）</title>
     <url>/2020/09/10/article-57/</url>
     <content><![CDATA[<p>BM（Boyer-Moore）算法</p>
@@ -1958,37 +1958,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Trie树</title>
-    <url>/2020/09/11/article-59/</url>
-    <content><![CDATA[<p>搜索引擎最基本的原理-Trie树</p>
-<a id="more"></a>
-
-<h3 id="什么是“Trie-树”？"><a href="#什么是“Trie-树”？" class="headerlink" title="什么是“Trie 树”？"></a>什么是“Trie 树”？</h3><p>Trie 树的本质，就是利用字符串之间的公共前缀，将重复的前缀合并在一起。</p>
-<p><img src="280fbc0bfdef8380fcb632af39e84b32.jpg" srcset="/img/loading.gif" alt=""></p>
-<h3 id="如何实现一棵-Trie-树？"><a href="#如何实现一棵-Trie-树？" class="headerlink" title="如何实现一棵 Trie 树？"></a>如何实现一棵 Trie 树？</h3><h4 id="Trie-树主要有两个操作"><a href="#Trie-树主要有两个操作" class="headerlink" title="Trie 树主要有两个操作"></a>Trie 树主要有两个操作</h4><ul>
-<li>一个是将字符串集合构造成 Trie 树</li>
-<li>一个是在 Trie 树中查询一个字符串</li>
-</ul>
-<h4 id="如何存储一个-Trie-树？"><a href="#如何存储一个-Trie-树？" class="headerlink" title="如何存储一个 Trie 树？"></a>如何存储一个 Trie 树？</h4><h5 id="经典的存储方式"><a href="#经典的存储方式" class="headerlink" title="经典的存储方式"></a>经典的存储方式</h5><p>通过一个下标与字符一一映射的数组，来存储子节点的指针。</p>
-<p><img src="f5a4a9cb7f0fe9dcfbf29eb1e5da6d35.jpg" srcset="/img/loading.gif" alt=""></p>
-<p>时间复杂度 O(k)， k表示目标查询字符串长度</p>
-<h4 id="Trie树的内存消耗"><a href="#Trie树的内存消耗" class="headerlink" title="Trie树的内存消耗"></a>Trie树的内存消耗</h4><p>Trie树非常内存消耗内存，采用的是空间换取时间的策略。</p>
-<h3 id="Trie-树与散列表、红黑树的比较"><a href="#Trie-树与散列表、红黑树的比较" class="headerlink" title="Trie 树与散列表、红黑树的比较"></a>Trie 树与散列表、红黑树的比较</h3><ul>
-<li>字符串中包含的字符集不能太大。我们前面讲到，如果字符集太大，那存储空间可能就会浪费很多。即便可以优化，但也要付出牺牲查询、插入效率的代价。</li>
-<li>要求字符串的前缀重合比较多，不然空间消耗会变大很多。</li>
-<li>如果要用 Trie 树解决问题，那我们就要自己从零开始实现一个 Trie 树，还要保证没有 bug，这个在工程上是将简单问题复杂化，除非必须，一般不建议这样做。</li>
-<li>我们知道，通过指针串起来的数据块是不连续的，而 Trie 树中用到了指针，所以，对缓存并不友好，性能上会打个折扣。</li>
-</ul>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="如果现在给你一个很大的字符串集合，比如包含-1-万条记录，如何通过编程量化分析这组字符串集合是否比较适合用-Trie-树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？"><a href="#如果现在给你一个很大的字符串集合，比如包含-1-万条记录，如何通过编程量化分析这组字符串集合是否比较适合用-Trie-树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？" class="headerlink" title="如果现在给你一个很大的字符串集合，比如包含 1 万条记录，如何通过编程量化分析这组字符串集合是否比较适合用 Trie 树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？"></a>如果现在给你一个很大的字符串集合，比如包含 1 万条记录，如何通过编程量化分析这组字符串集合是否比较适合用 Trie 树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？</h4>]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>基础篇</tag>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>字符串匹配基础（下）</title>
     <url>/2020/09/11/article-58/</url>
     <content><![CDATA[<p>借助BM算法理解KMP算法</p>
@@ -2011,26 +1980,28 @@
       </tags>
   </entry>
   <entry>
-    <title>AC自动机</title>
-    <url>/2020/09/11/article-60/</url>
-    <content><![CDATA[<p>用多模式串匹配实现敏感词过滤</p>
+    <title>Trie树</title>
+    <url>/2020/09/11/article-59/</url>
+    <content><![CDATA[<p>搜索引擎最基本的原理-Trie树</p>
 <a id="more"></a>
 
-<h3 id="基于单模式串和-Trie-树实现的敏感词过滤"><a href="#基于单模式串和-Trie-树实现的敏感词过滤" class="headerlink" title="基于单模式串和 Trie 树实现的敏感词过滤"></a>基于单模式串和 Trie 树实现的敏感词过滤</h3><p>BF 算法、RK 算法、BM 算法、KMP 算法，还有 Trie 树这几种算法中，只有Trie树是多模式串匹配算法。</p>
-<p>单模式串匹配中，匹配每个模式串时都需要遍历一遍主串，相比之下，多模式串匹配只需要遍历一遍主串，所以后者效率会更高。</p>
-<h4 id="如何用-Trie-树实现敏感词过滤功能"><a href="#如何用-Trie-树实现敏感词过滤功能" class="headerlink" title="如何用 Trie 树实现敏感词过滤功能"></a>如何用 Trie 树实现敏感词过滤功能</h4><p>我们可以对敏感词字典进行预处理，构建成 Trie 树结构。这个预处理的操作只需要做一次，如果敏感词字典动态更新了，比如删除、添加了一个敏感词，那我们只需要动态更新一下 Trie 树就可以了。</p>
-<p>当用户输入一个文本内容后，我们把用户输入的内容作为主串，从第一个字符（假设是字符 C）开始，在 Trie 树中匹配。当匹配到 Trie 树的叶子节点，或者中途遇到不匹配字符的时候，我们将主串的开始匹配位置后移一位，也就是从字符 C 的下一个字符开始，重新在 Trie 树中匹配。</p>
-<p>基于 Trie 树的这种处理方法，有点类似单模式串匹配的 BF 算法。所以可以进一步改进–&gt;<strong><em>AC 自动机</em></strong></p>
-<h3 id="经典的多模式串匹配算法：AC-自动机"><a href="#经典的多模式串匹配算法：AC-自动机" class="headerlink" title="经典的多模式串匹配算法：AC 自动机"></a>经典的多模式串匹配算法：AC 自动机</h3><h4 id="构建AC自动机"><a href="#构建AC自动机" class="headerlink" title="构建AC自动机"></a>构建AC自动机</h4><p>类似KMP算法的next失效数组构建方式，这里叫做<strong><em>失效指针</em></strong></p>
-<p>我们可以逐层依次来求解每个节点的失败指针。</p>
-<p>构建好的样子如下图：</p>
-<p><img src="5150d176502dda4adfc63e9b2915b23c.jpg" srcset="/img/loading.gif" alt=""></p>
-<h4 id="如何在-AC-自动机上匹配主串？"><a href="#如何在-AC-自动机上匹配主串？" class="headerlink" title="如何在 AC 自动机上匹配主串？"></a>如何在 AC 自动机上匹配主串？</h4><p>在匹配过程中，主串从 i=0 开始，AC 自动机从指针 p=root 开始，假设模式串是 b，主串是 a。</p>
-<ul>
-<li>如果 p 指向的节点有一个等于 b[i]的子节点 x，我们就更新 p 指向 x，这个时候我们需要通过失败指针，检测一系列失败指针为结尾的路径是否是模式串。这一句不好理解，你可以结合代码看。处理完之后，我们将 i 加一，继续这两个过程；</li>
-<li>如果 p 指向的节点没有等于 b[i]的子节点，那失败指针就派上用场了，我们让 p=p-&gt;fail，然后继续这 2 个过程。</li>
+<h3 id="什么是“Trie-树”？"><a href="#什么是“Trie-树”？" class="headerlink" title="什么是“Trie 树”？"></a>什么是“Trie 树”？</h3><p>Trie 树的本质，就是利用字符串之间的公共前缀，将重复的前缀合并在一起。</p>
+<p><img src="280fbc0bfdef8380fcb632af39e84b32.jpg" srcset="/img/loading.gif" alt=""></p>
+<h3 id="如何实现一棵-Trie-树？"><a href="#如何实现一棵-Trie-树？" class="headerlink" title="如何实现一棵 Trie 树？"></a>如何实现一棵 Trie 树？</h3><h4 id="Trie-树主要有两个操作"><a href="#Trie-树主要有两个操作" class="headerlink" title="Trie 树主要有两个操作"></a>Trie 树主要有两个操作</h4><ul>
+<li>一个是将字符串集合构造成 Trie 树</li>
+<li>一个是在 Trie 树中查询一个字符串</li>
 </ul>
-]]></content>
+<h4 id="如何存储一个-Trie-树？"><a href="#如何存储一个-Trie-树？" class="headerlink" title="如何存储一个 Trie 树？"></a>如何存储一个 Trie 树？</h4><h5 id="经典的存储方式"><a href="#经典的存储方式" class="headerlink" title="经典的存储方式"></a>经典的存储方式</h5><p>通过一个下标与字符一一映射的数组，来存储子节点的指针。</p>
+<p><img src="f5a4a9cb7f0fe9dcfbf29eb1e5da6d35.jpg" srcset="/img/loading.gif" alt=""></p>
+<p>时间复杂度 O(k)， k表示目标查询字符串长度</p>
+<h4 id="Trie树的内存消耗"><a href="#Trie树的内存消耗" class="headerlink" title="Trie树的内存消耗"></a>Trie树的内存消耗</h4><p>Trie树非常内存消耗内存，采用的是空间换取时间的策略。</p>
+<h3 id="Trie-树与散列表、红黑树的比较"><a href="#Trie-树与散列表、红黑树的比较" class="headerlink" title="Trie 树与散列表、红黑树的比较"></a>Trie 树与散列表、红黑树的比较</h3><ul>
+<li>字符串中包含的字符集不能太大。我们前面讲到，如果字符集太大，那存储空间可能就会浪费很多。即便可以优化，但也要付出牺牲查询、插入效率的代价。</li>
+<li>要求字符串的前缀重合比较多，不然空间消耗会变大很多。</li>
+<li>如果要用 Trie 树解决问题，那我们就要自己从零开始实现一个 Trie 树，还要保证没有 bug，这个在工程上是将简单问题复杂化，除非必须，一般不建议这样做。</li>
+<li>我们知道，通过指针串起来的数据块是不连续的，而 Trie 树中用到了指针，所以，对缓存并不友好，性能上会打个折扣。</li>
+</ul>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="如果现在给你一个很大的字符串集合，比如包含-1-万条记录，如何通过编程量化分析这组字符串集合是否比较适合用-Trie-树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？"><a href="#如果现在给你一个很大的字符串集合，比如包含-1-万条记录，如何通过编程量化分析这组字符串集合是否比较适合用-Trie-树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？" class="headerlink" title="如果现在给你一个很大的字符串集合，比如包含 1 万条记录，如何通过编程量化分析这组字符串集合是否比较适合用 Trie 树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？"></a>如果现在给你一个很大的字符串集合，比如包含 1 万条记录，如何通过编程量化分析这组字符串集合是否比较适合用 Trie 树解决呢？也就是如何统计字符串的字符集大小，以及前缀重合的程度呢？</h4>]]></content>
       <categories>
         <category>数据结构与算法</category>
       </categories>
@@ -2085,29 +2056,25 @@
       </tags>
   </entry>
   <entry>
-    <title>分治算法</title>
-    <url>/2020/09/14/article-62/</url>
-    <content><![CDATA[<p>大规模计算框架MapReduce中的分治思想</p>
+    <title>AC自动机</title>
+    <url>/2020/09/11/article-60/</url>
+    <content><![CDATA[<p>用多模式串匹配实现敏感词过滤</p>
 <a id="more"></a>
 
-<h3 id="如何理解分治算法？"><a href="#如何理解分治算法？" class="headerlink" title="如何理解分治算法？"></a>如何理解分治算法？</h3><p>分治算法（divide and conquer）的核心思想其实就是四个字，<strong>分而治之</strong> ，也就是将原问题划分成 n 个规模较小，并且结构与原问题相似的子问题，递归地解决这些子问题，然后再合并其结果，就得到原问题的解。</p>
-<p><strong>分治算法是一种处理问题的思想，递归是一种编程技巧。</strong></p>
-<p>分治算法的递归实现中，每一层递归都做了如下三个操作：</p>
+<h3 id="基于单模式串和-Trie-树实现的敏感词过滤"><a href="#基于单模式串和-Trie-树实现的敏感词过滤" class="headerlink" title="基于单模式串和 Trie 树实现的敏感词过滤"></a>基于单模式串和 Trie 树实现的敏感词过滤</h3><p>BF 算法、RK 算法、BM 算法、KMP 算法，还有 Trie 树这几种算法中，只有Trie树是多模式串匹配算法。</p>
+<p>单模式串匹配中，匹配每个模式串时都需要遍历一遍主串，相比之下，多模式串匹配只需要遍历一遍主串，所以后者效率会更高。</p>
+<h4 id="如何用-Trie-树实现敏感词过滤功能"><a href="#如何用-Trie-树实现敏感词过滤功能" class="headerlink" title="如何用 Trie 树实现敏感词过滤功能"></a>如何用 Trie 树实现敏感词过滤功能</h4><p>我们可以对敏感词字典进行预处理，构建成 Trie 树结构。这个预处理的操作只需要做一次，如果敏感词字典动态更新了，比如删除、添加了一个敏感词，那我们只需要动态更新一下 Trie 树就可以了。</p>
+<p>当用户输入一个文本内容后，我们把用户输入的内容作为主串，从第一个字符（假设是字符 C）开始，在 Trie 树中匹配。当匹配到 Trie 树的叶子节点，或者中途遇到不匹配字符的时候，我们将主串的开始匹配位置后移一位，也就是从字符 C 的下一个字符开始，重新在 Trie 树中匹配。</p>
+<p>基于 Trie 树的这种处理方法，有点类似单模式串匹配的 BF 算法。所以可以进一步改进–&gt;<strong><em>AC 自动机</em></strong></p>
+<h3 id="经典的多模式串匹配算法：AC-自动机"><a href="#经典的多模式串匹配算法：AC-自动机" class="headerlink" title="经典的多模式串匹配算法：AC 自动机"></a>经典的多模式串匹配算法：AC 自动机</h3><h4 id="构建AC自动机"><a href="#构建AC自动机" class="headerlink" title="构建AC自动机"></a>构建AC自动机</h4><p>类似KMP算法的next失效数组构建方式，这里叫做<strong><em>失效指针</em></strong></p>
+<p>我们可以逐层依次来求解每个节点的失败指针。</p>
+<p>构建好的样子如下图：</p>
+<p><img src="5150d176502dda4adfc63e9b2915b23c.jpg" srcset="/img/loading.gif" alt=""></p>
+<h4 id="如何在-AC-自动机上匹配主串？"><a href="#如何在-AC-自动机上匹配主串？" class="headerlink" title="如何在 AC 自动机上匹配主串？"></a>如何在 AC 自动机上匹配主串？</h4><p>在匹配过程中，主串从 i=0 开始，AC 自动机从指针 p=root 开始，假设模式串是 b，主串是 a。</p>
 <ul>
-<li>分解：将原问题分解成一系列子问题；</li>
-<li>解决：递归地求解各个子问题，若子问题足够小，则直接求解；</li>
-<li>合并：将子问题的结果合并成原问题。</li>
+<li>如果 p 指向的节点有一个等于 b[i]的子节点 x，我们就更新 p 指向 x，这个时候我们需要通过失败指针，检测一系列失败指针为结尾的路径是否是模式串。这一句不好理解，你可以结合代码看。处理完之后，我们将 i 加一，继续这两个过程；</li>
+<li>如果 p 指向的节点没有等于 b[i]的子节点，那失败指针就派上用场了，我们让 p=p-&gt;fail，然后继续这 2 个过程。</li>
 </ul>
-<p>分治算法解决问题需要满足的条件：</p>
-<ul>
-<li>原问题与分解成的小问题具有相同的模式；</li>
-<li>原问题分解成的子问题可以独立求解，子问题之间没有相关性，这一点是分治算法跟动态规划的明显区别，等我们讲到动态规划的时候，会详细对比这两种算法；</li>
-<li>具有分解终止条件，也就是说，当问题足够小时，可以直接求解；</li>
-<li>可以将子问题合并成原问题，而这个合并操作的复杂度不能太高，否则就起不到减小算法总体复杂度的效果了。</li>
-</ul>
-<h3 id="分治算法应用举例分析"><a href="#分治算法应用举例分析" class="headerlink" title="分治算法应用举例分析"></a>分治算法应用举例分析</h3><h4 id="如何编程求出一组数据的有序对个数或者逆序对个数"><a href="#如何编程求出一组数据的有序对个数或者逆序对个数" class="headerlink" title="如何编程求出一组数据的有序对个数或者逆序对个数"></a>如何编程求出一组数据的有序对个数或者逆序对个数</h4><p>借助归并排序算法，设置一个计数变量，在排序过程中如果发现逆序对就执行技术操作。</p>
-<p><img src="e835cab502bec3ebebab92381c667532.jpg" srcset="/img/loading.gif" alt=""></p>
-<h4 id="MapReduce-的本质处理思想"><a href="#MapReduce-的本质处理思想" class="headerlink" title="MapReduce 的本质处理思想"></a>MapReduce 的本质处理思想</h4><p>通过将任务拆分并分发至各个block中进行处理后再合并。</p>
 ]]></content>
       <categories>
         <category>数据结构与算法</category>
@@ -2143,6 +2110,39 @@
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>贪心算法适用的场景比较有限。这种算法思想更多的是指导设计基础算法。比如最小生成树算法、单源最短路径算法，这些算法都用到了贪心算法。</p>
 <h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="在一个非负整数-a-中，我们希望从中移除-k-个数字，让剩下的数字值最小，如何选择移除哪-k-个数字呢？"><a href="#在一个非负整数-a-中，我们希望从中移除-k-个数字，让剩下的数字值最小，如何选择移除哪-k-个数字呢？" class="headerlink" title="在一个非负整数 a 中，我们希望从中移除 k 个数字，让剩下的数字值最小，如何选择移除哪 k 个数字呢？"></a>在一个非负整数 a 中，我们希望从中移除 k 个数字，让剩下的数字值最小，如何选择移除哪 k 个数字呢？</h4><p>由高位开始两两比较大小，若高位大，低位小，则删除高位；反之右移一位。循环k次。</p>
 <h4 id="假设有-n-个人等待被服务，但是服务窗口只有一个，每个人需要被服务的时间长度是不同的，如何安排被服务的先后顺序，才能让这-n-个人总的等待时间最短？"><a href="#假设有-n-个人等待被服务，但是服务窗口只有一个，每个人需要被服务的时间长度是不同的，如何安排被服务的先后顺序，才能让这-n-个人总的等待时间最短？" class="headerlink" title="假设有 n 个人等待被服务，但是服务窗口只有一个，每个人需要被服务的时间长度是不同的，如何安排被服务的先后顺序，才能让这 n 个人总的等待时间最短？"></a>假设有 n 个人等待被服务，但是服务窗口只有一个，每个人需要被服务的时间长度是不同的，如何安排被服务的先后顺序，才能让这 n 个人总的等待时间最短？</h4><p>前面的被服务时间会影响，后面的被服务时间；总时间是后面的时间加上前面的时间和，所以，从服务时间最少的开始服务。</p>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>分治算法</title>
+    <url>/2020/09/14/article-62/</url>
+    <content><![CDATA[<p>大规模计算框架MapReduce中的分治思想</p>
+<a id="more"></a>
+
+<h3 id="如何理解分治算法？"><a href="#如何理解分治算法？" class="headerlink" title="如何理解分治算法？"></a>如何理解分治算法？</h3><p>分治算法（divide and conquer）的核心思想其实就是四个字，<strong>分而治之</strong> ，也就是将原问题划分成 n 个规模较小，并且结构与原问题相似的子问题，递归地解决这些子问题，然后再合并其结果，就得到原问题的解。</p>
+<p><strong>分治算法是一种处理问题的思想，递归是一种编程技巧。</strong></p>
+<p>分治算法的递归实现中，每一层递归都做了如下三个操作：</p>
+<ul>
+<li>分解：将原问题分解成一系列子问题；</li>
+<li>解决：递归地求解各个子问题，若子问题足够小，则直接求解；</li>
+<li>合并：将子问题的结果合并成原问题。</li>
+</ul>
+<p>分治算法解决问题需要满足的条件：</p>
+<ul>
+<li>原问题与分解成的小问题具有相同的模式；</li>
+<li>原问题分解成的子问题可以独立求解，子问题之间没有相关性，这一点是分治算法跟动态规划的明显区别，等我们讲到动态规划的时候，会详细对比这两种算法；</li>
+<li>具有分解终止条件，也就是说，当问题足够小时，可以直接求解；</li>
+<li>可以将子问题合并成原问题，而这个合并操作的复杂度不能太高，否则就起不到减小算法总体复杂度的效果了。</li>
+</ul>
+<h3 id="分治算法应用举例分析"><a href="#分治算法应用举例分析" class="headerlink" title="分治算法应用举例分析"></a>分治算法应用举例分析</h3><h4 id="如何编程求出一组数据的有序对个数或者逆序对个数"><a href="#如何编程求出一组数据的有序对个数或者逆序对个数" class="headerlink" title="如何编程求出一组数据的有序对个数或者逆序对个数"></a>如何编程求出一组数据的有序对个数或者逆序对个数</h4><p>借助归并排序算法，设置一个计数变量，在排序过程中如果发现逆序对就执行技术操作。</p>
+<p><img src="e835cab502bec3ebebab92381c667532.jpg" srcset="/img/loading.gif" alt=""></p>
+<h4 id="MapReduce-的本质处理思想"><a href="#MapReduce-的本质处理思想" class="headerlink" title="MapReduce 的本质处理思想"></a>MapReduce 的本质处理思想</h4><p>通过将任务拆分并分发至各个block中进行处理后再合并。</p>
 ]]></content>
       <categories>
         <category>数据结构与算法</category>
