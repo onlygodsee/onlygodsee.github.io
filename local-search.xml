@@ -1265,6 +1265,33 @@
   
   
   <entry>
+    <title>AST学习-scope常用方法</title>
+    <link href="/2020/06/17/article-66/"/>
+    <url>/2020/06/17/article-66/</url>
+    
+    <content type="html"><![CDATA[<p>scope常用方法</p><a id="more"></a><h3 id="作用域-Scope"><a href="#作用域-Scope" class="headerlink" title="作用域 Scope"></a>作用域 Scope</h3><p><code>@Babel</code>解析出来的语法树节点对象会包含作用域信息，这个信息会作为节点<code>Node</code>对象的一个属性保存<br>这个属性本身是一个<code>Scope</code>对象，其定义位于<code>node_modules/@babel/traverse/lib/scope/index.js</code>中</p><p>示例代码如下：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/parser"</span>);<br><span class="hljs-keyword">const</span> traverse = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/traverse"</span>).default;<br><span class="hljs-keyword">const</span> type = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/types"</span>);<br><span class="hljs-keyword">const</span> generator = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/generator"</span>).default;<br><br>jscode = <span class="hljs-string">'function squire(i)&#123;\n'</span> +<br>    <span class="hljs-string">'    return i * i * i;\n'</span> +<br>    <span class="hljs-string">'&#125;;\n'</span> +<br>    <span class="hljs-string">'\n'</span> +<br>    <span class="hljs-string">'function i()\n'</span> +<br>    <span class="hljs-string">'&#123;\n'</span> +<br>    <span class="hljs-string">'    var i = 123;\n'</span> +<br>    <span class="hljs-string">'    i += 2;\n'</span> +<br>    <span class="hljs-string">'    return 123;\n'</span> +<br>    <span class="hljs-string">'&#125;;'</span><br><br><span class="hljs-keyword">var</span> visitor = &#123;<br>    FunctionDeclaration(path)&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"\n\nhere"</span>, path.node.id.name + <span class="hljs-string">"()"</span>)<br>        path.scope.dump()<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">let</span> ast = parser.parse(jscode);<br>traverse(ast, visitor);<br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast)<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure><p>输出如下</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs text">here squire()<br>------------------------------------------------------------<br># FunctionDeclaration<br> - i &#123; constant: true, references: 3, violations: 0, kind: &#39;param&#39; &#125;<br># Program<br> - squire &#123; constant: true, references: 0, violations: 0, kind: &#39;hoisted&#39; &#125;<br> - i &#123; constant: true, references: 0, violations: 0, kind: &#39;hoisted&#39; &#125;<br>------------------------------------------------------------<br><br><br>here i()<br>------------------------------------------------------------<br># FunctionDeclaration<br> - i &#123; constant: false, references: 0, violations: 1, kind: &#39;var&#39; &#125;<br># Program<br> - squire &#123; constant: true, references: 0, violations: 0, kind: &#39;hoisted&#39; &#125;<br> - i &#123; constant: true, references: 0, violations: 0, kind: &#39;hoisted&#39; &#125;<br>------------------------------------------------------------<br>function squire(i) &#123;<br>  return i * i * i;<br>&#125;<br><br>function i() &#123;<br>  var i &#x3D; 123;<br>  i +&#x3D; 2;<br>  return 123;<br>&#125;<br></code></pre></td></tr></table></figure><h4 id="输出查看方法"><a href="#输出查看方法" class="headerlink" title="输出查看方法"></a>输出查看方法</h4><ul><li>每一个作用域都以<code>#</code>标识输出</li><li>每一个绑定都以<code>-</code>标识输出</li><li>对于单次输出，都是自底向上的;先输出当前作用域，再输出父级作用域，再输出父级的父级作用域……</li><li>对于单个绑定<code>Binding</code>，会输出4种信息<ul><li>constant 声明后，是否会被修改</li><li>references 被引用次数</li><li>violations 被重新定义的次数</li><li>kind 函数声明类型。param 参数, hoisted 提升，var 变量， local 内部</li></ul></li></ul>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+      <category>AST</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>AST</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>AST学习-认识path和node</title>
     <link href="/2020/06/16/article-17/"/>
     <url>/2020/06/16/article-17/</url>

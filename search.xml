@@ -585,6 +585,38 @@
       </tags>
   </entry>
   <entry>
+    <title>AST学习-将 BinaryExpression 类型转换为 CallExpression 类型</title>
+    <url>/2020/06/18/article-22/</url>
+    <content><![CDATA[<p>将 BinaryExpression 类型转换为 CallExpression 类型</p>
+<a id="more"></a>
+
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">996</span> | <span class="hljs-number">250</span>;<br></code></pre></td></tr></table></figure>
+
+<p>转换为</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">s, h</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> s | h;<br>&#125;(<span class="hljs-number">996</span>, <span class="hljs-number">250</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="WX20200618-154437.png" srcset="/img/loading.gif" alt=""></p>
+<p>对比发现差别在于 <strong><em>VariableDeclarator</em></strong> 节点的初始化中，所以转换思路就是将原来的 <strong><em>BinaryExpression</em></strong> 节点替换为 <strong><em>CallExpression</em></strong> 节点</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="修改BinaryExpression节点"><a href="#修改BinaryExpression节点" class="headerlink" title="修改BinaryExpression节点"></a>修改BinaryExpression节点</h4><p>代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 将 JS 源码转换成语法树的函数</span><br><span class="hljs-keyword">const</span> parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/parser"</span>)<br><span class="hljs-comment">// 遍历 AST 的函数</span><br><span class="hljs-keyword">const</span> traverse = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/traverse"</span>).default<br><span class="hljs-comment">// 操作节点的函数</span><br><span class="hljs-keyword">const</span> t = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/types"</span>)<br><span class="hljs-comment">// 将语法书转换成源代码的函数</span><br><span class="hljs-keyword">const</span> generator = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/generator"</span>).default<br><span class="hljs-comment">// 操作文件的函数</span><br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)<br><br>jscode = <span class="hljs-string">"var a = 996 | 250;"</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">binary2func</span>(<span class="hljs-params">path</span>)</span>&#123;<br>    init_path = path.get(<span class="hljs-string">'init'</span>);<br>    <span class="hljs-keyword">if</span> (!init_path.isBinaryExpression) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-comment">// 将type改为 CallExpression</span><br>    init_path.node.type = <span class="hljs-string">"CallExpression"</span>;<br><br>    <span class="hljs-comment">// 添加 arguments 节点</span><br>    <span class="hljs-keyword">let</span> &#123;operator, left, right&#125; = init_path.node;<br>    init_path.node.arguments = [left, right];<br><br>    <span class="hljs-comment">// 添加 callee 节点</span><br>    <span class="hljs-comment">// 先构造 params</span><br>    <span class="hljs-keyword">let</span> s = t.Identifier(<span class="hljs-string">'s'</span>);<br>    <span class="hljs-keyword">let</span> h = t.Identifier(<span class="hljs-string">'h'</span>);<br>    <span class="hljs-keyword">let</span> params = [s, h];<br><br>    <span class="hljs-comment">// 构造 BlockStatement-&gt;ReturnStatement-&gt;BinaryExpression</span><br>    <span class="hljs-keyword">let</span> binaryExpress = t.BinaryExpression(operator, s, h);<br>    <span class="hljs-keyword">let</span> returnStmt = t.ReturnStatement(binaryExpress);<br>    <span class="hljs-keyword">let</span> body = t.BlockStatement([returnStmt]);<br><br>    <span class="hljs-keyword">let</span> id = <span class="hljs-literal">null</span><br>    <span class="hljs-keyword">const</span> fuuncExpress = t.FunctionExpression(id, params, body);<br><br>    init_path.node.callee = fuuncExpress;<br>&#125;<br><br><span class="hljs-keyword">const</span> vistor = &#123;<br>    VariableDeclarator:&#123;<br>        enter: [binary2func]<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> ast = parser.parse(jscode);<br>traverse(ast, vistor)<br><br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast);<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="构造-CallExpression-替换-BinaryExpression"><a href="#构造-CallExpression-替换-BinaryExpression" class="headerlink" title="构造 CallExpression 替换 BinaryExpression"></a>构造 CallExpression 替换 BinaryExpression</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 将 JS 源码转换成语法树的函数</span><br><span class="hljs-keyword">const</span> parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/parser"</span>)<br><span class="hljs-comment">// 遍历 AST 的函数</span><br><span class="hljs-keyword">const</span> traverse = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/traverse"</span>).default<br><span class="hljs-comment">// 操作节点的函数</span><br><span class="hljs-keyword">const</span> t = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/types"</span>)<br><span class="hljs-comment">// 将语法书转换成源代码的函数</span><br><span class="hljs-keyword">const</span> generator = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/generator"</span>).default<br><span class="hljs-comment">// 操作文件的函数</span><br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)<br><br>jscode = <span class="hljs-string">"var a = 996 | 250;"</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">binary2func</span>(<span class="hljs-params">path</span>) </span>&#123;<br>    init_path = path.get(<span class="hljs-string">'init'</span>);<br><br>    <span class="hljs-keyword">if</span> (!init_path.isBinaryExpression()) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-keyword">let</span> id = <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">let</span> &#123;operator, left, right&#125; = init_path.node;<br><br>    <span class="hljs-comment">// 构造 arguments 节点</span><br>    <span class="hljs-keyword">const</span> <span class="hljs-built_in">arguments</span> = [left, right];<br><br>    <span class="hljs-comment">// 构造 FunctionExpression 节点</span><br>    <span class="hljs-keyword">let</span> s = t.Identifier(<span class="hljs-string">'s'</span>);<br>    <span class="hljs-keyword">let</span> h = t.Identifier(<span class="hljs-string">'h'</span>);<br>    <span class="hljs-keyword">let</span> params = [s, h]<br>    <span class="hljs-keyword">let</span> binaryExpress = t.BinaryExpression(operator, s, h);<br>    <span class="hljs-keyword">let</span> returnStmt = t.ReturnStatement(binaryExpress);<br>    <span class="hljs-keyword">let</span> blockStmt = t.BlockStatement([returnStmt]);<br>    <span class="hljs-keyword">const</span> funcExpress = t.FunctionExpression(id, params,blockStmt)<br><br>    init_path.replaceWith(t.CallExpression(funcExpress, <span class="hljs-built_in">arguments</span>));<br><br>&#125;<br><br><span class="hljs-keyword">const</span> vistor = &#123;<br>    VariableDeclarator:&#123;<br>        enter: [binary2func]<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> ast = parser.parse(jscode);<br>traverse(ast, vistor)<br><br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast);<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
+
+<p>打印结果</p>
+<p><img src="WX20200618-155056.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>注意本文中节点的修改和替换操作都是由底层向顶层的。</p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AST学习-合并Literal类型的计算表达式</title>
     <url>/2020/06/18/article-21/</url>
     <content><![CDATA[<p>合并Literal类型的计算表达式</p>
@@ -616,38 +648,6 @@
 <p>查看结果</p>
 <p><img src="WX20200618-121458.png" srcset="/img/loading.gif" alt=""></p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>尽量多阅读源码，应有尽有。</p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>AST</category>
-      </categories>
-      <tags>
-        <tag>AST</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AST学习-将 BinaryExpression 类型转换为 CallExpression 类型</title>
-    <url>/2020/06/18/article-22/</url>
-    <content><![CDATA[<p>将 BinaryExpression 类型转换为 CallExpression 类型</p>
-<a id="more"></a>
-
-<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">996</span> | <span class="hljs-number">250</span>;<br></code></pre></td></tr></table></figure>
-
-<p>转换为</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">s, h</span>) </span>&#123;<br>  <span class="hljs-keyword">return</span> s | h;<br>&#125;(<span class="hljs-number">996</span>, <span class="hljs-number">250</span>);<br></code></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="WX20200618-154437.png" srcset="/img/loading.gif" alt=""></p>
-<p>对比发现差别在于 <strong><em>VariableDeclarator</em></strong> 节点的初始化中，所以转换思路就是将原来的 <strong><em>BinaryExpression</em></strong> 节点替换为 <strong><em>CallExpression</em></strong> 节点</p>
-<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="修改BinaryExpression节点"><a href="#修改BinaryExpression节点" class="headerlink" title="修改BinaryExpression节点"></a>修改BinaryExpression节点</h4><p>代码如下</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 将 JS 源码转换成语法树的函数</span><br><span class="hljs-keyword">const</span> parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/parser"</span>)<br><span class="hljs-comment">// 遍历 AST 的函数</span><br><span class="hljs-keyword">const</span> traverse = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/traverse"</span>).default<br><span class="hljs-comment">// 操作节点的函数</span><br><span class="hljs-keyword">const</span> t = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/types"</span>)<br><span class="hljs-comment">// 将语法书转换成源代码的函数</span><br><span class="hljs-keyword">const</span> generator = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/generator"</span>).default<br><span class="hljs-comment">// 操作文件的函数</span><br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)<br><br>jscode = <span class="hljs-string">"var a = 996 | 250;"</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">binary2func</span>(<span class="hljs-params">path</span>)</span>&#123;<br>    init_path = path.get(<span class="hljs-string">'init'</span>);<br>    <span class="hljs-keyword">if</span> (!init_path.isBinaryExpression) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-comment">// 将type改为 CallExpression</span><br>    init_path.node.type = <span class="hljs-string">"CallExpression"</span>;<br><br>    <span class="hljs-comment">// 添加 arguments 节点</span><br>    <span class="hljs-keyword">let</span> &#123;operator, left, right&#125; = init_path.node;<br>    init_path.node.arguments = [left, right];<br><br>    <span class="hljs-comment">// 添加 callee 节点</span><br>    <span class="hljs-comment">// 先构造 params</span><br>    <span class="hljs-keyword">let</span> s = t.Identifier(<span class="hljs-string">'s'</span>);<br>    <span class="hljs-keyword">let</span> h = t.Identifier(<span class="hljs-string">'h'</span>);<br>    <span class="hljs-keyword">let</span> params = [s, h];<br><br>    <span class="hljs-comment">// 构造 BlockStatement-&gt;ReturnStatement-&gt;BinaryExpression</span><br>    <span class="hljs-keyword">let</span> binaryExpress = t.BinaryExpression(operator, s, h);<br>    <span class="hljs-keyword">let</span> returnStmt = t.ReturnStatement(binaryExpress);<br>    <span class="hljs-keyword">let</span> body = t.BlockStatement([returnStmt]);<br><br>    <span class="hljs-keyword">let</span> id = <span class="hljs-literal">null</span><br>    <span class="hljs-keyword">const</span> fuuncExpress = t.FunctionExpression(id, params, body);<br><br>    init_path.node.callee = fuuncExpress;<br>&#125;<br><br><span class="hljs-keyword">const</span> vistor = &#123;<br>    VariableDeclarator:&#123;<br>        enter: [binary2func]<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> ast = parser.parse(jscode);<br>traverse(ast, vistor)<br><br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast);<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
-
-
-
-<h4 id="构造-CallExpression-替换-BinaryExpression"><a href="#构造-CallExpression-替换-BinaryExpression" class="headerlink" title="构造 CallExpression 替换 BinaryExpression"></a>构造 CallExpression 替换 BinaryExpression</h4><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">// 将 JS 源码转换成语法树的函数</span><br><span class="hljs-keyword">const</span> parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/parser"</span>)<br><span class="hljs-comment">// 遍历 AST 的函数</span><br><span class="hljs-keyword">const</span> traverse = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/traverse"</span>).default<br><span class="hljs-comment">// 操作节点的函数</span><br><span class="hljs-keyword">const</span> t = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/types"</span>)<br><span class="hljs-comment">// 将语法书转换成源代码的函数</span><br><span class="hljs-keyword">const</span> generator = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/generator"</span>).default<br><span class="hljs-comment">// 操作文件的函数</span><br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">"fs"</span>)<br><br>jscode = <span class="hljs-string">"var a = 996 | 250;"</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">binary2func</span>(<span class="hljs-params">path</span>) </span>&#123;<br>    init_path = path.get(<span class="hljs-string">'init'</span>);<br><br>    <span class="hljs-keyword">if</span> (!init_path.isBinaryExpression()) <span class="hljs-keyword">return</span>;<br><br>    <span class="hljs-keyword">let</span> id = <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">let</span> &#123;operator, left, right&#125; = init_path.node;<br><br>    <span class="hljs-comment">// 构造 arguments 节点</span><br>    <span class="hljs-keyword">const</span> <span class="hljs-built_in">arguments</span> = [left, right];<br><br>    <span class="hljs-comment">// 构造 FunctionExpression 节点</span><br>    <span class="hljs-keyword">let</span> s = t.Identifier(<span class="hljs-string">'s'</span>);<br>    <span class="hljs-keyword">let</span> h = t.Identifier(<span class="hljs-string">'h'</span>);<br>    <span class="hljs-keyword">let</span> params = [s, h]<br>    <span class="hljs-keyword">let</span> binaryExpress = t.BinaryExpression(operator, s, h);<br>    <span class="hljs-keyword">let</span> returnStmt = t.ReturnStatement(binaryExpress);<br>    <span class="hljs-keyword">let</span> blockStmt = t.BlockStatement([returnStmt]);<br>    <span class="hljs-keyword">const</span> funcExpress = t.FunctionExpression(id, params,blockStmt)<br><br>    init_path.replaceWith(t.CallExpression(funcExpress, <span class="hljs-built_in">arguments</span>));<br><br>&#125;<br><br><span class="hljs-keyword">const</span> vistor = &#123;<br>    VariableDeclarator:&#123;<br>        enter: [binary2func]<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">const</span> ast = parser.parse(jscode);<br>traverse(ast, vistor)<br><br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast);<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
-
-<p>打印结果</p>
-<p><img src="WX20200618-155056.png" srcset="/img/loading.gif" alt=""></p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>注意本文中节点的修改和替换操作都是由底层向顶层的。</p>
 ]]></content>
       <categories>
         <category>技术</category>
@@ -710,33 +710,6 @@
       </tags>
   </entry>
   <entry>
-    <title>AST学习-删除全部注释</title>
-    <url>/2020/06/22/article-25/</url>
-    <content><![CDATA[<p>删除全部注释</p>
-<a id="more"></a>
-
-<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>删除示例代码中的注释：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">123</span>; <span class="hljs-comment">//this is single line comment</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">This is a  multiline comments;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-keyword">var</span> b = <span class="hljs-number">456</span>;<br></code></pre></td></tr></table></figure>
-
-<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="WX20200622-114717.png" srcset="/img/loading.gif" alt=""></p>
-<p>但使用插件遍历发现如下异常</p>
-<p><img src="WX20200622-115102.png" srcset="/img/loading.gif" alt=""></p>
-<p>这时使用generator直接操作，将comments参数声明为false，就可以去掉注释了</p>
-<p><img src="WX20200622-115311.png" srcset="/img/loading.gif" alt=""></p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> ast = parser.parse(jscode);<br><span class="hljs-comment">// traverse(ast, vistor)</span><br><br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast, opts=&#123;<span class="hljs-attr">comments</span>:<span class="hljs-literal">false</span>&#125;)<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
-
-<p>查看结果</p>
-<p><img src="WX20200622-115557.png" srcset="/img/loading.gif" alt=""></p>
-]]></content>
-      <categories>
-        <category>技术</category>
-        <category>AST</category>
-      </categories>
-      <tags>
-        <tag>AST</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AST学习-删除空行和空语句</title>
     <url>/2020/06/22/article-26/</url>
     <content><![CDATA[<p>删除空行和空语句</p>
@@ -754,6 +727,33 @@
 
 <p>查看结果</p>
 <p><img src="WX20200622-122351.png" srcset="/img/loading.gif" alt=""></p>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AST学习-删除全部注释</title>
+    <url>/2020/06/22/article-25/</url>
+    <content><![CDATA[<p>删除全部注释</p>
+<a id="more"></a>
+
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><p>删除示例代码中的注释：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> a = <span class="hljs-number">123</span>; <span class="hljs-comment">//this is single line comment</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">This is a  multiline comments;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">test</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-keyword">var</span> b = <span class="hljs-number">456</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="WX20200622-114717.png" srcset="/img/loading.gif" alt=""></p>
+<p>但使用插件遍历发现如下异常</p>
+<p><img src="WX20200622-115102.png" srcset="/img/loading.gif" alt=""></p>
+<p>这时使用generator直接操作，将comments参数声明为false，就可以去掉注释了</p>
+<p><img src="WX20200622-115311.png" srcset="/img/loading.gif" alt=""></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> ast = parser.parse(jscode);<br><span class="hljs-comment">// traverse(ast, vistor)</span><br><br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast, opts=&#123;<span class="hljs-attr">comments</span>:<span class="hljs-literal">false</span>&#125;)<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<p><img src="WX20200622-115557.png" srcset="/img/loading.gif" alt=""></p>
 ]]></content>
       <categories>
         <category>技术</category>
@@ -1301,42 +1301,6 @@
       </tags>
   </entry>
   <entry>
-    <title>散列表（上）</title>
-    <url>/2020/09/02/article-43/</url>
-    <content><![CDATA[<p>初识散列表</p>
-<a id="more"></a>
-
-<h3 id="散列思想"><a href="#散列思想" class="headerlink" title="散列思想"></a>散列思想</h3><p>散列表用的是数组支持按照下标随机访问数据的特性，所以散列表其实就是数组的一种扩展，由数组演化而来。可以说，如果没有数组，就没有散列表。</p>
-<p>当我们按照键值查询元素时，我们用同样的散列函数，将键值转化数组下标，从对应的数组下标的位置取数据。</p>
-<h3 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h3><h4 id="基本要求"><a href="#基本要求" class="headerlink" title="基本要求"></a>基本要求</h4><ul>
-<li>散列函数计算得到的散列值是一个非负整数</li>
-<li>如果 key1 = key2，那 hash(key1) == hash(key2)</li>
-<li>如果 key1 ≠ key2，那 hash(key1) ≠ hash(key2)</li>
-</ul>
-<h3 id="散列冲突"><a href="#散列冲突" class="headerlink" title="散列冲突"></a>散列冲突</h3><p>解决方法有两类，开放寻址法（open addressing）和链表法（chaining）。</p>
-<h4 id="开放寻址法"><a href="#开放寻址法" class="headerlink" title="开放寻址法"></a>开放寻址法</h4><p>当我们往散列表中插入数据时，如果某个数据经过散列函数散列之后，存储位置已经被占用了，我们就从当前位置开始，依次往后查找，看是否有空闲位置，直到找到为止。</p>
-<p>我们通过散列函数求出要查找元素的键值对应的散列值，然后比较数组中下标为散列值的元素和要查找的元素。如果相等，则说明就是我们要找的元素；否则就顺序往后依次查找。</p>
-<p>对于开放寻址冲突解决方法，除了线性探测方法之外，还有另外两种比较经典的探测方法，<strong><em>二次探测</em></strong>（Quadratic probing）和<strong><em>双重散列</em></strong>（Double hashing）。</p>
-<p>为了尽可能保证散列表的操作效率，一般情况下，我们会尽可能保证散列表中有一定比例的空闲槽位。我们用装载因子（load factor）来表示空位的多少。</p>
-<p>装载因子的计算公式是：</p>
-<figure class="highlight fix"><table><tr><td class="code"><pre><code class="hljs fix"><span class="hljs-attr">散列表的装载因子</span>=<span class="hljs-string">填入表中的元素个数/散列表的长度</span><br></code></pre></td></tr></table></figure>
-
-<p><strong><em>装载因子越大，说明空闲位置越少，冲突越多，散列表的性能会下降。</em></strong></p>
-<h4 id="链表法（拉链法）"><a href="#链表法（拉链法）" class="headerlink" title="链表法（拉链法）"></a>链表法（拉链法）</h4><p>链表法是一种更加常用的散列冲突解决办法，相比开放寻址法，它要简单很多。我们来看这个图，在散列表中，每个“桶（bucket）”或者“槽（slot）”会对应一条链表，所有散列值相同的元素我们都放到相同槽位对应的链表中。</p>
-<p>对于散列比较均匀的散列函数来说，理论上讲，k=n/m，其中 n 表示散列中数据的个数，m 表示散列表中“槽”的个数。</p>
-<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="假设我们有-10-万条-URL-访问日志，如何按照访问次数给-URL-排序？"><a href="#假设我们有-10-万条-URL-访问日志，如何按照访问次数给-URL-排序？" class="headerlink" title="假设我们有 10 万条 URL 访问日志，如何按照访问次数给 URL 排序？"></a>假设我们有 10 万条 URL 访问日志，如何按照访问次数给 URL 排序？</h4><p>遍历 10 万条数据，以 URL 为 key，访问次数为 value，存入散列表，同时记录下访问次数的最大值 K，时间复杂度 O(N)。</p>
-<p>如果 K 不是很大，可以使用桶排序，时间复杂度 O(N)。如果 K 非常大（比如大于 10 万），就使用快速排序，复杂度 O(NlogN)。</p>
-<h4 id="有两个字符串数组，每个数组大约有-10-万条字符串，如何快速找出两个数组中相同的字符串？"><a href="#有两个字符串数组，每个数组大约有-10-万条字符串，如何快速找出两个数组中相同的字符串？" class="headerlink" title="有两个字符串数组，每个数组大约有 10 万条字符串，如何快速找出两个数组中相同的字符串？"></a>有两个字符串数组，每个数组大约有 10 万条字符串，如何快速找出两个数组中相同的字符串？</h4><p>以第一个字符串数组构建散列表，key 为字符串，value 为出现次数。再遍历第二个字符串数组，以字符串为 key 在散列表中查找，如果 value 大于零，说明存在相同字符串。时间复杂度 O(N)。</p>
-]]></content>
-      <categories>
-        <category>数据结构与算法</category>
-      </categories>
-      <tags>
-        <tag>基础篇</tag>
-        <tag>数据结构与算法</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>散列表（中）</title>
     <url>/2020/09/02/article-44/</url>
     <content><![CDATA[<p>设计散列函数</p>
@@ -1378,6 +1342,42 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hashCode</span><span class="hljs-params">()</span> </span>&#123;<br>  <span class="hljs-keyword">int</span> var1 = <span class="hljs-keyword">this</span>.hash;<br>  <span class="hljs-keyword">if</span>(var1 == <span class="hljs-number">0</span> &amp;&amp; <span class="hljs-keyword">this</span>.value.length &gt; <span class="hljs-number">0</span>) &#123;<br>    <span class="hljs-keyword">char</span>[] var2 = <span class="hljs-keyword">this</span>.value;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> var3 = <span class="hljs-number">0</span>; var3 &lt; <span class="hljs-keyword">this</span>.value.length; ++var3) &#123;<br>      var1 = <span class="hljs-number">31</span> * var1 + var2[var3];<br>    &#125;<br>    <span class="hljs-keyword">this</span>.hash = var1;<br>  &#125;<br>  <span class="hljs-keyword">return</span> var1;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="在你熟悉的编程语言中，哪些数据类型底层是基于散列表实现的？散列函数是如何设计的？散列冲突是通过哪种方法解决的？是否支持动态扩容呢？"><a href="#在你熟悉的编程语言中，哪些数据类型底层是基于散列表实现的？散列函数是如何设计的？散列冲突是通过哪种方法解决的？是否支持动态扩容呢？" class="headerlink" title="在你熟悉的编程语言中，哪些数据类型底层是基于散列表实现的？散列函数是如何设计的？散列冲突是通过哪种方法解决的？是否支持动态扩容呢？"></a>在你熟悉的编程语言中，哪些数据类型底层是基于散列表实现的？散列函数是如何设计的？散列冲突是通过哪种方法解决的？是否支持动态扩容呢？</h3><p>比如Redis中的hash,set,hset,都是散列表实现，他们的动态扩容策略是同时维护两个散列表，然后一点点搬移数据</p>
+]]></content>
+      <categories>
+        <category>数据结构与算法</category>
+      </categories>
+      <tags>
+        <tag>基础篇</tag>
+        <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>散列表（上）</title>
+    <url>/2020/09/02/article-43/</url>
+    <content><![CDATA[<p>初识散列表</p>
+<a id="more"></a>
+
+<h3 id="散列思想"><a href="#散列思想" class="headerlink" title="散列思想"></a>散列思想</h3><p>散列表用的是数组支持按照下标随机访问数据的特性，所以散列表其实就是数组的一种扩展，由数组演化而来。可以说，如果没有数组，就没有散列表。</p>
+<p>当我们按照键值查询元素时，我们用同样的散列函数，将键值转化数组下标，从对应的数组下标的位置取数据。</p>
+<h3 id="散列函数"><a href="#散列函数" class="headerlink" title="散列函数"></a>散列函数</h3><h4 id="基本要求"><a href="#基本要求" class="headerlink" title="基本要求"></a>基本要求</h4><ul>
+<li>散列函数计算得到的散列值是一个非负整数</li>
+<li>如果 key1 = key2，那 hash(key1) == hash(key2)</li>
+<li>如果 key1 ≠ key2，那 hash(key1) ≠ hash(key2)</li>
+</ul>
+<h3 id="散列冲突"><a href="#散列冲突" class="headerlink" title="散列冲突"></a>散列冲突</h3><p>解决方法有两类，开放寻址法（open addressing）和链表法（chaining）。</p>
+<h4 id="开放寻址法"><a href="#开放寻址法" class="headerlink" title="开放寻址法"></a>开放寻址法</h4><p>当我们往散列表中插入数据时，如果某个数据经过散列函数散列之后，存储位置已经被占用了，我们就从当前位置开始，依次往后查找，看是否有空闲位置，直到找到为止。</p>
+<p>我们通过散列函数求出要查找元素的键值对应的散列值，然后比较数组中下标为散列值的元素和要查找的元素。如果相等，则说明就是我们要找的元素；否则就顺序往后依次查找。</p>
+<p>对于开放寻址冲突解决方法，除了线性探测方法之外，还有另外两种比较经典的探测方法，<strong><em>二次探测</em></strong>（Quadratic probing）和<strong><em>双重散列</em></strong>（Double hashing）。</p>
+<p>为了尽可能保证散列表的操作效率，一般情况下，我们会尽可能保证散列表中有一定比例的空闲槽位。我们用装载因子（load factor）来表示空位的多少。</p>
+<p>装载因子的计算公式是：</p>
+<figure class="highlight fix"><table><tr><td class="code"><pre><code class="hljs fix"><span class="hljs-attr">散列表的装载因子</span>=<span class="hljs-string">填入表中的元素个数/散列表的长度</span><br></code></pre></td></tr></table></figure>
+
+<p><strong><em>装载因子越大，说明空闲位置越少，冲突越多，散列表的性能会下降。</em></strong></p>
+<h4 id="链表法（拉链法）"><a href="#链表法（拉链法）" class="headerlink" title="链表法（拉链法）"></a>链表法（拉链法）</h4><p>链表法是一种更加常用的散列冲突解决办法，相比开放寻址法，它要简单很多。我们来看这个图，在散列表中，每个“桶（bucket）”或者“槽（slot）”会对应一条链表，所有散列值相同的元素我们都放到相同槽位对应的链表中。</p>
+<p>对于散列比较均匀的散列函数来说，理论上讲，k=n/m，其中 n 表示散列中数据的个数，m 表示散列表中“槽”的个数。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><h4 id="假设我们有-10-万条-URL-访问日志，如何按照访问次数给-URL-排序？"><a href="#假设我们有-10-万条-URL-访问日志，如何按照访问次数给-URL-排序？" class="headerlink" title="假设我们有 10 万条 URL 访问日志，如何按照访问次数给 URL 排序？"></a>假设我们有 10 万条 URL 访问日志，如何按照访问次数给 URL 排序？</h4><p>遍历 10 万条数据，以 URL 为 key，访问次数为 value，存入散列表，同时记录下访问次数的最大值 K，时间复杂度 O(N)。</p>
+<p>如果 K 不是很大，可以使用桶排序，时间复杂度 O(N)。如果 K 非常大（比如大于 10 万），就使用快速排序，复杂度 O(NlogN)。</p>
+<h4 id="有两个字符串数组，每个数组大约有-10-万条字符串，如何快速找出两个数组中相同的字符串？"><a href="#有两个字符串数组，每个数组大约有-10-万条字符串，如何快速找出两个数组中相同的字符串？" class="headerlink" title="有两个字符串数组，每个数组大约有 10 万条字符串，如何快速找出两个数组中相同的字符串？"></a>有两个字符串数组，每个数组大约有 10 万条字符串，如何快速找出两个数组中相同的字符串？</h4><p>以第一个字符串数组构建散列表，key 为字符串，value 为出现次数。再遍历第二个字符串数组，以字符串为 key 在散列表中查找，如果 value 大于零，说明存在相同字符串。时间复杂度 O(N)。</p>
 ]]></content>
       <categories>
         <category>数据结构与算法</category>
@@ -2244,6 +2244,42 @@
       <tags>
         <tag>基础篇</tag>
         <tag>数据结构与算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AST学习-scope常用方法</title>
+    <url>/2020/06/17/article-66/</url>
+    <content><![CDATA[<p>scope常用方法</p>
+<a id="more"></a>
+
+<h3 id="作用域-Scope"><a href="#作用域-Scope" class="headerlink" title="作用域 Scope"></a>作用域 Scope</h3><p><code>@Babel</code>解析出来的语法树节点对象会包含作用域信息，这个信息会作为节点<code>Node</code>对象的一个属性保存<br>这个属性本身是一个<code>Scope</code>对象，其定义位于<code>node_modules/@babel/traverse/lib/scope/index.js</code>中</p>
+<p>示例代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">const</span> parser = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/parser"</span>);<br><span class="hljs-keyword">const</span> traverse = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/traverse"</span>).default;<br><span class="hljs-keyword">const</span> type = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/types"</span>);<br><span class="hljs-keyword">const</span> generator = <span class="hljs-built_in">require</span>(<span class="hljs-string">"@babel/generator"</span>).default;<br><br>jscode = <span class="hljs-string">'function squire(i)&#123;\n'</span> +<br>    <span class="hljs-string">'    return i * i * i;\n'</span> +<br>    <span class="hljs-string">'&#125;;\n'</span> +<br>    <span class="hljs-string">'\n'</span> +<br>    <span class="hljs-string">'function i()\n'</span> +<br>    <span class="hljs-string">'&#123;\n'</span> +<br>    <span class="hljs-string">'    var i = 123;\n'</span> +<br>    <span class="hljs-string">'    i += 2;\n'</span> +<br>    <span class="hljs-string">'    return 123;\n'</span> +<br>    <span class="hljs-string">'&#125;;'</span><br><br><span class="hljs-keyword">var</span> visitor = &#123;<br>    FunctionDeclaration(path)&#123;<br>        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"\n\nhere"</span>, path.node.id.name + <span class="hljs-string">"()"</span>)<br>        path.scope.dump()<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">let</span> ast = parser.parse(jscode);<br>traverse(ast, visitor);<br><span class="hljs-keyword">let</span> &#123;code&#125; = generator(ast)<br><span class="hljs-built_in">console</span>.log(code)<br></code></pre></td></tr></table></figure>
+
+<p>输出如下</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><code class="hljs text">here squire()<br>------------------------------------------------------------<br># FunctionDeclaration<br> - i &#123; constant: true, references: 3, violations: 0, kind: &#39;param&#39; &#125;<br># Program<br> - squire &#123; constant: true, references: 0, violations: 0, kind: &#39;hoisted&#39; &#125;<br> - i &#123; constant: true, references: 0, violations: 0, kind: &#39;hoisted&#39; &#125;<br>------------------------------------------------------------<br><br><br>here i()<br>------------------------------------------------------------<br># FunctionDeclaration<br> - i &#123; constant: false, references: 0, violations: 1, kind: &#39;var&#39; &#125;<br># Program<br> - squire &#123; constant: true, references: 0, violations: 0, kind: &#39;hoisted&#39; &#125;<br> - i &#123; constant: true, references: 0, violations: 0, kind: &#39;hoisted&#39; &#125;<br>------------------------------------------------------------<br>function squire(i) &#123;<br>  return i * i * i;<br>&#125;<br><br>function i() &#123;<br>  var i &#x3D; 123;<br>  i +&#x3D; 2;<br>  return 123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="输出查看方法"><a href="#输出查看方法" class="headerlink" title="输出查看方法"></a>输出查看方法</h4><ul>
+<li>每一个作用域都以<code>#</code>标识输出</li>
+<li>每一个绑定都以<code>-</code>标识输出</li>
+<li>对于单次输出，都是自底向上的;先输出当前作用域，再输出父级作用域，再输出父级的父级作用域……</li>
+<li>对于单个绑定<code>Binding</code>，会输出4种信息<ul>
+<li>constant 声明后，是否会被修改</li>
+<li>references 被引用次数</li>
+<li>violations 被重新定义的次数</li>
+<li>kind 函数声明类型。param 参数, hoisted 提升，var 变量， local 内部</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>技术</category>
+        <category>AST</category>
+      </categories>
+      <tags>
+        <tag>AST</tag>
       </tags>
   </entry>
   <entry>
